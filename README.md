@@ -47,4 +47,18 @@ El proyecto utiliza MongoDB como base de datos.
 
 El backend se conecta a MongoDB mediante Mongoose y la configuración de conexión se maneja mediante variables de entorno.
 
+## Categorías
+
+Se implementó el CRUD de categorías mediante la API REST.
+
+Actualmente permite:
+
+- Registrar categorías.
+- Consultar categorías.
+- Actualizar categorías.
+- Eliminar categorías.
+- Validar categorías duplicadas.
+
+Las peticiones fueron probadas con Postman y los datos se verificaron en MongoDB Compass.
+
 
