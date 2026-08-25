@@ -37,3 +37,8 @@ JennCoffee/
 ├── frontend/
 ├── .gitignore
 └── README.md
+## Base de datos
+
+El proyecto utiliza MongoDB como base de datos.
+
+El backend se conecta a MongoDB mediante Mongoose y la configuración de conexión se maneja mediante variables de entorno.
