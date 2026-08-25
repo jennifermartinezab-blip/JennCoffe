@@ -4,7 +4,18 @@ const crearCategoria = async (req, res) => {
   try {
     const { nombre, descripcion, estado } = req.body;
 
-    const categoriaExistente = await Categoria.findOne({ nombre });
+    // Validar nombre obligatorio
+    if (!nombre || !nombre.trim()) {
+      return res.status(400).json({
+        success: false,
+        message: 'El nombre de la categoría es obligatorio'
+      });
+    }
+
+    // Validar categoría duplicada
+    const categoriaExistente = await Categoria.findOne({
+      nombre: nombre.trim()
+    });
 
     if (categoriaExistente) {
       return res.status(400).json({
@@ -14,7 +25,7 @@ const crearCategoria = async (req, res) => {
     }
 
     const categoria = await Categoria.create({
-      nombre,
+      nombre: nombre.trim(),
       descripcion,
       estado
     });
@@ -25,10 +36,17 @@ const crearCategoria = async (req, res) => {
       data: categoria
     });
   } catch (error) {
+    if (error.name === 'ValidationError') {
+      return res.status(400).json({
+        success: false,
+        message: 'Datos de categoría inválidos',
+        error: error.message
+      });
+    }
+
     return res.status(500).json({
       success: false,
-      message: 'Error al registrar la categoría',
-      error: error.message
+      message: 'Error interno al registrar la categoría'
     });
   }
 };
@@ -57,7 +75,11 @@ const actualizarCategoria = async (req, res) => {
 
     const categoria = await Categoria.findByIdAndUpdate(
       id,
-      { nombre, descripcion, estado },
+      {
+        nombre,
+        descripcion,
+        estado
+      },
       {
         new: true,
         runValidators: true
@@ -77,6 +99,14 @@ const actualizarCategoria = async (req, res) => {
       data: categoria
     });
   } catch (error) {
+    if (error.name === 'ValidationError') {
+      return res.status(400).json({
+        success: false,
+        message: 'Datos de categoría inválidos',
+        error: error.message
+      });
+    }
+
     return res.status(500).json({
       success: false,
       message: 'Error al actualizar la categoría',
