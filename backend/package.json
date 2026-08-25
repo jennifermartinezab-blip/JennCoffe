@@ -1,10 +1,12 @@
 {
   "name": "jenncoffee",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "description": "Backend API REST del sistema JennCoffee",
+  "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node server.js",
+    "dev": "node server.js",
+    "test": "echo \"Pruebas pendientes\""
   },
   "keywords": [],
   "author": "",
