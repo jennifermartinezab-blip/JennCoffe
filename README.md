@@ -62,3 +62,25 @@ Actualmente permite:
 Las peticiones fueron probadas con Postman y los datos se verificaron en MongoDB Compass.
 
 
+## Productos
+
+Se implementó el CRUD de productos mediante la API REST.
+
+Cada producto se relaciona con una categoría registrada en la base de datos.
+
+Actualmente permite:
+
+- Registrar productos.
+- Consultar productos.
+- Actualizar productos.
+- Eliminar productos.
+- Buscar productos por nombre.
+- Buscar productos por código.
+- Buscar productos por categoría.
+- Validar códigos de producto duplicados.
+- Validar que la categoría exista.
+- Validar los datos obligatorios del producto.
+
+Los productos contienen los campos código, nombre, descripción, categoría, precio, imagen, disponibilidad y estado.
+
+Las peticiones fueron probadas con Postman y los datos se verificaron en MongoDB Compass.
