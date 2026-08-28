@@ -2,6 +2,7 @@ const express = require('express');
 
 const categoriaRoutes = require('./routes/categoriaRoutes');
 const productoRoutes = require('./routes/productoRoutes');
+const clienteRoutes = require('./routes/clienteRoutes');
 
 const app = express();
 
@@ -15,7 +16,7 @@ app.get('/', (req, res) => {
 });
 
 app.use('/api/categorias', categoriaRoutes);
-
 app.use('/api/productos', productoRoutes);
+app.use('/api/clientes', clienteRoutes);
 
 module.exports = app;
