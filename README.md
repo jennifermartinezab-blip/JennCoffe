@@ -84,3 +84,27 @@ Actualmente permite:
 Los productos contienen los campos código, nombre, descripción, categoría, precio, imagen, disponibilidad y estado.
 
 Las peticiones fueron probadas con Postman y los datos se verificaron en MongoDB Compass.
+
+## Clientes
+
+Se implementó el CRUD de clientes mediante la API REST.
+
+Actualmente permite:
+
+- Registrar clientes.
+- Consultar clientes.
+- Actualizar los datos de los clientes.
+- Cambiar el estado del cliente entre Activo e Inactivo.
+- Eliminar clientes.
+- Validar documentos duplicados.
+- Validar correos duplicados.
+- Validar los campos obligatorios.
+- Validar los tipos de documento permitidos.
+- Validar los estados permitidos.
+- Validar identificadores incorrectos.
+
+Los clientes contienen los campos documento, tipo de documento, nombre, apellidos, correo, teléfono, dirección, contraseña y estado.
+
+La contraseña se cifra utilizando bcrypt antes de almacenarse en MongoDB y no se devuelve en las respuestas de la API.
+
+Las peticiones fueron probadas con Postman y los datos se verificaron en MongoDB Compass.
