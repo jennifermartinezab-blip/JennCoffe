@@ -6,7 +6,8 @@ const productoSchema = new mongoose.Schema(
       type: String,
       required: true,
       unique: true,
-      trim: true
+      trim: true,
+      uppercase: true
     },
 
     nombre: {
@@ -30,7 +31,12 @@ const productoSchema = new mongoose.Schema(
     precio: {
       type: Number,
       required: true,
-      min: 0
+      validate: {
+        validator: function (valor) {
+          return Number.isFinite(valor) && valor > 0;
+        },
+        message: 'El precio debe ser un número mayor que cero'
+      }
     },
 
     imagen: {

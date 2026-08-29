@@ -8,16 +8,44 @@ const {
   buscarProductos
 } = require('../controllers/productoController');
 
+const {
+  verificarToken,
+  soloAdministrador
+} = require('../middlewares/authMiddleware');
+
 const router = express.Router();
 
-router.post('/', crearProducto);
+// RF01 - Registrar producto
+// Solo administrador
+router.post(
+  '/',
+  verificarToken,
+  soloAdministrador,
+  crearProducto
+);
 
+// RF04 - Consultar productos
 router.get('/', listarProductos);
 
+// RF05 - Buscar productos por nombre, código o categoría
 router.get('/buscar', buscarProductos);
 
-router.put('/:id', actualizarProducto);
+// RF02 - Actualizar producto
+// Solo administrador
+router.put(
+  '/:id',
+  verificarToken,
+  soloAdministrador,
+  actualizarProducto
+);
 
-router.delete('/:id', eliminarProducto);
+// RF03 - Eliminar producto
+// Solo administrador
+router.delete(
+  '/:id',
+  verificarToken,
+  soloAdministrador,
+  eliminarProducto
+);
 
 module.exports = router;
