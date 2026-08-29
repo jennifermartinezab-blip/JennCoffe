@@ -108,3 +108,58 @@ Los clientes contienen los campos documento, tipo de documento, nombre, apellido
 La contraseña se cifra utilizando bcrypt antes de almacenarse en MongoDB y no se devuelve en las respuestas de la API.
 
 Las peticiones fueron probadas con Postman y los datos se verificaron en MongoDB Compass.
+
+## Pedidos
+
+Se implementó el módulo de pedidos.
+
+Permite:
+
+- Registrar pedidos.
+- Consultar pedidos del cliente.
+- Consultar detalle de pedidos.
+- Cancelar pedidos pendientes.
+- Consultar todos los pedidos como administrador.
+- Filtrar pedidos por estado.
+- Cambiar el estado de los pedidos.
+
+Los estados usados son:
+
+- Pendiente.
+- En preparación.
+- En camino.
+- Entregado.
+- Cancelado.
+
+También se agregaron validaciones para que un cliente no pueda consultar pedidos de otro cliente.
+
+## Usuarios administrativos
+
+Se implementó el módulo de usuarios administrativos.
+
+Permite:
+
+- Registrar usuarios.
+- Consultar usuarios.
+- Actualizar usuarios.
+- Eliminar usuarios.
+- Cambiar su estado entre Activo e Inactivo.
+
+Las contraseñas se protegen utilizando bcrypt y no se muestran en las respuestas de la API.
+
+## Autenticación
+
+Se implementó el inicio de sesión para clientes y administradores utilizando JWT.
+
+Permite:
+
+- Iniciar sesión como cliente.
+- Iniciar sesión como administrador.
+- Generar un token.
+- Proteger rutas.
+- Diferenciar permisos entre cliente y administrador.
+- Bloquear usuarios inactivos.
+
+También se validó que un usuario inactivo no pueda seguir utilizando rutas protegidas aunque tenga un token creado anteriormente.
+
+El cierre de sesión todavía está pendiente.
