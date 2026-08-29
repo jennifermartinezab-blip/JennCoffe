@@ -20,13 +20,24 @@ const ESTADOS_PEDIDO = [
   'Cancelado'
 ];
 
+const METODOS_PAGO = [
+  'Tarjeta simulada',
+  'Efectivo'
+];
+
+const RESULTADOS_PAGO_SIMULADO = [
+  'Aprobado',
+  'Fallido'
+];
+
 const registrarPedido = async (req, res) => {
   try {
     const clienteId = req.usuario.id;
 
     const {
       productos,
-      direccionEntrega
+      direccionEntrega,
+      pago
     } = req.body;
 
     if (!mongoose.Types.ObjectId.isValid(clienteId)) {
@@ -160,17 +171,68 @@ const registrarPedido = async (req, res) => {
       });
     }
 
+    if (
+      !pago ||
+      typeof pago !== 'object' ||
+      Array.isArray(pago)
+    ) {
+      return res.status(400).json({
+        success: false,
+        message: 'La información del pago simulado es obligatoria'
+      });
+    }
+
+    const {
+      metodo,
+      resultadoSimulado
+    } = pago;
+
+    if (
+      !metodo ||
+      !METODOS_PAGO.includes(metodo)
+    ) {
+      return res.status(400).json({
+        success: false,
+        message: 'El método de pago simulado no es válido'
+      });
+    }
+
+    if (
+      !resultadoSimulado ||
+      !RESULTADOS_PAGO_SIMULADO.includes(resultadoSimulado)
+    ) {
+      return res.status(400).json({
+        success: false,
+        message: 'El resultado del pago simulado no es válido'
+      });
+    }
+
+    if (resultadoSimulado === 'Fallido') {
+      return res.status(402).json({
+        success: false,
+        message: 'El pago simulado fue rechazado. El pedido no fue creado',
+        pago: {
+          metodo,
+          estado: 'Fallido'
+        }
+      });
+    }
+
     const pedido = await Pedido.create({
       cliente: cliente._id,
       productos: detallePedido,
       direccionEntrega: direccionFinal,
       total,
+      pago: {
+        metodo,
+        estado: 'Aprobado'
+      },
       estado: 'Pendiente'
     });
 
     return res.status(201).json({
       success: true,
-      message: 'Pedido registrado correctamente',
+      message: 'Pago simulado aprobado y pedido registrado correctamente',
       data: pedido
     });
   } catch (error) {

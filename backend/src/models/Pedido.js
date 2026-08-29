@@ -37,6 +37,28 @@ const detalleProductoSchema = new mongoose.Schema(
   }
 );
 
+const pagoSchema = new mongoose.Schema(
+  {
+    metodo: {
+      type: String,
+      required: true,
+      enum: [
+        'Tarjeta simulada',
+        'Efectivo'
+      ]
+    },
+
+    estado: {
+      type: String,
+      required: true,
+      enum: ['Aprobado']
+    }
+  },
+  {
+    _id: false
+  }
+);
+
 const pedidoSchema = new mongoose.Schema(
   {
     cliente: {
@@ -67,6 +89,11 @@ const pedidoSchema = new mongoose.Schema(
       type: Number,
       required: true,
       min: 0
+    },
+
+    pago: {
+      type: pagoSchema,
+      required: false
     },
 
     fecha: {

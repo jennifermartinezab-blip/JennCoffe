@@ -8,7 +8,9 @@ JennCoffee es un sistema web para gestionar productos, categorías, clientes, pe
 
 El proyecto se encuentra en desarrollo.
 
-Hasta el momento se creó la estructura inicial del backend y se configuró un servidor básico con Node.js y Express.
+Actualmente se encuentra implementada la estructura principal del backend utilizando Node.js, Express y MongoDB. También se han desarrollado y probado los módulos de categorías, productos, clientes, pedidos, usuarios administrativos y autenticación.
+
+Las funcionalidades de la API REST se están probando mediante Postman y los datos almacenados se verifican mediante MongoDB Compass.
 
 ## Módulos del sistema
 
@@ -37,13 +39,11 @@ JennCoffee/
 ├── frontend/
 ├── .gitignore
 └── README.md
-
-
-
-
 ```
+
 ## Base de datos
-El proyecto utiliza MongoDB como base de datos. 
+
+El proyecto utiliza MongoDB como base de datos.
 
 El backend se conecta a MongoDB mediante Mongoose y la configuración de conexión se maneja mediante variables de entorno.
 
@@ -60,7 +60,6 @@ Actualmente permite:
 - Validar categorías duplicadas.
 
 Las peticiones fueron probadas con Postman y los datos se verificaron en MongoDB Compass.
-
 
 ## Productos
 
@@ -113,17 +112,23 @@ Las peticiones fueron probadas con Postman y los datos se verificaron en MongoDB
 
 Se implementó el módulo de pedidos.
 
-Permite:
+Actualmente permite:
 
 - Registrar pedidos.
-- Consultar pedidos del cliente.
-- Consultar detalle de pedidos.
+- Consultar los pedidos del cliente autenticado.
+- Consultar el detalle de un pedido.
 - Cancelar pedidos pendientes.
 - Consultar todos los pedidos como administrador.
 - Filtrar pedidos por estado.
 - Cambiar el estado de los pedidos.
+- Validar que un cliente no pueda consultar pedidos pertenecientes a otro cliente.
+- Validar que los productos existan, estén activos y disponibles.
+- Validar que las cantidades sean mayores que cero.
+- Calcular el subtotal y total del pedido desde el backend.
+- Conservar el nombre y precio del producto al momento de realizar el pedido.
+- Conservar la dirección de entrega utilizada al momento de realizar el pedido.
 
-Los estados usados son:
+Los estados utilizados para los pedidos son:
 
 - Pendiente.
 - En preparación.
@@ -131,13 +136,38 @@ Los estados usados son:
 - Entregado.
 - Cancelado.
 
-También se agregaron validaciones para que un cliente no pueda consultar pedidos de otro cliente.
+### Pago simulado
+
+Se implementó un proceso de pago simulado para el registro de pedidos.
+
+Los métodos contemplados son:
+
+- Tarjeta simulada.
+- Efectivo.
+
+El pago simulado no procesa ni almacena información financiera real.
+
+Cuando se utiliza la tarjeta simulada, el sistema permite comprobar dos escenarios:
+
+- Si el pago simulado es aprobado, el pedido se registra y comienza con estado `Pendiente`.
+- Si el pago simulado falla, el pedido no se registra en la base de datos.
+
+El estado del pago y el estado del pedido se manejan de forma independiente.
+
+Por ejemplo, un pedido puede tener:
+
+```text
+Pago: Aprobado
+Pedido: Pendiente
+```
+
+El flujo de pago aprobado y el flujo de pago fallido fueron probados mediante Postman. También se verificó mediante MongoDB Compass que un pago fallido no genera un nuevo pedido.
 
 ## Usuarios administrativos
 
 Se implementó el módulo de usuarios administrativos.
 
-Permite:
+Actualmente permite:
 
 - Registrar usuarios.
 - Consultar usuarios.
@@ -149,17 +179,31 @@ Las contraseñas se protegen utilizando bcrypt y no se muestran en las respuesta
 
 ## Autenticación
 
-Se implementó el inicio de sesión para clientes y administradores utilizando JWT.
+Se implementó la autenticación para clientes y administradores utilizando JWT.
 
-Permite:
+Actualmente permite:
 
 - Iniciar sesión como cliente.
 - Iniciar sesión como administrador.
-- Generar un token.
-- Proteger rutas.
+- Generar un token JWT.
+- Proteger rutas mediante autenticación.
 - Diferenciar permisos entre cliente y administrador.
-- Bloquear usuarios inactivos.
+- Bloquear el acceso de usuarios inactivos.
+- Cerrar sesión mediante el endpoint de logout.
 
 También se validó que un usuario inactivo no pueda seguir utilizando rutas protegidas aunque tenga un token creado anteriormente.
 
-El cierre de sesión todavía está pendiente.
+### Cierre de sesión - RF15
+
+Se implementó el cierre de sesión mediante la API REST.
+
+El endpoint de logout requiere un token JWT válido. Al realizar el cierre de sesión, el backend valida el token y confirma la operación.
+
+Como la autenticación utiliza JWT, el cliente será responsable de eliminar el token almacenado cuando se implemente el frontend.
+
+Se realizaron pruebas de:
+
+- Logout con token válido.
+- Intento de logout sin token.
+
+Las pruebas fueron realizadas mediante Postman.

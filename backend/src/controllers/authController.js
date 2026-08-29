@@ -165,6 +165,21 @@ const login = async (req, res) => {
   }
 };
 
+const logout = async (req, res) => {
+  try {
+    return res.status(200).json({
+      success: true,
+      message: 'Cierre de sesión correcto'
+    });
+  } catch (error) {
+    return res.status(500).json({
+      success: false,
+      message: 'Error interno al cerrar sesión'
+    });
+  }
+};
+
 module.exports = {
-  login
+  login,
+  logout
 };
