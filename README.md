@@ -57,7 +57,12 @@ Actualmente permite:
 - Consultar categorías.
 - Actualizar categorías.
 - Eliminar categorías.
-- Validar categorías duplicadas.
+- Proteger el registro, actualización y eliminación de categorías para que solo puedan ser realizados por administradores autenticados.
+- Validar que el nombre de la categoría sea obligatorio.
+- Evitar categorías duplicadas, incluso si cambian las mayúsculas o minúsculas.
+- Evitar que una categoría sea actualizada con el nombre de otra categoría existente.
+- Validar identificadores de categorías y responder correctamente cuando la categoría no exista.
+- Impedir la eliminación de categorías que tengan productos asociados.
 
 Las peticiones fueron probadas con Postman y los datos se verificaron en MongoDB Compass.
 
@@ -76,9 +81,16 @@ Actualmente permite:
 - Buscar productos por nombre.
 - Buscar productos por código.
 - Buscar productos por categoría.
-- Validar códigos de producto duplicados.
-- Validar que la categoría exista.
-- Validar los datos obligatorios del producto.
+- Validar que los datos obligatorios del producto sean correctos.
+- Validar que el código del producto no se repita, incluso si cambia el uso de mayúsculas o minúsculas.
+- Validar que la categoría asociada exista antes de registrar o actualizar un producto.
+- Validar que el precio sea un número mayor que cero.
+- Validar que la disponibilidad sea un valor verdadero o falso.
+- Validar que el estado del producto solo pueda ser Activo o Inactivo.
+- Validar identificadores de productos y responder correctamente cuando el producto no exista.
+- Rechazar identificadores de categoría con formato no válido durante las búsquedas.
+- Proteger el registro, actualización y eliminación de productos para que solo puedan ser realizados por administradores autenticados.
+- Impedir la eliminación de productos que estén asociados a pedidos registrados.
 
 Los productos contienen los campos código, nombre, descripción, categoría, precio, imagen, disponibilidad y estado.
 
