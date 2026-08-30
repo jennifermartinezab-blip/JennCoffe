@@ -182,17 +182,26 @@ El flujo de pago aprobado y el flujo de pago fallido fueron probados mediante Po
 
 ## Usuarios administrativos
 
-Se implementó el módulo de usuarios administrativos.
+Se implementó y auditó el módulo de gestión de usuarios administrativos correspondiente al RF30.
 
 Actualmente permite:
 
-- Registrar usuarios.
-- Consultar usuarios.
-- Actualizar usuarios.
-- Eliminar usuarios.
-- Cambiar su estado entre Activo e Inactivo.
+- Registrar usuarios administrativos.
+- Consultar todos los usuarios administrativos.
+- Consultar un usuario administrativo por su identificador.
+- Actualizar los datos de un usuario administrativo.
+- Actualizar la contraseña de un usuario administrativo.
+- Cambiar el estado entre Activo e Inactivo.
+- Eliminar usuarios administrativos.
+- Validar campos obligatorios y tipos de datos.
+- Evitar usuarios administrativos duplicados, sin distinguir entre mayúsculas y minúsculas.
+- Validar identificadores con formato incorrecto y usuarios inexistentes.
 
-Las contraseñas se protegen utilizando bcrypt y no se muestran en las respuestas de la API.
+Las operaciones de gestión de usuarios están protegidas mediante autenticación JWT y autorización por rol. Únicamente un usuario con rol Administrador puede acceder a estos endpoints.
+
+Las contraseñas de los usuarios administrativos se protegen utilizando bcrypt y no se muestran en las respuestas de la API.
+
+También se validó que los clientes autenticados no puedan acceder a la gestión de usuarios administrativos y que las solicitudes sin token sean rechazadas.
 
 ## Autenticación
 

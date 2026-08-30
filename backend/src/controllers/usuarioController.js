@@ -1,6 +1,11 @@
 const bcrypt = require('bcrypt');
+const mongoose = require('mongoose');
 
 const Usuario = require('../models/Usuario');
+
+const escaparRegex = (texto) => {
+  return texto.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+};
 
 const registrarUsuario = async (req, res) => {
   try {
@@ -11,24 +16,45 @@ const registrarUsuario = async (req, res) => {
       estado
     } = req.body;
 
-    if (!usuario || !contrasena) {
+    if (
+      typeof usuario !== 'string' ||
+      typeof contrasena !== 'string'
+    ) {
+      return res.status(400).json({
+        success: false,
+        message: 'El usuario y la contraseña deben tener un formato válido'
+      });
+    }
+
+    const usuarioNormalizado = usuario.trim();
+    const contrasenaNormalizada = contrasena.trim();
+
+    if (!usuarioNormalizado || !contrasenaNormalizada) {
       return res.status(400).json({
         success: false,
         message: 'El usuario y la contraseña son obligatorios'
       });
     }
 
-    const usuarioNormalizado = usuario.trim();
-
-    if (usuarioNormalizado === '') {
+    if (rol !== undefined && typeof rol !== 'string') {
       return res.status(400).json({
         success: false,
-        message: 'El usuario no puede estar vacío'
+        message: 'El rol debe tener un formato válido'
+      });
+    }
+
+    if (estado !== undefined && typeof estado !== 'string') {
+      return res.status(400).json({
+        success: false,
+        message: 'El estado debe tener un formato válido'
       });
     }
 
     const usuarioExistente = await Usuario.findOne({
-      usuario: usuarioNormalizado
+      usuario: {
+        $regex: `^${escaparRegex(usuarioNormalizado)}$`,
+        $options: 'i'
+      }
     });
 
     if (usuarioExistente) {
@@ -38,13 +64,16 @@ const registrarUsuario = async (req, res) => {
       });
     }
 
-    const contrasenaCifrada = await bcrypt.hash(contrasena, 10);
+    const contrasenaCifrada = await bcrypt.hash(
+      contrasenaNormalizada,
+      10
+    );
 
     const usuarioCreado = await Usuario.create({
       usuario: usuarioNormalizado,
       contrasena: contrasenaCifrada,
-      rol: rol || 'Administrador',
-      estado: estado || 'Activo'
+      rol: rol !== undefined ? rol.trim() : 'Administrador',
+      estado: estado !== undefined ? estado.trim() : 'Activo'
     });
 
     const usuarioRespuesta = usuarioCreado.toObject();
@@ -59,8 +88,7 @@ const registrarUsuario = async (req, res) => {
     if (error.name === 'ValidationError') {
       return res.status(400).json({
         success: false,
-        message: 'Datos del usuario administrativo inválidos',
-        error: error.message
+        message: 'Datos del usuario administrativo inválidos'
       });
     }
 
@@ -100,6 +128,13 @@ const obtenerUsuario = async (req, res) => {
   try {
     const { id } = req.params;
 
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+      return res.status(400).json({
+        success: false,
+        message: 'El identificador del usuario no es válido'
+      });
+    }
+
     const usuario = await Usuario.findById(id)
       .select('-contrasena');
 
@@ -115,13 +150,6 @@ const obtenerUsuario = async (req, res) => {
       data: usuario
     });
   } catch (error) {
-    if (error.name === 'CastError') {
-      return res.status(400).json({
-        success: false,
-        message: 'El identificador del usuario no es válido'
-      });
-    }
-
     return res.status(500).json({
       success: false,
       message: 'Error al consultar el usuario administrativo'
@@ -133,8 +161,25 @@ const actualizarUsuario = async (req, res) => {
   try {
     const { id } = req.params;
 
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+      return res.status(400).json({
+        success: false,
+        message: 'El identificador del usuario no es válido'
+      });
+    }
+
+    const usuarioActual = await Usuario.findById(id);
+
+    if (!usuarioActual) {
+      return res.status(404).json({
+        success: false,
+        message: 'Usuario administrativo no encontrado'
+      });
+    }
+
     const {
       usuario,
+      contrasena,
       rol,
       estado
     } = req.body;
@@ -142,42 +187,80 @@ const actualizarUsuario = async (req, res) => {
     const datosActualizar = {};
 
     if (usuario !== undefined) {
-      const usuarioNormalizado = usuario.trim();
-
-      if (usuarioNormalizado === '') {
+      if (typeof usuario !== 'string' || !usuario.trim()) {
         return res.status(400).json({
           success: false,
-          message: 'El usuario no puede estar vacío'
+          message: 'El usuario debe tener un formato válido'
+        });
+      }
+
+      const usuarioNormalizado = usuario.trim();
+
+      const usuarioExistente = await Usuario.findOne({
+        _id: { $ne: id },
+        usuario: {
+          $regex: `^${escaparRegex(usuarioNormalizado)}$`,
+          $options: 'i'
+        }
+      });
+
+      if (usuarioExistente) {
+        return res.status(400).json({
+          success: false,
+          message: 'Ya existe un usuario administrativo con ese nombre'
         });
       }
 
       datosActualizar.usuario = usuarioNormalizado;
     }
 
+    if (contrasena !== undefined) {
+      if (
+        typeof contrasena !== 'string' ||
+        !contrasena.trim()
+      ) {
+        return res.status(400).json({
+          success: false,
+          message: 'La contraseña debe tener un formato válido'
+        });
+      }
+
+      datosActualizar.contrasena = await bcrypt.hash(
+        contrasena.trim(),
+        10
+      );
+    }
+
     if (rol !== undefined) {
-      datosActualizar.rol = rol;
+      if (typeof rol !== 'string') {
+        return res.status(400).json({
+          success: false,
+          message: 'El rol debe tener un formato válido'
+        });
+      }
+
+      datosActualizar.rol = rol.trim();
     }
 
     if (estado !== undefined) {
-      datosActualizar.estado = estado;
+      if (typeof estado !== 'string') {
+        return res.status(400).json({
+          success: false,
+          message: 'El estado debe tener un formato válido'
+        });
+      }
+
+      datosActualizar.estado = estado.trim();
     }
 
-    const usuarioActualizado =
-      await Usuario.findByIdAndUpdate(
-        id,
-        datosActualizar,
-        {
-          new: true,
-          runValidators: true
-        }
-      ).select('-contrasena');
-
-    if (!usuarioActualizado) {
-      return res.status(404).json({
-        success: false,
-        message: 'Usuario administrativo no encontrado'
-      });
-    }
+    const usuarioActualizado = await Usuario.findByIdAndUpdate(
+      id,
+      datosActualizar,
+      {
+        new: true,
+        runValidators: true
+      }
+    ).select('-contrasena');
 
     return res.status(200).json({
       success: true,
@@ -185,18 +268,10 @@ const actualizarUsuario = async (req, res) => {
       data: usuarioActualizado
     });
   } catch (error) {
-    if (error.name === 'CastError') {
-      return res.status(400).json({
-        success: false,
-        message: 'El identificador del usuario no es válido'
-      });
-    }
-
     if (error.name === 'ValidationError') {
       return res.status(400).json({
         success: false,
-        message: 'Datos del usuario administrativo inválidos',
-        error: error.message
+        message: 'Datos del usuario administrativo inválidos'
       });
     }
 
@@ -218,7 +293,14 @@ const eliminarUsuario = async (req, res) => {
   try {
     const { id } = req.params;
 
-    const usuario = await Usuario.findByIdAndDelete(id);
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+      return res.status(400).json({
+        success: false,
+        message: 'El identificador del usuario no es válido'
+      });
+    }
+
+    const usuario = await Usuario.findById(id);
 
     if (!usuario) {
       return res.status(404).json({
@@ -227,18 +309,13 @@ const eliminarUsuario = async (req, res) => {
       });
     }
 
+    await Usuario.findByIdAndDelete(id);
+
     return res.status(200).json({
       success: true,
       message: 'Usuario administrativo eliminado correctamente'
     });
   } catch (error) {
-    if (error.name === 'CastError') {
-      return res.status(400).json({
-        success: false,
-        message: 'El identificador del usuario no es válido'
-      });
-    }
-
     return res.status(500).json({
       success: false,
       message: 'Error al eliminar el usuario administrativo'
