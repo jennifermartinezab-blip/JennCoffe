@@ -7,14 +7,45 @@ const {
   eliminarCliente
 } = require('../controllers/clienteController');
 
+const {
+  verificarToken,
+  soloAdministrador
+} = require('../middlewares/authMiddleware');
+
 const router = express.Router();
 
-router.post('/', registrarCliente);
+// RF10 - Registrar cliente
+// Ruta pública para permitir que el cliente cree su cuenta
+router.post(
+  '/',
+  registrarCliente
+);
 
-router.get('/', listarClientes);
+// RF11 - Consultar clientes
+// Solo administrador
+router.get(
+  '/',
+  verificarToken,
+  soloAdministrador,
+  listarClientes
+);
 
-router.put('/:id', actualizarCliente);
+// RF12 - Actualizar cliente
+// Solo administrador
+router.put(
+  '/:id',
+  verificarToken,
+  soloAdministrador,
+  actualizarCliente
+);
 
-router.delete('/:id', eliminarCliente);
+// RF13 - Eliminar cliente
+// Solo administrador
+router.delete(
+  '/:id',
+  verificarToken,
+  soloAdministrador,
+  eliminarCliente
+);
 
 module.exports = router;

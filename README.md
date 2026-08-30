@@ -98,7 +98,7 @@ Las peticiones fueron probadas con Postman y los datos se verificaron en MongoDB
 
 ## Clientes
 
-Se implementó el CRUD de clientes mediante la API REST.
+Se implementó y validó el módulo de clientes mediante la API REST.
 
 Actualmente permite:
 
@@ -106,19 +106,24 @@ Actualmente permite:
 - Consultar clientes.
 - Actualizar los datos de los clientes.
 - Cambiar el estado del cliente entre Activo e Inactivo.
-- Eliminar clientes.
+- Eliminar clientes sin pedidos asociados.
+- Impedir la eliminación de clientes que tengan pedidos históricos.
 - Validar documentos duplicados.
 - Validar correos duplicados.
 - Validar los campos obligatorios.
 - Validar los tipos de documento permitidos.
 - Validar los estados permitidos.
 - Validar identificadores incorrectos.
+- Validar clientes inexistentes.
+- Restringir la consulta, actualización y eliminación de clientes únicamente al administrador.
 
 Los clientes contienen los campos documento, tipo de documento, nombre, apellidos, correo, teléfono, dirección, contraseña y estado.
 
 La contraseña se cifra utilizando bcrypt antes de almacenarse en MongoDB y no se devuelve en las respuestas de la API.
 
-Las peticiones fueron probadas con Postman y los datos se verificaron en MongoDB Compass.
+La actualización de clientes no permite modificar ni consultar la contraseña desde las operaciones administrativas.
+
+Se realizaron pruebas positivas y negativas con Postman para los requisitos RF10, RF11, RF12 y RF13. También se verificaron los datos en MongoDB Compass.
 
 ## Pedidos
 

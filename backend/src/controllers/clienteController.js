@@ -1,5 +1,8 @@
 const bcrypt = require('bcrypt');
+const mongoose = require('mongoose');
+
 const Cliente = require('../models/Cliente');
+const Pedido = require('../models/Pedido');
 
 const registrarCliente = async (req, res) => {
   try {
@@ -15,14 +18,39 @@ const registrarCliente = async (req, res) => {
     } = req.body;
 
     if (
-      !documento ||
-      !tipoDocumento ||
-      !nombre ||
-      !apellidos ||
-      !correo ||
-      !telefono ||
-      !direccion ||
-      !contrasena
+      typeof documento !== 'string' ||
+      typeof tipoDocumento !== 'string' ||
+      typeof nombre !== 'string' ||
+      typeof apellidos !== 'string' ||
+      typeof correo !== 'string' ||
+      typeof telefono !== 'string' ||
+      typeof direccion !== 'string' ||
+      typeof contrasena !== 'string'
+    ) {
+      return res.status(400).json({
+        success: false,
+        message: 'Los datos del cliente deben tener un formato válido'
+      });
+    }
+
+    const documentoLimpio = documento.trim();
+    const tipoDocumentoLimpio = tipoDocumento.trim();
+    const nombreLimpio = nombre.trim();
+    const apellidosLimpios = apellidos.trim();
+    const correoLimpio = correo.trim().toLowerCase();
+    const telefonoLimpio = telefono.trim();
+    const direccionLimpia = direccion.trim();
+    const contrasenaLimpia = contrasena.trim();
+
+    if (
+      !documentoLimpio ||
+      !tipoDocumentoLimpio ||
+      !nombreLimpio ||
+      !apellidosLimpios ||
+      !correoLimpio ||
+      !telefonoLimpio ||
+      !direccionLimpia ||
+      !contrasenaLimpia
     ) {
       return res.status(400).json({
         success: false,
@@ -31,7 +59,7 @@ const registrarCliente = async (req, res) => {
     }
 
     const clientePorDocumento = await Cliente.findOne({
-      documento: documento.trim()
+      documento: documentoLimpio
     });
 
     if (clientePorDocumento) {
@@ -42,7 +70,7 @@ const registrarCliente = async (req, res) => {
     }
 
     const clientePorCorreo = await Cliente.findOne({
-      correo: correo.trim().toLowerCase()
+      correo: correoLimpio
     });
 
     if (clientePorCorreo) {
@@ -52,16 +80,16 @@ const registrarCliente = async (req, res) => {
       });
     }
 
-    const contrasenaCifrada = await bcrypt.hash(contrasena, 10);
+    const contrasenaCifrada = await bcrypt.hash(contrasenaLimpia, 10);
 
     const cliente = await Cliente.create({
-      documento: documento.trim(),
-      tipoDocumento,
-      nombre: nombre.trim(),
-      apellidos: apellidos.trim(),
-      correo: correo.trim().toLowerCase(),
-      telefono: telefono.trim(),
-      direccion: direccion.trim(),
+      documento: documentoLimpio,
+      tipoDocumento: tipoDocumentoLimpio,
+      nombre: nombreLimpio,
+      apellidos: apellidosLimpios,
+      correo: correoLimpio,
+      telefono: telefonoLimpio,
+      direccion: direccionLimpia,
       contrasena: contrasenaCifrada
     });
 
@@ -77,8 +105,7 @@ const registrarCliente = async (req, res) => {
     if (error.name === 'ValidationError') {
       return res.status(400).json({
         success: false,
-        message: 'Datos del cliente inválidos',
-        error: error.message
+        message: 'Datos del cliente inválidos'
       });
     }
 
@@ -116,6 +143,22 @@ const actualizarCliente = async (req, res) => {
   try {
     const { id } = req.params;
 
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+      return res.status(400).json({
+        success: false,
+        message: 'El identificador del cliente no es válido'
+      });
+    }
+
+    const clienteActual = await Cliente.findById(id);
+
+    if (!clienteActual) {
+      return res.status(404).json({
+        success: false,
+        message: 'Cliente no encontrado'
+      });
+    }
+
     const {
       documento,
       tipoDocumento,
@@ -130,35 +173,119 @@ const actualizarCliente = async (req, res) => {
     const datosActualizar = {};
 
     if (documento !== undefined) {
-      datosActualizar.documento = documento.trim();
+      if (typeof documento !== 'string' || !documento.trim()) {
+        return res.status(400).json({
+          success: false,
+          message: 'El documento debe tener un formato válido'
+        });
+      }
+
+      const documentoLimpio = documento.trim();
+
+      const clientePorDocumento = await Cliente.findOne({
+        documento: documentoLimpio,
+        _id: { $ne: id }
+      });
+
+      if (clientePorDocumento) {
+        return res.status(400).json({
+          success: false,
+          message: 'Ya existe un cliente con ese documento'
+        });
+      }
+
+      datosActualizar.documento = documentoLimpio;
     }
 
     if (tipoDocumento !== undefined) {
-      datosActualizar.tipoDocumento = tipoDocumento;
+      if (typeof tipoDocumento !== 'string' || !tipoDocumento.trim()) {
+        return res.status(400).json({
+          success: false,
+          message: 'El tipo de documento debe tener un formato válido'
+        });
+      }
+
+      datosActualizar.tipoDocumento = tipoDocumento.trim();
     }
 
     if (nombre !== undefined) {
+      if (typeof nombre !== 'string' || !nombre.trim()) {
+        return res.status(400).json({
+          success: false,
+          message: 'El nombre debe tener un formato válido'
+        });
+      }
+
       datosActualizar.nombre = nombre.trim();
     }
 
     if (apellidos !== undefined) {
+      if (typeof apellidos !== 'string' || !apellidos.trim()) {
+        return res.status(400).json({
+          success: false,
+          message: 'Los apellidos deben tener un formato válido'
+        });
+      }
+
       datosActualizar.apellidos = apellidos.trim();
     }
 
     if (correo !== undefined) {
-      datosActualizar.correo = correo.trim().toLowerCase();
+      if (typeof correo !== 'string' || !correo.trim()) {
+        return res.status(400).json({
+          success: false,
+          message: 'El correo debe tener un formato válido'
+        });
+      }
+
+      const correoLimpio = correo.trim().toLowerCase();
+
+      const clientePorCorreo = await Cliente.findOne({
+        correo: correoLimpio,
+        _id: { $ne: id }
+      });
+
+      if (clientePorCorreo) {
+        return res.status(400).json({
+          success: false,
+          message: 'Ya existe un cliente con ese correo'
+        });
+      }
+
+      datosActualizar.correo = correoLimpio;
     }
 
     if (telefono !== undefined) {
+      if (typeof telefono !== 'string' || !telefono.trim()) {
+        return res.status(400).json({
+          success: false,
+          message: 'El teléfono debe tener un formato válido'
+        });
+      }
+
       datosActualizar.telefono = telefono.trim();
     }
 
     if (direccion !== undefined) {
+      if (typeof direccion !== 'string' || !direccion.trim()) {
+        return res.status(400).json({
+          success: false,
+          message: 'La dirección debe tener un formato válido'
+        });
+      }
+
       datosActualizar.direccion = direccion.trim();
     }
 
     if (estado !== undefined) {
-      datosActualizar.estado = estado;
+      if (typeof estado !== 'string') {
+        return res.status(400).json({
+          success: false,
+          message: 'El estado debe tener un formato válido'
+        });
+      }
+
+      datosActualizar.estado = estado.trim();
     }
 
     const cliente = await Cliente.findByIdAndUpdate(
@@ -170,31 +297,16 @@ const actualizarCliente = async (req, res) => {
       }
     ).select('-contrasena');
 
-    if (!cliente) {
-      return res.status(404).json({
-        success: false,
-        message: 'Cliente no encontrado'
-      });
-    }
-
     return res.status(200).json({
       success: true,
       message: 'Cliente actualizado correctamente',
       data: cliente
     });
   } catch (error) {
-    if (error.name === 'CastError') {
-      return res.status(400).json({
-        success: false,
-        message: 'El identificador del cliente no es válido'
-      });
-    }
-
     if (error.name === 'ValidationError') {
       return res.status(400).json({
         success: false,
-        message: 'Datos del cliente inválidos',
-        error: error.message
+        message: 'Datos del cliente inválidos'
       });
     }
 
@@ -216,7 +328,14 @@ const eliminarCliente = async (req, res) => {
   try {
     const { id } = req.params;
 
-    const cliente = await Cliente.findByIdAndDelete(id);
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+      return res.status(400).json({
+        success: false,
+        message: 'El identificador del cliente no es válido'
+      });
+    }
+
+    const cliente = await Cliente.findById(id);
 
     if (!cliente) {
       return res.status(404).json({
@@ -225,18 +344,24 @@ const eliminarCliente = async (req, res) => {
       });
     }
 
+    const tienePedidos = await Pedido.exists({
+      cliente: id
+    });
+
+    if (tienePedidos) {
+      return res.status(409).json({
+        success: false,
+        message: 'No se puede eliminar el cliente porque tiene pedidos asociados'
+      });
+    }
+
+    await Cliente.findByIdAndDelete(id);
+
     return res.status(200).json({
       success: true,
       message: 'Cliente eliminado correctamente'
     });
   } catch (error) {
-    if (error.name === 'CastError') {
-      return res.status(400).json({
-        success: false,
-        message: 'El identificador del cliente no es válido'
-      });
-    }
-
     return res.status(500).json({
       success: false,
       message: 'Error al eliminar el cliente'
