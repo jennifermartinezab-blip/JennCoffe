@@ -17,9 +17,14 @@
 }
 
 .category-list__link {
+  padding: 0;
+  border: 0;
+  background: transparent;
   color: #ed4f9a;
+  font-family: inherit;
   font-size: 0.9rem;
   font-weight: 600;
+  cursor: pointer;
 }
 
 .category-list__grid {
@@ -31,13 +36,23 @@
 .category-list__item {
   min-height: 90px;
   padding: 12px 8px;
+
   border: 1px solid #f1dbe6;
   border-radius: 18px;
   background: #fde7f0;
+
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
+
+  font-family: inherit;
+  cursor: pointer;
+}
+
+.category-list__item--active {
+  border-color: #ed4f9a;
+  background: #fbd5e7;
 }
 
 .category-list__icon {

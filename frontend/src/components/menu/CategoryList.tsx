@@ -4,17 +4,29 @@ import './CategoryList.css';
 
 interface CategoryListProps {
   categorias: Categoria[];
+  categoriaSeleccionada: string | null;
+  onSeleccionarCategoria: (categoriaId: string) => void;
+  onVerTodas: () => void;
 }
 
-function CategoryList({ categorias }: CategoryListProps) {
+function CategoryList({
+  categorias,
+  categoriaSeleccionada,
+  onSeleccionarCategoria,
+  onVerTodas
+}: CategoryListProps) {
   return (
     <section className="category-list">
       <div className="category-list__header">
         <h2 className="category-list__title">Categorías</h2>
 
-        <span className="category-list__link">
+        <button
+          type="button"
+          className="category-list__link"
+          onClick={onVerTodas}
+        >
           Ver todas
-        </span>
+        </button>
       </div>
 
       {categorias.length === 0 ? (
@@ -24,18 +36,28 @@ function CategoryList({ categorias }: CategoryListProps) {
       ) : (
         <div className="category-list__grid">
           {categorias.map((categoria) => (
-            <article
+            <button
               key={categoria._id}
-              className="category-list__item"
+              type="button"
+              className={`category-list__item ${
+                categoriaSeleccionada === categoria._id
+                  ? 'category-list__item--active'
+                  : ''
+              }`}
+              onClick={() => onSeleccionarCategoria(categoria._id)}
+              aria-pressed={categoriaSeleccionada === categoria._id}
             >
-              <span className="category-list__icon">
+              <span
+                className="category-list__icon"
+                aria-hidden="true"
+              >
                 ☕
               </span>
 
               <span className="category-list__name">
                 {categoria.nombre}
               </span>
-            </article>
+            </button>
           ))}
         </div>
       )}

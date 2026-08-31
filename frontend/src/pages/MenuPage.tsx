@@ -1,11 +1,17 @@
 import { useEffect, useState } from 'react';
 import './MenuPage.css';
+
 import MenuHeader from '../components/menu/MenuHeader';
 import HeroBanner from '../components/menu/HeroBanner';
 import CategoryList from '../components/menu/CategoryList';
 import ProductGrid from '../components/menu/ProductGrid';
 import BottomNavigation from '../components/menu/BottomNavigation';
-import { obtenerCategorias, obtenerProductos } from '../services/menuService';
+
+import {
+  obtenerCategorias,
+  obtenerProductos,
+  obtenerProductosPorCategoria
+} from '../services/menuService';
 
 import type { Categoria } from '../types/Categoria';
 import type { Producto } from '../types/Producto';
@@ -13,6 +19,10 @@ import type { Producto } from '../types/Producto';
 function MenuPage() {
   const [categorias, setCategorias] = useState<Categoria[]>([]);
   const [productos, setProductos] = useState<Producto[]>([]);
+  const [categoriaSeleccionada, setCategoriaSeleccionada] = useState<
+    string | null
+  >(null);
+
   const [cargando, setCargando] = useState(true);
   const [error, setError] = useState('');
 
@@ -40,6 +50,37 @@ function MenuPage() {
     cargarMenu();
   }, []);
 
+  const seleccionarCategoria = async (categoriaId: string) => {
+    try {
+      setError('');
+
+      const productosObtenidos =
+        await obtenerProductosPorCategoria(categoriaId);
+
+      setCategoriaSeleccionada(categoriaId);
+      setProductos(productosObtenidos);
+    } catch (error) {
+      console.error('Error al filtrar productos por categoría:', error);
+      setError(
+        'No fue posible consultar los productos de esta categoría.'
+      );
+    }
+  };
+
+  const verTodas = async () => {
+    try {
+      setError('');
+
+      const productosObtenidos = await obtenerProductos();
+
+      setCategoriaSeleccionada(null);
+      setProductos(productosObtenidos);
+    } catch (error) {
+      console.error('Error al consultar todos los productos:', error);
+      setError('No fue posible consultar todos los productos.');
+    }
+  };
+
   if (cargando) {
     return (
       <main>
@@ -64,7 +105,12 @@ function MenuPage() {
 
       <HeroBanner />
 
-      <CategoryList categorias={categorias} />
+      <CategoryList
+        categorias={categorias}
+        categoriaSeleccionada={categoriaSeleccionada}
+        onSeleccionarCategoria={seleccionarCategoria}
+        onVerTodas={verTodas}
+      />
 
       <ProductGrid productos={productos} />
 

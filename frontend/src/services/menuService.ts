@@ -15,3 +15,18 @@ export const obtenerCategorias = async (): Promise<Categoria[]> => {
 
   return respuesta.data.data;
 };
+
+export const obtenerProductosPorCategoria = async (
+  categoriaId: string
+): Promise<Producto[]> => {
+  const respuesta = await api.get<ApiResponse<Producto[]>>(
+    '/productos/buscar',
+    {
+      params: {
+        categoria: categoriaId
+      }
+    }
+  );
+
+  return respuesta.data.data;
+};

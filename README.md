@@ -291,4 +291,14 @@ También se verificó que la consola del navegador no presentara errores durante
 El frontend fue compilado correctamente para producción mediante:
 
 ```bash
-npm run build
+npm run buildcls
+```
+### RF17 - Filtrar productos por categoría
+
+Se agregó la opción para filtrar los productos según la categoría seleccionada.
+
+- Al seleccionar una categoría se muestran sus productos.
+- Si la categoría no tiene productos, se muestra un mensaje.
+- La categoría seleccionada queda resaltada.
+- La opción **Ver todas** vuelve a mostrar todos los productos.
+- Se realizaron pruebas y funciona correctamente sin errores.
