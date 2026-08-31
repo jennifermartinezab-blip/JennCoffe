@@ -10,7 +10,9 @@ El proyecto se encuentra en desarrollo.
 
 Actualmente se encuentra implementada la estructura principal del backend utilizando Node.js, Express y MongoDB. También se han desarrollado y probado los módulos de categorías, productos, clientes, pedidos, usuarios administrativos y autenticación.
 
-Las funcionalidades de la API REST se están probando mediante Postman y los datos almacenados se verifican mediante MongoDB Compass.
+Se inició el desarrollo del frontend utilizando React, TypeScript y Vite. El frontend ya consume información real de la API REST para mostrar el menú de productos y categorías.
+
+Las funcionalidades de la API REST se prueban mediante Postman y los datos almacenados se verifican mediante MongoDB Compass.
 
 ## Módulos del sistema
 
@@ -37,6 +39,26 @@ JennCoffee/
 │   ├── package-lock.json
 │   └── server.js
 ├── frontend/
+│   ├── public/
+│   │   └── images/
+│   │       ├── banners/
+│   │       ├── branding/
+│   │       └── products/
+│   ├── src/
+│   │   ├── assets/
+│   │   ├── components/
+│   │   │   └── menu/
+│   │   ├── hooks/
+│   │   ├── layouts/
+│   │   ├── pages/
+│   │   ├── services/
+│   │   ├── types/
+│   │   ├── App.tsx
+│   │   ├── index.css
+│   │   └── main.tsx
+│   ├── package.json
+│   ├── package-lock.json
+│   └── vite.config.ts
 ├── .gitignore
 └── README.md
 ```
@@ -233,3 +255,40 @@ Se realizaron pruebas de:
 - Intento de logout sin token.
 
 Las pruebas fueron realizadas mediante Postman.
+
+## Frontend
+
+Se inició el desarrollo del frontend utilizando React, TypeScript y Vite.
+
+El frontend se comunica con la API REST del backend mediante Axios. El backend permite las solicitudes provenientes del servidor local de desarrollo del frontend mediante la configuración de CORS.
+
+La interfaz mantiene como referencia visual los mockups definidos para JennCoffee y utiliza una identidad gráfica basada en tonos pastel.
+
+### Consulta del menú - RF16
+
+Se implementó la primera pantalla funcional del menú correspondiente al requisito RF16.
+
+Actualmente permite:
+
+- Consultar las categorías registradas mediante la API REST.
+- Consultar los productos registrados mediante la API REST.
+- Mostrar información real almacenada en MongoDB.
+- Mostrar nombre, descripción, precio, imagen y disponibilidad del producto.
+- Mostrar las categorías disponibles.
+- Mostrar un estado de carga mientras se obtiene la información.
+- Mostrar un mensaje de error cuando no es posible cargar el menú.
+- Manejar visualmente el caso en que no existan categorías o productos.
+- Adaptar la interfaz a diferentes tamaños de pantalla.
+
+La pantalla del menú se encuentra organizada mediante componentes independientes para el encabezado, banner principal, categorías, cuadrícula de productos, tarjeta de producto y navegación inferior.
+
+La navegación inferior, los iconos, la búsqueda y otras acciones visibles se mantienen por el momento como elementos visuales. Su funcionalidad se incorporará en los requisitos correspondientes.
+
+El diseño responsive fue verificado en vista móvil de 375 px y en escritorio.
+
+También se verificó que la consola del navegador no presentara errores durante la ejecución del menú.
+
+El frontend fue compilado correctamente para producción mediante:
+
+```bash
+npm run build
