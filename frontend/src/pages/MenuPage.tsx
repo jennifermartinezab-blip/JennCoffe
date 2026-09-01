@@ -21,12 +21,14 @@ interface MenuPageProps {
   carrito: CarritoItem[];
   onAgregarAlCarrito: (producto: Producto) => void;
   onAbrirCarrito: () => void;
+  onCerrarSesion: () => void;
 }
 
 function MenuPage({
   carrito,
   onAgregarAlCarrito,
-  onAbrirCarrito
+  onAbrirCarrito,
+  onCerrarSesion
 }: MenuPageProps) {
   const [categorias, setCategorias] = useState<Categoria[]>([]);
   const [productos, setProductos] = useState<Producto[]>([]);
@@ -112,7 +114,9 @@ function MenuPage({
 
   return (
     <main className="menu-page">
-      <MenuHeader />
+      <MenuHeader
+        onCerrarSesion={onCerrarSesion}
+      />
 
       <HeroBanner />
 

@@ -348,4 +348,27 @@ Se agregó el cálculo automático de subtotales y del total del carrito.
 - Al eliminar productos, el total se recalcula automáticamente.
 - El total solo se muestra cuando existen productos en el carrito.
 - Se realizaron pruebas funcionales con varios productos y cantidades.
-- La compilación del frontend se realizó correctamente.
+- La compilación del frontend se realizó correctamente.cd
+### RF14 - Inicio de sesión del cliente
+
+Se implementó el inicio de sesión del cliente en el frontend.
+
+- El cliente inicia sesión con correo y contraseña.
+- El frontend consume el endpoint de autenticación del backend.
+- Al iniciar sesión correctamente se recibe y almacena un token JWT.
+- El token se agrega automáticamente a las peticiones protegidas.
+- Las credenciales inválidas muestran un mensaje de error.
+- La sesión permanece activa mientras el token sea válido.
+- Se agregó una pantalla de login con el diseño visual de JennCoffee.
+
+### RF15 - Cerrar sesión
+
+Se implementó el cierre de sesión del cliente en el frontend.
+
+- Se agregó la opción Cerrar sesión en el encabezado del menú.
+- El frontend consume el endpoint de logout del backend.
+- Al cerrar sesión se elimina el token almacenado.
+- Se limpia el carrito temporal del cliente.
+- El usuario regresa automáticamente a la pantalla de inicio de sesión.
+- Después de cerrar sesión, la aplicación permanece en el login al recargar.
+- Se realizaron pruebas funcionales y de compilación correctamente.

@@ -1,6 +1,12 @@
 import './MenuHeader.css';
 
-function MenuHeader() {
+interface MenuHeaderProps {
+  onCerrarSesion: () => void;
+}
+
+function MenuHeader({
+  onCerrarSesion
+}: MenuHeaderProps) {
   return (
     <header className="menu-header">
       <div className="menu-header__top">
@@ -18,6 +24,14 @@ function MenuHeader() {
           <span aria-hidden="true">⌕</span>
           <span aria-hidden="true">♡</span>
           <span aria-hidden="true">🛒</span>
+
+          <button
+            type="button"
+            className="menu-header__logout-button"
+            onClick={onCerrarSesion}
+          >
+            Cerrar sesión
+          </button>
         </div>
       </div>
 

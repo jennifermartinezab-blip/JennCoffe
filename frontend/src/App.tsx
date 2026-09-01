@@ -1,7 +1,14 @@
 import { useState } from 'react';
 
+import LoginPage from './pages/LoginPage';
 import MenuPage from './pages/MenuPage';
 import CarritoPage from './pages/CarritoPage';
+
+import {
+  eliminarToken,
+  logout,
+  obtenerToken
+} from './services/authService';
 
 import type { Producto } from './types/Producto';
 import type { CarritoItem } from './types/CarritoItem';
@@ -11,6 +18,10 @@ type VistaActual = 'menu' | 'carrito';
 function App() {
   const [carrito, setCarrito] = useState<CarritoItem[]>([]);
   const [vistaActual, setVistaActual] = useState<VistaActual>('menu');
+
+  const [autenticado, setAutenticado] = useState(
+    Boolean(obtenerToken())
+  );
 
   const agregarAlCarrito = (producto: Producto) => {
     if (!producto.disponibilidad || producto.estado !== 'Activo') {
@@ -60,7 +71,8 @@ function App() {
   const disminuirCantidad = (productoId: string) => {
     setCarrito((carritoActual) =>
       carritoActual.map((item) =>
-        item.producto._id === productoId && item.cantidad > 1
+        item.producto._id === productoId &&
+        item.cantidad > 1
           ? {
               ...item,
               cantidad: item.cantidad - 1
@@ -77,6 +89,35 @@ function App() {
   const volverAlMenu = () => {
     setVistaActual('menu');
   };
+
+  const loginCorrecto = () => {
+    setAutenticado(true);
+    setVistaActual('menu');
+  };
+
+  const cerrarSesion = async () => {
+    try {
+      await logout();
+    } catch (error) {
+      console.error(
+        'No fue posible completar el logout en el servidor:',
+        error
+      );
+    } finally {
+      eliminarToken();
+      setCarrito([]);
+      setVistaActual('menu');
+      setAutenticado(false);
+    }
+  };
+
+  if (!autenticado) {
+    return (
+      <LoginPage
+        onLoginCorrecto={loginCorrecto}
+      />
+    );
+  }
 
   if (vistaActual === 'carrito') {
     return (
@@ -95,6 +136,7 @@ function App() {
       carrito={carrito}
       onAgregarAlCarrito={agregarAlCarrito}
       onAbrirCarrito={abrirCarrito}
+      onCerrarSesion={cerrarSesion}
     />
   );
 }

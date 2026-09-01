@@ -13,6 +13,7 @@
 
 .menu-header__menu {
   justify-self: start;
+
   color: #4c3747;
   font-size: 1.35rem;
 }
@@ -25,17 +26,45 @@
 
 .menu-header__brand-text {
   color: #ed4f9a;
+
   font-size: 1.3rem;
   font-weight: 700;
 }
 
 .menu-header__actions {
   justify-self: end;
+
   display: flex;
   align-items: center;
   gap: 18px;
+
   color: #4c3747;
   font-size: 1.25rem;
+}
+
+.menu-header__logout-button {
+  padding: 8px 12px;
+
+  border: 1px solid #f1dbe6;
+  border-radius: 10px;
+
+  background: #ffffff;
+  color: #d94682;
+
+  font-size: 0.82rem;
+  font-weight: 700;
+
+  cursor: pointer;
+}
+
+.menu-header__logout-button:hover {
+  background: #fff0f6;
+  border-color: #ed4f9a;
+}
+
+.menu-header__logout-button:focus-visible {
+  outline: 2px solid #ed4f9a;
+  outline-offset: 3px;
 }
 
 .menu-header__search {
@@ -48,8 +77,10 @@
   gap: 10px;
 
   background: #ffffff;
+
   border: 1px solid #f1dbe6;
   border-radius: 14px;
+
   color: #765f70;
 }
 
@@ -59,14 +90,31 @@
 
 @media (max-width: 768px) {
   .menu-header__top {
+    grid-template-columns: auto 1fr;
     gap: 10px;
   }
 
+  .menu-header__brand {
+    justify-content: flex-start;
+  }
+
   .menu-header__actions {
+    grid-column: 1 / -1;
+
+    width: 100%;
+
+    justify-content: flex-end;
+    flex-wrap: wrap;
+
     gap: 12px;
   }
 
   .menu-header__brand-text {
     font-size: 1.1rem;
+  }
+
+  .menu-header__logout-button {
+    font-size: 0.78rem;
+    padding: 7px 10px;
   }
 }
