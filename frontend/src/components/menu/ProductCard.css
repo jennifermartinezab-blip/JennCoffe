@@ -66,3 +66,23 @@
   color: #9a4d61;
   background: #fde7ed;
 }
+
+.product-card__add-button {
+  width: 100%;
+  margin-top: 16px;
+  padding: 11px 16px;
+  border: 0;
+  border-radius: 14px;
+  background: #ed4f9a;
+  color: #ffffff;
+  font-family: inherit;
+  font-size: 0.95rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.product-card__add-button:disabled {
+  background: #e8d8e0;
+  color: #9b8792;
+  cursor: not-allowed;
+}

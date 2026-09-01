@@ -302,3 +302,13 @@ Se agregó la opción para filtrar los productos según la categoría selecciona
 - La categoría seleccionada queda resaltada.
 - La opción **Ver todas** vuelve a mostrar todos los productos.
 - Se realizaron pruebas y funciona correctamente sin errores.
+### RF18 - Agregar productos al carrito
+
+Se agregó la opción para añadir productos disponibles al carrito.
+
+- Los productos disponibles se pueden agregar desde el menú.
+- Los productos no disponibles no se pueden agregar.
+- El carrito guarda temporalmente los productos en el frontend.
+- Se muestra un contador en el icono del carrito.
+- El mismo producto no se duplica al agregarlo nuevamente.
+- Se realizaron pruebas y funciona correctamente sin errores.

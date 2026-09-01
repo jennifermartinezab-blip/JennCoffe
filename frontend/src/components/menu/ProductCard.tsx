@@ -4,9 +4,16 @@ import './ProductCard.css';
 
 interface ProductCardProps {
   producto: Producto;
+  onAgregar: (producto: Producto) => void;
 }
 
-function ProductCard({ producto }: ProductCardProps) {
+function ProductCard({
+  producto,
+  onAgregar
+}: ProductCardProps) {
+  const sePuedeAgregar =
+    producto.disponibilidad && producto.estado === 'Activo';
+
   return (
     <article className="product-card">
       <div className="product-card__image-container">
@@ -39,6 +46,15 @@ function ProductCard({ producto }: ProductCardProps) {
         >
           {producto.disponibilidad ? 'Disponible' : 'No disponible'}
         </span>
+
+        <button
+          type="button"
+          className="product-card__add-button"
+          disabled={!sePuedeAgregar}
+          onClick={() => onAgregar(producto)}
+        >
+          {sePuedeAgregar ? 'Agregar' : 'No disponible'}
+        </button>
       </div>
     </article>
   );

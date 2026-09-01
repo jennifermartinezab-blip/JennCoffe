@@ -6,9 +6,13 @@ import './ProductGrid.css';
 
 interface ProductGridProps {
   productos: Producto[];
+  onAgregar: (producto: Producto) => void;
 }
 
-function ProductGrid({ productos }: ProductGridProps) {
+function ProductGrid({
+  productos,
+  onAgregar
+}: ProductGridProps) {
   return (
     <section className="product-grid-section">
       <div className="product-grid-section__header">
@@ -31,6 +35,7 @@ function ProductGrid({ productos }: ProductGridProps) {
             <ProductCard
               key={producto._id}
               producto={producto}
+              onAgregar={onAgregar}
             />
           ))}
         </div>

@@ -1,6 +1,12 @@
 import './BottomNavigation.css';
 
-function BottomNavigation() {
+interface BottomNavigationProps {
+  cantidadCarrito: number;
+}
+
+function BottomNavigation({
+  cantidadCarrito
+}: BottomNavigationProps) {
   return (
     <nav
       className="bottom-navigation"
@@ -30,6 +36,15 @@ function BottomNavigation() {
         <span className="bottom-navigation__icon" aria-hidden="true">
           🛒
         </span>
+
+        {cantidadCarrito > 0 && (
+          <span
+            className="bottom-navigation__cart-count"
+            aria-label={`${cantidadCarrito} productos en el carrito`}
+          >
+            {cantidadCarrito}
+          </span>
+        )}
 
         <span className="bottom-navigation__label">
           Carrito

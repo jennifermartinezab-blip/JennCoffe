@@ -15,6 +15,7 @@ import {
 
 import type { Categoria } from '../types/Categoria';
 import type { Producto } from '../types/Producto';
+import type { CarritoItem } from '../types/CarritoItem';
 
 function MenuPage() {
   const [categorias, setCategorias] = useState<Categoria[]>([]);
@@ -22,6 +23,8 @@ function MenuPage() {
   const [categoriaSeleccionada, setCategoriaSeleccionada] = useState<
     string | null
   >(null);
+
+  const [carrito, setCarrito] = useState<CarritoItem[]>([]);
 
   const [cargando, setCargando] = useState(true);
   const [error, setError] = useState('');
@@ -81,6 +84,30 @@ function MenuPage() {
     }
   };
 
+  const agregarAlCarrito = (producto: Producto) => {
+    if (!producto.disponibilidad || producto.estado !== 'Activo') {
+      return;
+    }
+
+    setCarrito((carritoActual) => {
+      const productoYaAgregado = carritoActual.some(
+        (item) => item.producto._id === producto._id
+      );
+
+      if (productoYaAgregado) {
+        return carritoActual;
+      }
+
+      return [
+        ...carritoActual,
+        {
+          producto,
+          cantidad: 1
+        }
+      ];
+    });
+  };
+
   if (cargando) {
     return (
       <main>
@@ -112,9 +139,12 @@ function MenuPage() {
         onVerTodas={verTodas}
       />
 
-      <ProductGrid productos={productos} />
+      <ProductGrid
+        productos={productos}
+        onAgregar={agregarAlCarrito}
+      />
 
-      <BottomNavigation />
+      <BottomNavigation cantidadCarrito={carrito.length} />
     </main>
   );
 }
