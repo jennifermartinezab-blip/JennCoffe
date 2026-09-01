@@ -13,7 +13,6 @@
   display: flex;
   align-items: center;
   gap: 14px;
-
   margin-bottom: 28px;
 }
 
@@ -109,7 +108,7 @@
 }
 
 .carrito-item__price {
-  margin: 0 0 8px;
+  margin: 0 0 12px;
 
   color: #ed4f9a;
 
@@ -117,12 +116,64 @@
   font-weight: 700;
 }
 
-.carrito-item__quantity {
-  margin: 0;
+.carrito-item__quantity-control {
+  width: fit-content;
 
-  color: #765f70;
+  display: flex;
+  align-items: center;
+  gap: 10px;
 
-  font-size: 0.9rem;
+  padding: 5px 8px;
+
+  border: 1px solid #f1dbe6;
+  border-radius: 12px;
+
+  background: #ffffff;
+}
+
+.carrito-item__quantity-button {
+  width: 32px;
+  height: 32px;
+  padding: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border: 0;
+  border-radius: 8px;
+
+  background: #fff0f6;
+  color: #ed4f9a;
+
+  font-size: 1.1rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.carrito-item__quantity-button:hover:not(:disabled) {
+  background: #fbd9e8;
+}
+
+.carrito-item__quantity-button:disabled {
+  background: #f3edf0;
+  color: #b9aab2;
+  cursor: not-allowed;
+}
+
+.carrito-item__quantity-button:focus-visible {
+  outline: 2px solid #ed4f9a;
+  outline-offset: 2px;
+}
+
+.carrito-item__quantity-value {
+  min-width: 24px;
+
+  color: #4c3747;
+
+  font-size: 0.95rem;
+  font-weight: 700;
+  text-align: center;
 }
 
 .carrito-item__delete-button {
@@ -167,7 +218,6 @@
 
 .carrito-page__empty-icon {
   margin-bottom: 16px;
-
   font-size: 3rem;
 }
 
@@ -231,7 +281,6 @@
 
   .carrito-item__delete-button {
     grid-column: 1 / -1;
-
     width: 100%;
   }
 }

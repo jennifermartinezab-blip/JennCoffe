@@ -5,12 +5,16 @@ import type { CarritoItem } from '../types/CarritoItem';
 interface CarritoPageProps {
   carrito: CarritoItem[];
   onEliminarProducto: (productoId: string) => void;
+  onAumentarCantidad: (productoId: string) => void;
+  onDisminuirCantidad: (productoId: string) => void;
   onVolverAlMenu: () => void;
 }
 
 function CarritoPage({
   carrito,
   onEliminarProducto,
+  onAumentarCantidad,
+  onDisminuirCantidad,
   onVolverAlMenu
 }: CarritoPageProps) {
   return (
@@ -82,9 +86,40 @@ function CarritoPage({
                   ${item.producto.precio.toLocaleString('es-CO')}
                 </p>
 
-                <p className="carrito-item__quantity">
-                  Cantidad: {item.cantidad}
-                </p>
+                <div
+                  className="carrito-item__quantity-control"
+                  aria-label={`Cantidad de ${item.producto.nombre}`}
+                >
+                  <button
+                    type="button"
+                    className="carrito-item__quantity-button"
+                    onClick={() =>
+                      onDisminuirCantidad(item.producto._id)
+                    }
+                    disabled={item.cantidad === 1}
+                    aria-label={`Disminuir cantidad de ${item.producto.nombre}`}
+                  >
+                    −
+                  </button>
+
+                  <span
+                    className="carrito-item__quantity-value"
+                    aria-live="polite"
+                  >
+                    {item.cantidad}
+                  </span>
+
+                  <button
+                    type="button"
+                    className="carrito-item__quantity-button"
+                    onClick={() =>
+                      onAumentarCantidad(item.producto._id)
+                    }
+                    aria-label={`Aumentar cantidad de ${item.producto.nombre}`}
+                  >
+                    +
+                  </button>
+                </div>
               </div>
 
               <button

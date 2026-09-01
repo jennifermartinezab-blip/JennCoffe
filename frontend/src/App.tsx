@@ -44,6 +44,32 @@ function App() {
     );
   };
 
+  const aumentarCantidad = (productoId: string) => {
+    setCarrito((carritoActual) =>
+      carritoActual.map((item) =>
+        item.producto._id === productoId
+          ? {
+              ...item,
+              cantidad: item.cantidad + 1
+            }
+          : item
+      )
+    );
+  };
+
+  const disminuirCantidad = (productoId: string) => {
+    setCarrito((carritoActual) =>
+      carritoActual.map((item) =>
+        item.producto._id === productoId && item.cantidad > 1
+          ? {
+              ...item,
+              cantidad: item.cantidad - 1
+            }
+          : item
+      )
+    );
+  };
+
   const abrirCarrito = () => {
     setVistaActual('carrito');
   };
@@ -57,6 +83,8 @@ function App() {
       <CarritoPage
         carrito={carrito}
         onEliminarProducto={eliminarProductoDelCarrito}
+        onAumentarCantidad={aumentarCantidad}
+        onDisminuirCantidad={disminuirCantidad}
         onVolverAlMenu={volverAlMenu}
       />
     );

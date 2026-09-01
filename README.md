@@ -324,3 +324,15 @@ Se agregó la opción para eliminar productos del carrito.
 - Si el carrito queda vacío, se muestra un mensaje indicando que no hay productos.
 - El cliente puede volver al menú desde el carrito.
 - Se realizaron pruebas funcionales y de compilación correctamente.
+
+### RF20 - Modificar cantidades del carrito
+
+Se agregó la opción para modificar la cantidad de los productos agregados al carrito.
+
+- El cliente puede aumentar la cantidad de cada producto.
+- El cliente puede disminuir la cantidad de cada producto.
+- La cantidad mínima permitida es 1.
+- Los productos del carrito mantienen cantidades independientes.
+- La eliminación del producto continúa disponible de forma separada.
+- Se realizaron pruebas funcionales con varios productos.
+- La compilación del frontend se realizó correctamente.
