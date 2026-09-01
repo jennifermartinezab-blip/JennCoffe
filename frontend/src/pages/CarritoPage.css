@@ -176,6 +176,15 @@
   text-align: center;
 }
 
+.carrito-item__subtotal {
+  margin: 12px 0 0;
+
+  color: #765f70;
+
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
 .carrito-item__delete-button {
   padding: 9px 14px;
 
@@ -197,6 +206,35 @@
 .carrito-item__delete-button:focus-visible {
   outline: 2px solid #ed4f9a;
   outline-offset: 3px;
+}
+
+.carrito-page__summary {
+  margin-top: 22px;
+  padding: 18px 20px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  border: 1px solid #f1dbe6;
+  border-radius: 16px;
+
+  background: #fff8fb;
+  box-shadow: 0 6px 18px rgba(76, 55, 71, 0.05);
+}
+
+.carrito-page__summary-label {
+  color: #4c3747;
+
+  font-size: 1rem;
+  font-weight: 700;
+}
+
+.carrito-page__summary-total {
+  color: #ed4f9a;
+
+  font-size: 1.35rem;
+  font-weight: 800;
 }
 
 .carrito-page__empty {
@@ -282,5 +320,13 @@
   .carrito-item__delete-button {
     grid-column: 1 / -1;
     width: 100%;
+  }
+
+  .carrito-page__summary {
+    padding: 16px;
+  }
+
+  .carrito-page__summary-total {
+    font-size: 1.2rem;
   }
 }

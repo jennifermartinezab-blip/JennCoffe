@@ -336,3 +336,16 @@ Se agregó la opción para modificar la cantidad de los productos agregados al c
 - La eliminación del producto continúa disponible de forma separada.
 - Se realizaron pruebas funcionales con varios productos.
 - La compilación del frontend se realizó correctamente.
+
+### RF21 - Calcular total del carrito
+
+Se agregó el cálculo automático de subtotales y del total del carrito.
+
+- Cada producto muestra su subtotal según el precio y la cantidad.
+- El subtotal se calcula multiplicando el precio unitario por la cantidad.
+- El total del carrito corresponde a la suma de todos los subtotales.
+- Los valores se actualizan automáticamente al modificar cantidades.
+- Al eliminar productos, el total se recalcula automáticamente.
+- El total solo se muestra cuando existen productos en el carrito.
+- Se realizaron pruebas funcionales con varios productos y cantidades.
+- La compilación del frontend se realizó correctamente.

@@ -17,6 +17,12 @@ function CarritoPage({
   onDisminuirCantidad,
   onVolverAlMenu
 }: CarritoPageProps) {
+  const totalCarrito = carrito.reduce(
+    (total, item) =>
+      total + item.producto.precio * item.cantidad,
+    0
+  );
+
   return (
     <main className="carrito-page">
       <header className="carrito-page__header">
@@ -60,81 +66,106 @@ function CarritoPage({
           </button>
         </section>
       ) : (
-        <section
-          className="carrito-page__list"
-          aria-label="Productos en el carrito"
-        >
-          {carrito.map((item) => (
-            <article
-              key={item.producto._id}
-              className="carrito-item"
-            >
-              <div className="carrito-item__image-container">
-                <img
-                  className="carrito-item__image"
-                  src={`/images/products/${item.producto.imagen}`}
-                  alt={item.producto.nombre}
-                />
-              </div>
+        <>
+          <section
+            className="carrito-page__list"
+            aria-label="Productos en el carrito"
+          >
+            {carrito.map((item) => {
+              const subtotal =
+                item.producto.precio * item.cantidad;
 
-              <div className="carrito-item__content">
-                <h2 className="carrito-item__name">
-                  {item.producto.nombre}
-                </h2>
-
-                <p className="carrito-item__price">
-                  ${item.producto.precio.toLocaleString('es-CO')}
-                </p>
-
-                <div
-                  className="carrito-item__quantity-control"
-                  aria-label={`Cantidad de ${item.producto.nombre}`}
+              return (
+                <article
+                  key={item.producto._id}
+                  className="carrito-item"
                 >
+                  <div className="carrito-item__image-container">
+                    <img
+                      className="carrito-item__image"
+                      src={`/images/products/${item.producto.imagen}`}
+                      alt={item.producto.nombre}
+                    />
+                  </div>
+
+                  <div className="carrito-item__content">
+                    <h2 className="carrito-item__name">
+                      {item.producto.nombre}
+                    </h2>
+
+                    <p className="carrito-item__price">
+                      ${item.producto.precio.toLocaleString('es-CO')}
+                    </p>
+
+                    <div
+                      className="carrito-item__quantity-control"
+                      aria-label={`Cantidad de ${item.producto.nombre}`}
+                    >
+                      <button
+                        type="button"
+                        className="carrito-item__quantity-button"
+                        onClick={() =>
+                          onDisminuirCantidad(item.producto._id)
+                        }
+                        disabled={item.cantidad === 1}
+                        aria-label={`Disminuir cantidad de ${item.producto.nombre}`}
+                      >
+                        −
+                      </button>
+
+                      <span
+                        className="carrito-item__quantity-value"
+                        aria-live="polite"
+                      >
+                        {item.cantidad}
+                      </span>
+
+                      <button
+                        type="button"
+                        className="carrito-item__quantity-button"
+                        onClick={() =>
+                          onAumentarCantidad(item.producto._id)
+                        }
+                        aria-label={`Aumentar cantidad de ${item.producto.nombre}`}
+                      >
+                        +
+                      </button>
+                    </div>
+
+                    <p className="carrito-item__subtotal">
+                      Subtotal: $
+                      {subtotal.toLocaleString('es-CO')}
+                    </p>
+                  </div>
+
                   <button
                     type="button"
-                    className="carrito-item__quantity-button"
+                    className="carrito-item__delete-button"
                     onClick={() =>
-                      onDisminuirCantidad(item.producto._id)
+                      onEliminarProducto(item.producto._id)
                     }
-                    disabled={item.cantidad === 1}
-                    aria-label={`Disminuir cantidad de ${item.producto.nombre}`}
+                    aria-label={`Eliminar ${item.producto.nombre} del carrito`}
                   >
-                    −
+                    Eliminar
                   </button>
+                </article>
+              );
+            })}
+          </section>
 
-                  <span
-                    className="carrito-item__quantity-value"
-                    aria-live="polite"
-                  >
-                    {item.cantidad}
-                  </span>
+          <section
+            className="carrito-page__summary"
+            aria-label="Resumen del carrito"
+          >
+            <span className="carrito-page__summary-label">
+              Total
+            </span>
 
-                  <button
-                    type="button"
-                    className="carrito-item__quantity-button"
-                    onClick={() =>
-                      onAumentarCantidad(item.producto._id)
-                    }
-                    aria-label={`Aumentar cantidad de ${item.producto.nombre}`}
-                  >
-                    +
-                  </button>
-                </div>
-              </div>
-
-              <button
-                type="button"
-                className="carrito-item__delete-button"
-                onClick={() =>
-                  onEliminarProducto(item.producto._id)
-                }
-                aria-label={`Eliminar ${item.producto.nombre} del carrito`}
-              >
-                Eliminar
-              </button>
-            </article>
-          ))}
-        </section>
+            <strong className="carrito-page__summary-total">
+              ${totalCarrito.toLocaleString('es-CO')}
+            </strong>
+          </section>
+        </>
       )}
     </main>
   );
