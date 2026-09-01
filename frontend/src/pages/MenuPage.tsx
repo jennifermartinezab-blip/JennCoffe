@@ -17,14 +17,22 @@ import type { Categoria } from '../types/Categoria';
 import type { Producto } from '../types/Producto';
 import type { CarritoItem } from '../types/CarritoItem';
 
-function MenuPage() {
+interface MenuPageProps {
+  carrito: CarritoItem[];
+  onAgregarAlCarrito: (producto: Producto) => void;
+  onAbrirCarrito: () => void;
+}
+
+function MenuPage({
+  carrito,
+  onAgregarAlCarrito,
+  onAbrirCarrito
+}: MenuPageProps) {
   const [categorias, setCategorias] = useState<Categoria[]>([]);
   const [productos, setProductos] = useState<Producto[]>([]);
   const [categoriaSeleccionada, setCategoriaSeleccionada] = useState<
     string | null
   >(null);
-
-  const [carrito, setCarrito] = useState<CarritoItem[]>([]);
 
   const [cargando, setCargando] = useState(true);
   const [error, setError] = useState('');
@@ -84,30 +92,6 @@ function MenuPage() {
     }
   };
 
-  const agregarAlCarrito = (producto: Producto) => {
-    if (!producto.disponibilidad || producto.estado !== 'Activo') {
-      return;
-    }
-
-    setCarrito((carritoActual) => {
-      const productoYaAgregado = carritoActual.some(
-        (item) => item.producto._id === producto._id
-      );
-
-      if (productoYaAgregado) {
-        return carritoActual;
-      }
-
-      return [
-        ...carritoActual,
-        {
-          producto,
-          cantidad: 1
-        }
-      ];
-    });
-  };
-
   if (cargando) {
     return (
       <main>
@@ -141,10 +125,13 @@ function MenuPage() {
 
       <ProductGrid
         productos={productos}
-        onAgregar={agregarAlCarrito}
+        onAgregar={onAgregarAlCarrito}
       />
 
-      <BottomNavigation cantidadCarrito={carrito.length} />
+      <BottomNavigation
+        cantidadCarrito={carrito.length}
+        onAbrirCarrito={onAbrirCarrito}
+      />
     </main>
   );
 }

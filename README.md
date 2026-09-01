@@ -312,3 +312,15 @@ Se agregó la opción para añadir productos disponibles al carrito.
 - Se muestra un contador en el icono del carrito.
 - El mismo producto no se duplica al agregarlo nuevamente.
 - Se realizaron pruebas y funciona correctamente sin errores.
+
+### RF19 - Eliminar productos del carrito
+
+Se agregó la opción para eliminar productos del carrito.
+
+- El cliente puede abrir el carrito desde la navegación inferior.
+- Los productos agregados se muestran en la vista del carrito.
+- Cada producto puede eliminarse individualmente.
+- Al eliminar un producto, se actualiza el contenido del carrito.
+- Si el carrito queda vacío, se muestra un mensaje indicando que no hay productos.
+- El cliente puede volver al menú desde el carrito.
+- Se realizaron pruebas funcionales y de compilación correctamente.
