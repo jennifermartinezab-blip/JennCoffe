@@ -213,8 +213,15 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
+  gap: 16px;
 
   border-top: 1px solid #f1dbe6;
+}
+
+.pedido-card__footer > div {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
 }
 
 .pedido-card__total-label {
@@ -229,6 +236,30 @@
 
   font-size: 1.2rem;
   font-weight: 800;
+}
+
+.pedido-card__detail-button {
+  padding: 9px 14px;
+
+  border: 1px solid #ed4f9a;
+  border-radius: 10px;
+
+  background: #ffffff;
+  color: #ed4f9a;
+
+  font-size: 0.85rem;
+  font-weight: 700;
+
+  cursor: pointer;
+}
+
+.pedido-card__detail-button:hover {
+  background: #fff0f6;
+}
+
+.pedido-card__detail-button:focus-visible {
+  outline: 2px solid #ed4f9a;
+  outline-offset: 3px;
 }
 
 .mis-pedidos-page__empty {
@@ -304,5 +335,14 @@
 
   .pedido-card__product {
     align-items: flex-start;
+  }
+
+  .pedido-card__footer {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .pedido-card__detail-button {
+    width: 100%;
   }
 }

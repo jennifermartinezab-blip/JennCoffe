@@ -402,3 +402,18 @@ Se implementó la consulta del historial de pedidos del cliente autenticado.
 - Después de registrar un pedido, el cliente puede acceder a su historial.
 - Se realizaron pruebas funcionales con pedidos en diferentes estados.
 - La compilación del frontend se realizó correctamente.
+
+### RF24 - Detalle del pedido
+
+Se implementó la consulta y visualización del detalle de un pedido del cliente autenticado.
+
+- Desde Mis pedidos se agregó la opción Ver detalle.
+- Se consulta el endpoint protegido GET /api/pedidos/:id.
+- El detalle muestra número del pedido, fecha, estado, dirección de entrega, productos, cantidades, precio unitario, subtotal y total.
+- Se muestra el método de pago y el estado del pago.
+- Se mantiene la validación del backend para que el cliente solo pueda consultar sus propios pedidos.
+- Se agregó compatibilidad con pedidos históricos que no contienen información de pago.
+- Los estados del pedido se diferencian visualmente.
+- La interfaz fue adaptada al diseño visual de JennCoffee y al mockup de detalle de pedido.
+- Se realizaron pruebas funcionales con pedidos Pendiente, En camino y Cancelado.
+- La compilación del frontend se realizó correctamente.

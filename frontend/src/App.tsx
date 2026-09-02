@@ -5,6 +5,7 @@ import MenuPage from './pages/MenuPage';
 import CarritoPage from './pages/CarritoPage';
 import ConfirmarPedidoPage from './pages/ConfirmarPedidoPage';
 import MisPedidosPage from './pages/MisPedidosPage';
+import DetallePedidoPage from './pages/DetallePedidoPage';
 
 import {
   eliminarToken,
@@ -19,12 +20,16 @@ type VistaActual =
   | 'menu'
   | 'carrito'
   | 'confirmarPedido'
-  | 'misPedidos';
+  | 'misPedidos'
+  | 'detallePedido';
 
 function App() {
   const [carrito, setCarrito] = useState<CarritoItem[]>([]);
   const [vistaActual, setVistaActual] =
     useState<VistaActual>('menu');
+
+  const [pedidoSeleccionadoId, setPedidoSeleccionadoId] =
+    useState<string | null>(null);
 
   const [autenticado, setAutenticado] = useState(
     Boolean(obtenerToken())
@@ -113,8 +118,18 @@ function App() {
     setVistaActual('misPedidos');
   };
 
+  const abrirDetallePedido = (pedidoId: string) => {
+    setPedidoSeleccionadoId(pedidoId);
+    setVistaActual('detallePedido');
+  };
+
   const volverAlCarrito = () => {
     setVistaActual('carrito');
+  };
+
+  const volverAMisPedidos = () => {
+    setPedidoSeleccionadoId(null);
+    setVistaActual('misPedidos');
   };
 
   const volverAlMenu = () => {
@@ -142,6 +157,7 @@ function App() {
     } finally {
       eliminarToken();
       setCarrito([]);
+      setPedidoSeleccionadoId(null);
       setVistaActual('menu');
       setAutenticado(false);
     }
@@ -155,10 +171,23 @@ function App() {
     );
   }
 
+  if (
+    vistaActual === 'detallePedido' &&
+    pedidoSeleccionadoId
+  ) {
+    return (
+      <DetallePedidoPage
+        pedidoId={pedidoSeleccionadoId}
+        onVolverAMisPedidos={volverAMisPedidos}
+      />
+    );
+  }
+
   if (vistaActual === 'misPedidos') {
     return (
       <MisPedidosPage
         onVolverAlMenu={volverAlMenu}
+        onVerDetalle={abrirDetallePedido}
       />
     );
   }

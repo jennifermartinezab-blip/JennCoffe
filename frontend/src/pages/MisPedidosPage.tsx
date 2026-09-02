@@ -9,10 +9,12 @@ import {
 
 interface MisPedidosPageProps {
   onVolverAlMenu: () => void;
+  onVerDetalle: (pedidoId: string) => void;
 }
 
 function MisPedidosPage({
-  onVolverAlMenu
+  onVolverAlMenu,
+  onVerDetalle
 }: MisPedidosPageProps) {
   const [pedidos, setPedidos] = useState<PedidoCliente[]>([]);
   const [cargando, setCargando] = useState(true);
@@ -221,13 +223,23 @@ function MisPedidosPage({
               </div>
 
               <div className="pedido-card__footer">
-                <span className="pedido-card__total-label">
-                  Total
-                </span>
+                <div>
+                  <span className="pedido-card__total-label">
+                    Total
+                  </span>
 
-                <strong className="pedido-card__total-value">
-                  ${pedido.total.toLocaleString('es-CO')}
-                </strong>
+                  <strong className="pedido-card__total-value">
+                    ${pedido.total.toLocaleString('es-CO')}
+                  </strong>
+                </div>
+
+                <button
+                  type="button"
+                  className="pedido-card__detail-button"
+                  onClick={() => onVerDetalle(pedido._id)}
+                >
+                  Ver detalle
+                </button>
               </div>
             </article>
           ))}
