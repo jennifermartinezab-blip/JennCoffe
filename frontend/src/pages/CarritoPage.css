@@ -213,14 +213,20 @@
   padding: 18px 20px;
 
   display: flex;
-  align-items: center;
-  justify-content: space-between;
+  flex-direction: column;
+  gap: 16px;
 
   border: 1px solid #f1dbe6;
   border-radius: 16px;
 
   background: #fff8fb;
   box-shadow: 0 6px 18px rgba(76, 55, 71, 0.05);
+}
+
+.carrito-page__summary-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 
 .carrito-page__summary-label {
@@ -235,6 +241,29 @@
 
   font-size: 1.35rem;
   font-weight: 800;
+}
+
+.carrito-page__confirm-button {
+  width: 100%;
+  padding: 12px 16px;
+
+  border: 0;
+  border-radius: 12px;
+
+  background: #ed4f9a;
+  color: #ffffff;
+
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.carrito-page__confirm-button:hover {
+  opacity: 0.92;
+}
+
+.carrito-page__confirm-button:focus-visible {
+  outline: 2px solid #ed4f9a;
+  outline-offset: 3px;
 }
 
 .carrito-page__empty {

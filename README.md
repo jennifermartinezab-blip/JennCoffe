@@ -372,3 +372,18 @@ Se implementó el cierre de sesión del cliente en el frontend.
 - El usuario regresa automáticamente a la pantalla de inicio de sesión.
 - Después de cerrar sesión, la aplicación permanece en el login al recargar.
 - Se realizaron pruebas funcionales y de compilación correctamente.
+
+### RF22 - Registrar pedido
+
+Se implementó el registro de pedidos desde el frontend.
+
+- El cliente puede continuar desde el carrito hacia la confirmación del pedido.
+- Se muestra un resumen con productos, cantidades, subtotales y total.
+- Se solicita una dirección de entrega.
+- Se permite seleccionar un método de pago simulado.
+- El frontend envía únicamente los productos, cantidades, dirección y pago simulado.
+- El cliente autenticado se obtiene desde el token JWT.
+- Los precios, subtotales y total son recalculados y validados por el backend.
+- Los pedidos aprobados se almacenan en MongoDB con estado Pendiente.
+- Después de registrar correctamente el pedido, el carrito se limpia.
+- Se realizaron pruebas funcionales y de compilación correctamente.

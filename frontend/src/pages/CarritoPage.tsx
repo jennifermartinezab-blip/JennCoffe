@@ -8,6 +8,7 @@ interface CarritoPageProps {
   onAumentarCantidad: (productoId: string) => void;
   onDisminuirCantidad: (productoId: string) => void;
   onVolverAlMenu: () => void;
+  onConfirmarPedido: () => void;
 }
 
 function CarritoPage({
@@ -15,7 +16,8 @@ function CarritoPage({
   onEliminarProducto,
   onAumentarCantidad,
   onDisminuirCantidad,
-  onVolverAlMenu
+  onVolverAlMenu,
+  onConfirmarPedido
 }: CarritoPageProps) {
   const totalCarrito = carrito.reduce(
     (total, item) =>
@@ -157,13 +159,23 @@ function CarritoPage({
             className="carrito-page__summary"
             aria-label="Resumen del carrito"
           >
-            <span className="carrito-page__summary-label">
-              Total
-            </span>
+            <div className="carrito-page__summary-row">
+              <span className="carrito-page__summary-label">
+                Total
+              </span>
 
-            <strong className="carrito-page__summary-total">
-              ${totalCarrito.toLocaleString('es-CO')}
-            </strong>
+              <strong className="carrito-page__summary-total">
+                ${totalCarrito.toLocaleString('es-CO')}
+              </strong>
+            </div>
+
+            <button
+              type="button"
+              className="carrito-page__confirm-button"
+              onClick={onConfirmarPedido}
+            >
+              Continuar pedido
+            </button>
           </section>
         </>
       )}

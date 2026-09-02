@@ -1,0 +1,280 @@
+.confirmar-pedido-page {
+  width: min(100%, 760px);
+  min-height: 100vh;
+  margin: 0 auto;
+  padding: 24px 24px 80px;
+
+  color: #4c3747;
+  background: #ffffff;
+}
+
+.confirmar-pedido-page__header {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+
+  margin-bottom: 28px;
+}
+
+.confirmar-pedido-page__back-button {
+  width: 42px;
+  height: 42px;
+  padding: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border: 1px solid #f1dbe6;
+  border-radius: 50%;
+
+  background: #ffffff;
+  color: #765f70;
+
+  font-size: 1.3rem;
+  cursor: pointer;
+}
+
+.confirmar-pedido-page__back-button:hover {
+  background: #fff4f8;
+  color: #ed4f9a;
+}
+
+.confirmar-pedido-page__back-button:focus-visible {
+  outline: 2px solid #ed4f9a;
+  outline-offset: 3px;
+}
+
+.confirmar-pedido-page__title {
+  margin: 0;
+
+  color: #4c3747;
+
+  font-size: 1.8rem;
+  font-weight: 800;
+}
+
+.confirmar-pedido-page__section {
+  margin-bottom: 18px;
+  padding: 20px;
+
+  border: 1px solid #f1dbe6;
+  border-radius: 18px;
+
+  background: #fff8fb;
+  box-shadow: 0 6px 18px rgba(76, 55, 71, 0.05);
+}
+
+.confirmar-pedido-page__section-title {
+  margin: 0 0 16px;
+
+  color: #4c3747;
+
+  font-size: 1.05rem;
+  font-weight: 800;
+}
+
+.confirmar-pedido-page__field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.confirmar-pedido-page__label {
+  color: #4c3747;
+
+  font-size: 0.9rem;
+  font-weight: 700;
+}
+
+.confirmar-pedido-page__input {
+  width: 100%;
+  padding: 12px 14px;
+
+  border: 1px solid #e8ccd9;
+  border-radius: 12px;
+
+  background: #ffffff;
+  color: #4c3747;
+
+  outline: none;
+}
+
+.confirmar-pedido-page__input:focus {
+  border-color: #ed4f9a;
+  box-shadow: 0 0 0 3px rgba(237, 79, 154, 0.12);
+}
+
+.confirmar-pedido-page__payment-options {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.confirmar-pedido-page__payment-option {
+  min-height: 76px;
+  padding: 14px;
+
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+  border: 1px solid #f1dbe6;
+  border-radius: 14px;
+
+  background: #ffffff;
+
+  color: #4c3747;
+  font-size: 0.9rem;
+  font-weight: 600;
+
+  cursor: pointer;
+}
+
+.confirmar-pedido-page__payment-option:has(input:checked) {
+  border-color: #ed4f9a;
+  background: #fff0f6;
+}
+
+.confirmar-pedido-page__payment-radio {
+  accent-color: #ed4f9a;
+}
+
+.confirmar-pedido-page__summary-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.confirmar-pedido-page__summary-item {
+  padding-bottom: 12px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+
+  border-bottom: 1px solid #f1dbe6;
+}
+
+.confirmar-pedido-page__summary-item:last-child {
+  border-bottom: 0;
+}
+
+.confirmar-pedido-page__summary-name {
+  color: #4c3747;
+
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+.confirmar-pedido-page__summary-price {
+  flex-shrink: 0;
+
+  color: #ed4f9a;
+
+  font-size: 0.95rem;
+  font-weight: 800;
+}
+
+.confirmar-pedido-page__total {
+  margin-top: 16px;
+  padding-top: 16px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  border-top: 1px solid #f1dbe6;
+}
+
+.confirmar-pedido-page__total-label {
+  color: #4c3747;
+
+  font-size: 1rem;
+  font-weight: 800;
+}
+
+.confirmar-pedido-page__total-value {
+  color: #ed4f9a;
+
+  font-size: 1.4rem;
+  font-weight: 800;
+}
+
+.confirmar-pedido-page__error {
+  margin: 0 0 16px;
+  padding: 12px 14px;
+
+  border: 1px solid #f3c1d4;
+  border-radius: 12px;
+
+  background: #fff1f6;
+  color: #b73f6f;
+
+  font-size: 0.9rem;
+}
+
+.confirmar-pedido-page__confirm-button {
+  width: 100%;
+  padding: 13px 16px;
+
+  border: 0;
+  border-radius: 12px;
+
+  background: #ed4f9a;
+  color: #ffffff;
+
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.confirmar-pedido-page__confirm-button:hover:not(:disabled) {
+  opacity: 0.92;
+}
+
+.confirmar-pedido-page__confirm-button:disabled {
+  background: #d9c8d1;
+  cursor: not-allowed;
+}
+
+.confirmar-pedido-page__confirm-button:focus-visible {
+  outline: 2px solid #ed4f9a;
+  outline-offset: 3px;
+}
+
+.confirmar-pedido-page__note {
+  margin: 12px 0 0;
+
+  color: #8a7483;
+
+  font-size: 0.8rem;
+  line-height: 1.5;
+  text-align: center;
+}
+
+@media (max-width: 600px) {
+  .confirmar-pedido-page {
+    padding: 16px 12px 60px;
+  }
+
+  .confirmar-pedido-page__title {
+    font-size: 1.5rem;
+  }
+
+  .confirmar-pedido-page__payment-options {
+    grid-template-columns: 1fr;
+  }
+
+  .confirmar-pedido-page__section {
+    padding: 16px;
+  }
+
+  .confirmar-pedido-page__summary-item {
+    align-items: flex-start;
+  }
+
+  .confirmar-pedido-page__total-value {
+    font-size: 1.2rem;
+  }
+}

@@ -3,6 +3,7 @@ import { useState } from 'react';
 import LoginPage from './pages/LoginPage';
 import MenuPage from './pages/MenuPage';
 import CarritoPage from './pages/CarritoPage';
+import ConfirmarPedidoPage from './pages/ConfirmarPedidoPage';
 
 import {
   eliminarToken,
@@ -13,11 +14,15 @@ import {
 import type { Producto } from './types/Producto';
 import type { CarritoItem } from './types/CarritoItem';
 
-type VistaActual = 'menu' | 'carrito';
+type VistaActual =
+  | 'menu'
+  | 'carrito'
+  | 'confirmarPedido';
 
 function App() {
   const [carrito, setCarrito] = useState<CarritoItem[]>([]);
-  const [vistaActual, setVistaActual] = useState<VistaActual>('menu');
+  const [vistaActual, setVistaActual] =
+    useState<VistaActual>('menu');
 
   const [autenticado, setAutenticado] = useState(
     Boolean(obtenerToken())
@@ -82,7 +87,27 @@ function App() {
     );
   };
 
+  const calcularTotalCarrito = () => {
+    return carrito.reduce(
+      (total, item) =>
+        total + item.producto.precio * item.cantidad,
+      0
+    );
+  };
+
   const abrirCarrito = () => {
+    setVistaActual('carrito');
+  };
+
+  const abrirConfirmacionPedido = () => {
+    if (carrito.length === 0) {
+      return;
+    }
+
+    setVistaActual('confirmarPedido');
+  };
+
+  const volverAlCarrito = () => {
     setVistaActual('carrito');
   };
 
@@ -92,6 +117,11 @@ function App() {
 
   const loginCorrecto = () => {
     setAutenticado(true);
+    setVistaActual('menu');
+  };
+
+  const pedidoRegistrado = () => {
+    setCarrito([]);
     setVistaActual('menu');
   };
 
@@ -119,6 +149,17 @@ function App() {
     );
   }
 
+  if (vistaActual === 'confirmarPedido') {
+    return (
+      <ConfirmarPedidoPage
+        carrito={carrito}
+        total={calcularTotalCarrito()}
+        onVolverAlCarrito={volverAlCarrito}
+        onPedidoRegistrado={pedidoRegistrado}
+      />
+    );
+  }
+
   if (vistaActual === 'carrito') {
     return (
       <CarritoPage
@@ -127,6 +168,7 @@ function App() {
         onAumentarCantidad={aumentarCantidad}
         onDisminuirCantidad={disminuirCantidad}
         onVolverAlMenu={volverAlMenu}
+        onConfirmarPedido={abrirConfirmacionPedido}
       />
     );
   }
