@@ -3,11 +3,13 @@ import './BottomNavigation.css';
 interface BottomNavigationProps {
   cantidadCarrito: number;
   onAbrirCarrito: () => void;
+  onAbrirMisPedidos: () => void;
 }
 
 function BottomNavigation({
   cantidadCarrito,
-  onAbrirCarrito
+  onAbrirCarrito,
+  onAbrirMisPedidos
 }: BottomNavigationProps) {
   return (
     <nav
@@ -58,7 +60,12 @@ function BottomNavigation({
         </span>
       </button>
 
-      <div className="bottom-navigation__item">
+      <button
+        type="button"
+        className="bottom-navigation__item bottom-navigation__button"
+        onClick={onAbrirMisPedidos}
+        aria-label="Abrir mis pedidos"
+      >
         <span className="bottom-navigation__icon" aria-hidden="true">
           ◫
         </span>
@@ -66,7 +73,7 @@ function BottomNavigation({
         <span className="bottom-navigation__label">
           Mis pedidos
         </span>
-      </div>
+      </button>
 
       <div className="bottom-navigation__item">
         <span className="bottom-navigation__icon" aria-hidden="true">

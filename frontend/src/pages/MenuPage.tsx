@@ -21,6 +21,7 @@ interface MenuPageProps {
   carrito: CarritoItem[];
   onAgregarAlCarrito: (producto: Producto) => void;
   onAbrirCarrito: () => void;
+  onAbrirMisPedidos: () => void;
   onCerrarSesion: () => void;
 }
 
@@ -28,6 +29,7 @@ function MenuPage({
   carrito,
   onAgregarAlCarrito,
   onAbrirCarrito,
+  onAbrirMisPedidos,
   onCerrarSesion
 }: MenuPageProps) {
   const [categorias, setCategorias] = useState<Categoria[]>([]);
@@ -135,6 +137,7 @@ function MenuPage({
       <BottomNavigation
         cantidadCarrito={carrito.length}
         onAbrirCarrito={onAbrirCarrito}
+        onAbrirMisPedidos={onAbrirMisPedidos}
       />
     </main>
   );

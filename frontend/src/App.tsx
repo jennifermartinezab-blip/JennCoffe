@@ -4,6 +4,7 @@ import LoginPage from './pages/LoginPage';
 import MenuPage from './pages/MenuPage';
 import CarritoPage from './pages/CarritoPage';
 import ConfirmarPedidoPage from './pages/ConfirmarPedidoPage';
+import MisPedidosPage from './pages/MisPedidosPage';
 
 import {
   eliminarToken,
@@ -17,7 +18,8 @@ import type { CarritoItem } from './types/CarritoItem';
 type VistaActual =
   | 'menu'
   | 'carrito'
-  | 'confirmarPedido';
+  | 'confirmarPedido'
+  | 'misPedidos';
 
 function App() {
   const [carrito, setCarrito] = useState<CarritoItem[]>([]);
@@ -107,6 +109,10 @@ function App() {
     setVistaActual('confirmarPedido');
   };
 
+  const abrirMisPedidos = () => {
+    setVistaActual('misPedidos');
+  };
+
   const volverAlCarrito = () => {
     setVistaActual('carrito');
   };
@@ -122,7 +128,7 @@ function App() {
 
   const pedidoRegistrado = () => {
     setCarrito([]);
-    setVistaActual('menu');
+    setVistaActual('misPedidos');
   };
 
   const cerrarSesion = async () => {
@@ -145,6 +151,14 @@ function App() {
     return (
       <LoginPage
         onLoginCorrecto={loginCorrecto}
+      />
+    );
+  }
+
+  if (vistaActual === 'misPedidos') {
+    return (
+      <MisPedidosPage
+        onVolverAlMenu={volverAlMenu}
       />
     );
   }
@@ -178,6 +192,7 @@ function App() {
       carrito={carrito}
       onAgregarAlCarrito={agregarAlCarrito}
       onAbrirCarrito={abrirCarrito}
+      onAbrirMisPedidos={abrirMisPedidos}
       onCerrarSesion={cerrarSesion}
     />
   );

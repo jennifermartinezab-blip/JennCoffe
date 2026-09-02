@@ -1,0 +1,308 @@
+.mis-pedidos-page {
+  width: min(100%, 820px);
+  min-height: 100vh;
+  margin: 0 auto;
+  padding: 24px 24px 80px;
+
+  color: #4c3747;
+  background: #ffffff;
+}
+
+.mis-pedidos-page__header {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+
+  margin-bottom: 28px;
+}
+
+.mis-pedidos-page__back-button {
+  width: 42px;
+  height: 42px;
+  padding: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border: 1px solid #f1dbe6;
+  border-radius: 50%;
+
+  background: #ffffff;
+  color: #765f70;
+
+  font-size: 1.3rem;
+  cursor: pointer;
+}
+
+.mis-pedidos-page__back-button:hover {
+  background: #fff4f8;
+  color: #ed4f9a;
+}
+
+.mis-pedidos-page__back-button:focus-visible {
+  outline: 2px solid #ed4f9a;
+  outline-offset: 3px;
+}
+
+.mis-pedidos-page__title {
+  margin: 0;
+
+  color: #4c3747;
+
+  font-size: 1.8rem;
+  font-weight: 800;
+}
+
+.mis-pedidos-page__list {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.pedido-card {
+  padding: 20px;
+
+  border: 1px solid #f1dbe6;
+  border-radius: 18px;
+
+  background: #fff8fb;
+  box-shadow: 0 6px 18px rgba(76, 55, 71, 0.05);
+}
+
+.pedido-card__header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+
+  margin-bottom: 16px;
+}
+
+.pedido-card__number {
+  margin: 0;
+
+  color: #4c3747;
+
+  font-size: 1.05rem;
+  font-weight: 800;
+}
+
+.pedido-card__status {
+  padding: 6px 10px;
+
+  border-radius: 999px;
+
+  font-size: 0.78rem;
+  font-weight: 700;
+}
+
+.pedido-card__status--pendiente {
+  background: #fff0cf;
+  color: #9a6a00;
+}
+
+.pedido-card__status--preparacion {
+  background: #ece8ff;
+  color: #6754a3;
+}
+
+.pedido-card__status--camino {
+  background: #e7f3ff;
+  color: #356c9c;
+}
+
+.pedido-card__status--entregado {
+  background: #e8f7ec;
+  color: #3d8c54;
+}
+
+.pedido-card__status--cancelado {
+  background: #fde8ee;
+  color: #c74f6f;
+}
+
+.pedido-card__meta {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+
+  margin-bottom: 18px;
+}
+
+.pedido-card__meta-item {
+  padding: 12px;
+
+  border: 1px solid #f1dbe6;
+  border-radius: 12px;
+
+  background: #ffffff;
+}
+
+.pedido-card__meta-label {
+  display: block;
+  margin-bottom: 4px;
+
+  color: #8a7483;
+
+  font-size: 0.75rem;
+  font-weight: 700;
+}
+
+.pedido-card__meta-value {
+  color: #4c3747;
+
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+.pedido-card__products {
+  margin-bottom: 18px;
+}
+
+.pedido-card__products-title {
+  margin: 0 0 10px;
+
+  color: #4c3747;
+
+  font-size: 0.9rem;
+  font-weight: 800;
+}
+
+.pedido-card__products-list {
+  margin: 0;
+  padding: 0;
+
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+
+  list-style: none;
+}
+
+.pedido-card__product {
+  padding: 10px 12px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+
+  border-radius: 10px;
+
+  background: #ffffff;
+}
+
+.pedido-card__product-name {
+  color: #4c3747;
+
+  font-size: 0.88rem;
+  font-weight: 600;
+}
+
+.pedido-card__product-quantity {
+  color: #765f70;
+
+  font-size: 0.82rem;
+  font-weight: 700;
+}
+
+.pedido-card__footer {
+  padding-top: 16px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  border-top: 1px solid #f1dbe6;
+}
+
+.pedido-card__total-label {
+  color: #4c3747;
+
+  font-size: 0.95rem;
+  font-weight: 800;
+}
+
+.pedido-card__total-value {
+  color: #ed4f9a;
+
+  font-size: 1.2rem;
+  font-weight: 800;
+}
+
+.mis-pedidos-page__empty {
+  min-height: 340px;
+  padding: 40px 20px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  border: 1px solid #f1dbe6;
+  border-radius: 20px;
+
+  background: #fff8fb;
+
+  text-align: center;
+}
+
+.mis-pedidos-page__empty-icon {
+  margin-bottom: 14px;
+
+  font-size: 3rem;
+}
+
+.mis-pedidos-page__empty-title {
+  margin: 0 0 8px;
+
+  color: #4c3747;
+
+  font-size: 1.2rem;
+  font-weight: 800;
+}
+
+.mis-pedidos-page__empty-text {
+  margin: 0;
+
+  color: #765f70;
+
+  font-size: 0.9rem;
+}
+
+.mis-pedidos-page__error {
+  padding: 14px;
+
+  border: 1px solid #f3c1d4;
+  border-radius: 12px;
+
+  background: #fff1f6;
+  color: #b73f6f;
+}
+
+@media (max-width: 600px) {
+  .mis-pedidos-page {
+    padding: 16px 12px 60px;
+  }
+
+  .mis-pedidos-page__title {
+    font-size: 1.5rem;
+  }
+
+  .pedido-card {
+    padding: 16px;
+  }
+
+  .pedido-card__header {
+    flex-direction: column;
+  }
+
+  .pedido-card__meta {
+    grid-template-columns: 1fr;
+  }
+
+  .pedido-card__product {
+    align-items: flex-start;
+  }
+}

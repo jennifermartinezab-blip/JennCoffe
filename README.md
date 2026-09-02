@@ -387,3 +387,18 @@ Se implementó el registro de pedidos desde el frontend.
 - Los pedidos aprobados se almacenan en MongoDB con estado Pendiente.
 - Después de registrar correctamente el pedido, el carrito se limpia.
 - Se realizaron pruebas funcionales y de compilación correctamente.
+
+### RF23 - Historial de pedidos del cliente
+
+Se implementó la consulta del historial de pedidos del cliente autenticado.
+
+- Se habilitó la opción Mis pedidos en la navegación inferior.
+- El frontend consulta el endpoint protegido GET /api/pedidos/mis.
+- La consulta utiliza el token JWT del cliente autenticado.
+- Solo se muestran los pedidos asociados al cliente que inició sesión.
+- Cada pedido muestra fecha, dirección, productos, cantidades, total y estado.
+- Los estados del pedido se diferencian visualmente.
+- Los pedidos más recientes se muestran primero.
+- Después de registrar un pedido, el cliente puede acceder a su historial.
+- Se realizaron pruebas funcionales con pedidos en diferentes estados.
+- La compilación del frontend se realizó correctamente.
