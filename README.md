@@ -438,3 +438,28 @@ Se implementó el acceso administrativo y la gestión de estados de los pedidos.
 - Se corrigió la conservación de los datos del cliente después de actualizar un pedido.
 - Se realizaron pruebas funcionales de autenticación, cierre de sesión, consulta y actualización de pedidos.
 - La compilación del frontend se realizó correctamente.
+
+### RF26 - Cancelación de pedidos por cliente
+
+Se implementó la cancelación de pedidos desde el historial del cliente autenticado.
+
+- El cliente puede cancelar únicamente pedidos en estado Pendiente.
+- Se utiliza el endpoint PATCH /api/pedidos/:id/cancelar.
+- Antes de cancelar se solicita confirmación al usuario.
+- Después de una cancelación exitosa el pedido cambia a estado Cancelado.
+- Los pedidos En preparación, En camino, Entregado y Cancelado no muestran la opción Cancelar pedido.
+- La cancelación se refleja tanto en la vista del cliente como en la vista administrativa.
+- Se verificó que un pedido cancelado no pueda continuar avanzando de estado.
+- Se mantuvo el acceso a Ver detalle para pedidos en cualquier estado.
+- Se realizaron pruebas funcionales con pedidos Pendiente y Cancelado.
+
+### Mejora - Paginación de pedidos
+
+Se agregó paginación al historial de pedidos del cliente y al listado administrativo.
+
+- Se muestran máximo 5 pedidos por página.
+- Los pedidos se ordenan del más reciente al más antiguo.
+- Se agregaron controles Anterior, números de página y Siguiente.
+- Los controles se deshabilitan correctamente en la primera y última página.
+- La paginación se adapta a dispositivos móviles.
+- Las operaciones de cancelación y actualización de estado continúan funcionando sin perder la navegación actual.

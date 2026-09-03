@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 
 import AdminLayout from '../layouts/AdminLayout';
 
@@ -21,6 +21,8 @@ interface AdminPedidosPageProps {
   onIrUsuarios: () => void;
 }
 
+const PEDIDOS_POR_PAGINA = 5;
+
 function AdminPedidosPage({
   onCerrarSesion,
   onIrDashboard,
@@ -37,6 +39,9 @@ function AdminPedidosPage({
   const [actualizandoId, setActualizandoId] =
     useState<string | null>(null);
 
+  const [paginaActual, setPaginaActual] =
+    useState(1);
+
   useEffect(() => {
     const cargarPedidos = async () => {
       try {
@@ -47,6 +52,7 @@ function AdminPedidosPage({
           await obtenerPedidosAdmin();
 
         setPedidos(pedidosObtenidos);
+        setPaginaActual(1);
       } catch (error) {
         console.error(
           'Error al consultar pedidos administrativos:',
@@ -63,6 +69,67 @@ function AdminPedidosPage({
 
     cargarPedidos();
   }, []);
+
+  const pedidosOrdenados = useMemo(() => {
+    return [...pedidos].sort((a, b) => {
+      return (
+        new Date(b.fecha).getTime() -
+        new Date(a.fecha).getTime()
+      );
+    });
+  }, [pedidos]);
+
+  const totalPaginas = Math.max(
+    1,
+    Math.ceil(
+      pedidosOrdenados.length /
+        PEDIDOS_POR_PAGINA
+    )
+  );
+
+  const pedidosPaginaActual = useMemo(() => {
+    const inicio =
+      (paginaActual - 1) *
+      PEDIDOS_POR_PAGINA;
+
+    const fin =
+      inicio + PEDIDOS_POR_PAGINA;
+
+    return pedidosOrdenados.slice(
+      inicio,
+      fin
+    );
+  }, [
+    pedidosOrdenados,
+    paginaActual
+  ]);
+
+  useEffect(() => {
+    if (paginaActual > totalPaginas) {
+      setPaginaActual(totalPaginas);
+    }
+  }, [
+    paginaActual,
+    totalPaginas
+  ]);
+
+  const cambiarPagina = (
+    nuevaPagina: number
+  ) => {
+    if (
+      nuevaPagina < 1 ||
+      nuevaPagina > totalPaginas
+    ) {
+      return;
+    }
+
+    setPaginaActual(nuevaPagina);
+
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth'
+    });
+  };
 
   const formatearFecha = (fecha: string) => {
     return new Intl.DateTimeFormat('es-CO', {
@@ -220,116 +287,199 @@ function AdminPedidosPage({
               </p>
             )}
 
-            {pedidos.length === 0 ? (
+            {pedidosOrdenados.length === 0 ? (
               <p className="admin-pedidos-page__empty">
                 No hay pedidos registrados.
               </p>
             ) : (
-              <section
-                className="admin-pedidos-list"
-                aria-label="Listado administrativo de pedidos"
-              >
-                {pedidos.map((pedido) => {
-                  const siguienteEstado =
-                    obtenerSiguienteEstado(pedido.estado);
+              <>
+                <section
+                  className="admin-pedidos-list"
+                  aria-label="Listado administrativo de pedidos"
+                >
+                  {pedidosPaginaActual.map((pedido) => {
+                    const siguienteEstado =
+                      obtenerSiguienteEstado(
+                        pedido.estado
+                      );
 
-                  return (
-                    <article
-                      key={pedido._id}
-                      className="admin-pedido-card"
-                    >
-                      <div className="admin-pedido-card__top">
-                        <h2 className="admin-pedido-card__number">
-                          Pedido #{pedido._id.slice(-6)}
-                        </h2>
+                    return (
+                      <article
+                        key={pedido._id}
+                        className="admin-pedido-card"
+                      >
+                        <div className="admin-pedido-card__top">
+                          <h2 className="admin-pedido-card__number">
+                            Pedido #{pedido._id.slice(-6)}
+                          </h2>
 
-                        <span
-                          className={`admin-pedido-card__status ${obtenerClaseEstado(
-                            pedido.estado
-                          )}`}
-                        >
-                          {pedido.estado}
-                        </span>
-                      </div>
-
-                      <div className="admin-pedido-card__grid">
-                        <div className="admin-pedido-card__field">
-                          <span className="admin-pedido-card__label">
-                            Cliente
-                          </span>
-
-                          <span className="admin-pedido-card__value">
-                            {obtenerNombreCliente(pedido)}
-                          </span>
-                        </div>
-
-                        <div className="admin-pedido-card__field">
-                          <span className="admin-pedido-card__label">
-                            Fecha
-                          </span>
-
-                          <span className="admin-pedido-card__value">
-                            {formatearFecha(pedido.fecha)}
-                          </span>
-                        </div>
-
-                        <div className="admin-pedido-card__field">
-                          <span className="admin-pedido-card__label">
-                            Dirección
-                          </span>
-
-                          <span className="admin-pedido-card__value">
-                            {pedido.direccionEntrega}
-                          </span>
-                        </div>
-
-                        <div className="admin-pedido-card__field">
-                          <span className="admin-pedido-card__label">
-                            Estado
-                          </span>
-
-                          <span className="admin-pedido-card__value">
+                          <span
+                            className={`admin-pedido-card__status ${obtenerClaseEstado(
+                              pedido.estado
+                            )}`}
+                          >
                             {pedido.estado}
                           </span>
                         </div>
-                      </div>
 
-                      <div className="admin-pedido-card__footer">
-                        <div className="admin-pedido-card__total">
-                          <span className="admin-pedido-card__total-label">
-                            Total
-                          </span>
+                        <div className="admin-pedido-card__grid">
+                          <div className="admin-pedido-card__field">
+                            <span className="admin-pedido-card__label">
+                              Cliente
+                            </span>
 
-                          <strong className="admin-pedido-card__total-value">
-                            ${pedido.total.toLocaleString('es-CO')}
-                          </strong>
+                            <span className="admin-pedido-card__value">
+                              {obtenerNombreCliente(pedido)}
+                            </span>
+                          </div>
+
+                          <div className="admin-pedido-card__field">
+                            <span className="admin-pedido-card__label">
+                              Fecha
+                            </span>
+
+                            <span className="admin-pedido-card__value">
+                              {formatearFecha(pedido.fecha)}
+                            </span>
+                          </div>
+
+                          <div className="admin-pedido-card__field">
+                            <span className="admin-pedido-card__label">
+                              Dirección
+                            </span>
+
+                            <span className="admin-pedido-card__value">
+                              {pedido.direccionEntrega}
+                            </span>
+                          </div>
+
+                          <div className="admin-pedido-card__field">
+                            <span className="admin-pedido-card__label">
+                              Estado
+                            </span>
+
+                            <span className="admin-pedido-card__value">
+                              {pedido.estado}
+                            </span>
+                          </div>
                         </div>
 
-                        {siguienteEstado ? (
-                          <button
-                            type="button"
-                            className="admin-pedido-card__action-button"
-                            disabled={
-                              actualizandoId === pedido._id
-                            }
-                            onClick={() =>
-                              cambiarEstado(pedido)
-                            }
-                          >
-                            {actualizandoId === pedido._id
-                              ? 'Actualizando...'
-                              : `Cambiar a ${siguienteEstado}`}
-                          </button>
-                        ) : (
-                          <p className="admin-pedido-card__finished">
-                            Este pedido no tiene un siguiente estado disponible.
-                          </p>
-                        )}
-                      </div>
-                    </article>
-                  );
-                })}
-              </section>
+                        <div className="admin-pedido-card__footer">
+                          <div className="admin-pedido-card__total">
+                            <span className="admin-pedido-card__total-label">
+                              Total
+                            </span>
+
+                            <strong className="admin-pedido-card__total-value">
+                              ${pedido.total.toLocaleString('es-CO')}
+                            </strong>
+                          </div>
+
+                          {siguienteEstado ? (
+                            <button
+                              type="button"
+                              className="admin-pedido-card__action-button"
+                              disabled={
+                                actualizandoId === pedido._id
+                              }
+                              onClick={() =>
+                                cambiarEstado(pedido)
+                              }
+                            >
+                              {actualizandoId === pedido._id
+                                ? 'Actualizando...'
+                                : `Cambiar a ${siguienteEstado}`}
+                            </button>
+                          ) : (
+                            <p className="admin-pedido-card__finished">
+                              Este pedido no tiene un siguiente estado disponible.
+                            </p>
+                          )}
+                        </div>
+                      </article>
+                    );
+                  })}
+                </section>
+
+                {totalPaginas > 1 && (
+                  <nav
+                    className="admin-pedidos-pagination"
+                    aria-label="Paginación administrativa de pedidos"
+                  >
+                    <button
+                      type="button"
+                      className="admin-pedidos-pagination__button"
+                      disabled={
+                        paginaActual === 1
+                      }
+                      onClick={() =>
+                        cambiarPagina(
+                          paginaActual - 1
+                        )
+                      }
+                    >
+                      ← Anterior
+                    </button>
+
+                    <div className="admin-pedidos-pagination__pages">
+                      {Array.from(
+                        {
+                          length:
+                            totalPaginas
+                        },
+                        (_, index) => {
+                          const numeroPagina =
+                            index + 1;
+
+                          return (
+                            <button
+                              key={
+                                numeroPagina
+                              }
+                              type="button"
+                              className={
+                                paginaActual ===
+                                numeroPagina
+                                  ? 'admin-pedidos-pagination__page admin-pedidos-pagination__page--active'
+                                  : 'admin-pedidos-pagination__page'
+                              }
+                              onClick={() =>
+                                cambiarPagina(
+                                  numeroPagina
+                                )
+                              }
+                              aria-current={
+                                paginaActual ===
+                                numeroPagina
+                                  ? 'page'
+                                  : undefined
+                              }
+                            >
+                              {numeroPagina}
+                            </button>
+                          );
+                        }
+                      )}
+                    </div>
+
+                    <button
+                      type="button"
+                      className="admin-pedidos-pagination__button"
+                      disabled={
+                        paginaActual ===
+                        totalPaginas
+                      }
+                      onClick={() =>
+                        cambiarPagina(
+                          paginaActual + 1
+                        )
+                      }
+                    >
+                      Siguiente →
+                    </button>
+                  </nav>
+                )}
+              </>
             )}
           </>
         )}

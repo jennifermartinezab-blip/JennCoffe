@@ -38,25 +38,6 @@
   font-size: 0.9rem;
 }
 
-.admin-pedidos-page__back-button {
-  padding: 10px 14px;
-
-  border: 1px solid #e3d6ee;
-  border-radius: 10px;
-
-  background: #ffffff;
-  color: #6f58a6;
-
-  font-size: 0.86rem;
-  font-weight: 700;
-
-  cursor: pointer;
-}
-
-.admin-pedidos-page__back-button:hover {
-  background: #f7f2fb;
-}
-
 .admin-pedidos-page__error {
   margin-bottom: 18px;
   padding: 12px 14px;
@@ -259,8 +240,78 @@
   color: #8a7483;
 }
 
-.admin-pedidos-page__back-button:focus-visible,
-.admin-pedido-card__action-button:focus-visible {
+.admin-pedidos-pagination {
+  margin-top: 24px;
+  padding-top: 18px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+
+  border-top: 1px solid #eee3f4;
+}
+
+.admin-pedidos-pagination__pages {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.admin-pedidos-pagination__button,
+.admin-pedidos-pagination__page {
+  min-height: 38px;
+  padding: 8px 12px;
+
+  border: 1px solid #d9cde7;
+  border-radius: 10px;
+
+  background: #ffffff;
+  color: #6f58a6;
+
+  font-size: 0.82rem;
+  font-weight: 700;
+
+  cursor: pointer;
+}
+
+.admin-pedidos-pagination__page {
+  min-width: 38px;
+  padding: 8px;
+}
+
+.admin-pedidos-pagination__button:hover:not(:disabled),
+.admin-pedidos-pagination__page:hover {
+  border-color: #6f58a6;
+
+  background: #f7f2fb;
+  color: #6f58a6;
+}
+
+.admin-pedidos-pagination__page--active {
+  border-color: #6f58a6;
+
+  background: #6f58a6;
+  color: #ffffff;
+}
+
+.admin-pedidos-pagination__page--active:hover {
+  background: #6f58a6;
+  color: #ffffff;
+}
+
+.admin-pedidos-pagination__button:disabled {
+  border-color: #e5dfea;
+
+  background: #f7f4f8;
+  color: #b6aabd;
+
+  cursor: not-allowed;
+}
+
+.admin-pedido-card__action-button:focus-visible,
+.admin-pedidos-pagination__button:focus-visible,
+.admin-pedidos-pagination__page:focus-visible {
   outline: 2px solid #6f58a6;
   outline-offset: 3px;
 }
@@ -286,5 +337,21 @@
 
   .admin-pedido-card__action-button {
     width: 100%;
+  }
+
+  .admin-pedidos-pagination {
+    flex-wrap: wrap;
+  }
+
+  .admin-pedidos-pagination__pages {
+    order: 3;
+    width: 100%;
+
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  .admin-pedidos-pagination__button {
+    flex: 1;
   }
 }

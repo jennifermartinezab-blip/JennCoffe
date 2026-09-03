@@ -8,6 +8,7 @@ export interface ProductoPedido {
     estado: string;
     disponibilidad: boolean;
   } | string;
+
   nombre: string;
   cantidad: number;
   precioUnitario: number;
@@ -24,14 +25,18 @@ export interface PedidoCliente {
   productos: ProductoPedido[];
   direccionEntrega: string;
   total: number;
-  pago: PagoPedido;
+
+  pago?: PagoPedido;
+
   estado:
     | 'Pendiente'
     | 'En preparación'
     | 'En camino'
     | 'Entregado'
     | 'Cancelado';
+
   fecha: string;
+
   createdAt?: string;
   updatedAt?: string;
 }
@@ -41,10 +46,29 @@ interface MisPedidosResponse {
   data: PedidoCliente[];
 }
 
-export const obtenerMisPedidos = async (): Promise<PedidoCliente[]> => {
+interface CancelarPedidoResponse {
+  success: boolean;
+  message: string;
+  data: PedidoCliente;
+}
+
+export const obtenerMisPedidos = async (): Promise<
+  PedidoCliente[]
+> => {
   const respuesta = await api.get<MisPedidosResponse>(
     '/pedidos/mis'
   );
+
+  return respuesta.data.data;
+};
+
+export const cancelarPedido = async (
+  pedidoId: string
+): Promise<PedidoCliente> => {
+  const respuesta =
+    await api.patch<CancelarPedidoResponse>(
+      `/pedidos/${pedidoId}/cancelar`
+    );
 
   return respuesta.data.data;
 };
