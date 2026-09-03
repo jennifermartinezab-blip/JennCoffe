@@ -8,10 +8,20 @@ const api = axios.create({
 });
 
 api.interceptors.request.use((config) => {
-  const token = localStorage.getItem('jenncoffee_token');
+  const tokenCliente = localStorage.getItem(
+    'jenncoffee_token'
+  );
 
-  if (token) {
-    config.headers.Authorization = `Bearer ${token}`;
+  const tokenAdministrador = localStorage.getItem(
+    'jenncoffee_admin_token'
+  );
+
+  const tokenActivo =
+    tokenAdministrador || tokenCliente;
+
+  if (tokenActivo) {
+    config.headers.Authorization =
+      `Bearer ${tokenActivo}`;
   }
 
   return config;

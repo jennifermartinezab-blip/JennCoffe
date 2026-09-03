@@ -417,3 +417,24 @@ Se implementó la consulta y visualización del detalle de un pedido del cliente
 - La interfaz fue adaptada al diseño visual de JennCoffee y al mockup de detalle de pedido.
 - Se realizaron pruebas funcionales con pedidos Pendiente, En camino y Cancelado.
 - La compilación del frontend se realizó correctamente.
+
+### RF25 - Actualización del estado de pedidos por administrador
+
+Se implementó el acceso administrativo y la gestión de estados de los pedidos.
+
+- Se agregó acceso separado para clientes y administradores.
+- El administrador inicia sesión mediante POST /api/auth/login utilizando el tipo Administrador.
+- Se separaron los tokens de cliente y administrador para evitar conflictos de sesión.
+- Se implementó cierre de sesión administrativo.
+- Se creó un layout administrativo reutilizable con navegación para Dashboard, Productos, Categorías, Clientes, Pedidos y Usuarios.
+- Se implementó la consulta administrativa de pedidos mediante GET /api/pedidos.
+- Se muestran cliente, fecha, dirección, estado y total de cada pedido.
+- Los estados se diferencian visualmente.
+- Se implementó la actualización del estado mediante PATCH /api/pedidos/:id/estado.
+- Se respetan las transiciones Pendiente → En preparación → En camino → Entregado.
+- Los pedidos Entregado y Cancelado no ofrecen un siguiente estado.
+- El backend continúa siendo responsable de validar las transiciones permitidas.
+- Se verificó la persistencia de los cambios de estado.
+- Se corrigió la conservación de los datos del cliente después de actualizar un pedido.
+- Se realizaron pruebas funcionales de autenticación, cierre de sesión, consulta y actualización de pedidos.
+- La compilación del frontend se realizó correctamente.

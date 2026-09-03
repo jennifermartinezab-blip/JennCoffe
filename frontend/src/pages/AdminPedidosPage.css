@@ -1,0 +1,290 @@
+.admin-pedidos-page {
+  min-height: 100vh;
+  padding: 28px;
+
+  background: #fffafb;
+  color: #4c3747;
+}
+
+.admin-pedidos-page__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+
+  margin-bottom: 24px;
+}
+
+.admin-pedidos-page__header-left {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.admin-pedidos-page__title {
+  margin: 0;
+
+  color: #4c3747;
+
+  font-size: 1.9rem;
+  font-weight: 800;
+}
+
+.admin-pedidos-page__subtitle {
+  margin: 0;
+
+  color: #8a7483;
+
+  font-size: 0.9rem;
+}
+
+.admin-pedidos-page__back-button {
+  padding: 10px 14px;
+
+  border: 1px solid #e3d6ee;
+  border-radius: 10px;
+
+  background: #ffffff;
+  color: #6f58a6;
+
+  font-size: 0.86rem;
+  font-weight: 700;
+
+  cursor: pointer;
+}
+
+.admin-pedidos-page__back-button:hover {
+  background: #f7f2fb;
+}
+
+.admin-pedidos-page__error {
+  margin-bottom: 18px;
+  padding: 12px 14px;
+
+  border: 1px solid #f3c1d4;
+  border-radius: 10px;
+
+  background: #fff1f6;
+  color: #b73f6f;
+
+  font-size: 0.88rem;
+}
+
+.admin-pedidos-page__empty {
+  padding: 24px;
+
+  border: 1px solid #f1dbe6;
+  border-radius: 14px;
+
+  background: #ffffff;
+  color: #8a7483;
+}
+
+.admin-pedidos-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.admin-pedido-card {
+  padding: 18px;
+
+  border: 1px solid #f1dbe6;
+  border-radius: 16px;
+
+  background: #ffffff;
+
+  box-shadow:
+    0 6px 18px rgba(76, 55, 71, 0.05);
+}
+
+.admin-pedido-card__top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+
+  margin-bottom: 14px;
+}
+
+.admin-pedido-card__number {
+  margin: 0;
+
+  color: #4c3747;
+
+  font-size: 1rem;
+  font-weight: 800;
+}
+
+.admin-pedido-card__status {
+  padding: 6px 10px;
+
+  border-radius: 999px;
+
+  font-size: 0.75rem;
+  font-weight: 700;
+
+  white-space: nowrap;
+}
+
+.admin-pedido-card__status--pendiente {
+  background: #fff0cf;
+  color: #9a6a00;
+}
+
+.admin-pedido-card__status--preparacion {
+  background: #ece8ff;
+  color: #6754a3;
+}
+
+.admin-pedido-card__status--camino {
+  background: #e7f3ff;
+  color: #356c9c;
+}
+
+.admin-pedido-card__status--entregado {
+  background: #e8f7ec;
+  color: #3d8c54;
+}
+
+.admin-pedido-card__status--cancelado {
+  background: #fde8ee;
+  color: #c74f6f;
+}
+
+.admin-pedido-card__grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+
+  margin-bottom: 14px;
+}
+
+.admin-pedido-card__field {
+  padding: 10px 12px;
+
+  border: 1px solid #f1dbe6;
+  border-radius: 10px;
+
+  background: #fffafb;
+}
+
+.admin-pedido-card__label {
+  display: block;
+  margin-bottom: 4px;
+
+  color: #8a7483;
+
+  font-size: 0.72rem;
+  font-weight: 700;
+}
+
+.admin-pedido-card__value {
+  color: #4c3747;
+
+  font-size: 0.86rem;
+  font-weight: 600;
+}
+
+.admin-pedido-card__footer {
+  padding-top: 14px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+
+  border-top: 1px solid #f1dbe6;
+}
+
+.admin-pedido-card__total {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.admin-pedido-card__total-label {
+  color: #8a7483;
+
+  font-size: 0.75rem;
+  font-weight: 700;
+}
+
+.admin-pedido-card__total-value {
+  color: #ed4f9a;
+
+  font-size: 1.1rem;
+  font-weight: 800;
+}
+
+.admin-pedido-card__action-button {
+  padding: 10px 14px;
+
+  border: 0;
+  border-radius: 10px;
+
+  background: #6f58a6;
+  color: #ffffff;
+
+  font-size: 0.84rem;
+  font-weight: 700;
+
+  cursor: pointer;
+}
+
+.admin-pedido-card__action-button:hover:not(:disabled) {
+  opacity: 0.92;
+}
+
+.admin-pedido-card__action-button:disabled {
+  background: #cfc4df;
+  cursor: not-allowed;
+}
+
+.admin-pedido-card__finished {
+  margin: 0;
+
+  color: #8a7483;
+
+  font-size: 0.82rem;
+}
+
+.admin-pedidos-page__loading {
+  padding: 20px;
+
+  border: 1px solid #f1dbe6;
+  border-radius: 12px;
+
+  background: #ffffff;
+  color: #8a7483;
+}
+
+.admin-pedidos-page__back-button:focus-visible,
+.admin-pedido-card__action-button:focus-visible {
+  outline: 2px solid #6f58a6;
+  outline-offset: 3px;
+}
+
+@media (max-width: 760px) {
+  .admin-pedidos-page {
+    padding: 18px 14px 40px;
+  }
+
+  .admin-pedidos-page__header {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .admin-pedido-card__grid {
+    grid-template-columns: 1fr;
+  }
+
+  .admin-pedido-card__footer {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .admin-pedido-card__action-button {
+    width: 100%;
+  }
+}

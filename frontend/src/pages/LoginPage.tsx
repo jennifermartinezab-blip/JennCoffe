@@ -9,10 +9,12 @@ import {
 
 interface LoginPageProps {
   onLoginCorrecto: () => void;
+  onIrAdministrador: () => void;
 }
 
 function LoginPage({
-  onLoginCorrecto
+  onLoginCorrecto,
+  onIrAdministrador
 }: LoginPageProps) {
   const [correo, setCorreo] = useState('');
   const [contrasena, setContrasena] = useState('');
@@ -158,6 +160,14 @@ function LoginPage({
           <p className="login-card__note">
             Acceso exclusivo para clientes registrados en JennCoffee.
           </p>
+
+          <button
+            type="button"
+            className="login-card__admin-button"
+            onClick={onIrAdministrador}
+          >
+            Ingresar como administrador
+          </button>
         </div>
       </section>
     </main>

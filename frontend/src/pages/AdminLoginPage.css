@@ -1,0 +1,164 @@
+.admin-login-page {
+  min-height: 100vh;
+  padding: 24px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background:
+    linear-gradient(
+      135deg,
+      #fff7fb 0%,
+      #f8ecff 55%,
+      #fff4f8 100%
+    );
+}
+
+.admin-login-card {
+  width: min(100%, 520px);
+  padding: 36px;
+
+  border: 1px solid #f1dbe6;
+  border-radius: 22px;
+
+  background: #ffffff;
+
+  box-shadow: 0 18px 45px rgba(76, 55, 71, 0.12);
+}
+
+.admin-login-card__back-button {
+  margin-bottom: 22px;
+  padding: 9px 12px;
+
+  border: 1px solid #e8ccd9;
+  border-radius: 10px;
+
+  background: #ffffff;
+  color: #765f70;
+
+  font-size: 0.86rem;
+  font-weight: 700;
+
+  cursor: pointer;
+}
+
+.admin-login-card__back-button:hover {
+  background: #fff4f8;
+  color: #ed4f9a;
+}
+
+.admin-login-card__title {
+  margin: 0 0 8px;
+
+  color: #4c3747;
+
+  font-size: 2rem;
+  font-weight: 800;
+}
+
+.admin-login-card__subtitle {
+  margin: 0 0 26px;
+
+  color: #765f70;
+
+  font-size: 0.95rem;
+  line-height: 1.5;
+}
+
+.admin-login-form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.admin-login-form__group {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+}
+
+.admin-login-form__label {
+  color: #4c3747;
+
+  font-size: 0.9rem;
+  font-weight: 700;
+}
+
+.admin-login-form__input {
+  width: 100%;
+  padding: 12px 14px;
+
+  border: 1px solid #e8ccd9;
+  border-radius: 12px;
+
+  background: #ffffff;
+  color: #4c3747;
+
+  outline: none;
+}
+
+.admin-login-form__input:focus {
+  border-color: #ed4f9a;
+
+  box-shadow:
+    0 0 0 3px rgba(237, 79, 154, 0.12);
+}
+
+.admin-login-form__error {
+  margin: 0;
+  padding: 10px 12px;
+
+  border: 1px solid #f3c1d4;
+  border-radius: 10px;
+
+  background: #fff1f6;
+  color: #b73f6f;
+
+  font-size: 0.88rem;
+}
+
+.admin-login-form__button {
+  width: 100%;
+  margin-top: 4px;
+  padding: 12px 16px;
+
+  border: 0;
+  border-radius: 12px;
+
+  background: #ed4f9a;
+  color: #ffffff;
+
+  font-weight: 800;
+
+  cursor: pointer;
+}
+
+.admin-login-form__button:hover:not(:disabled) {
+  opacity: 0.92;
+}
+
+.admin-login-form__button:disabled {
+  background: #d9c8d1;
+  cursor: not-allowed;
+}
+
+.admin-login-form__button:focus-visible,
+.admin-login-card__back-button:focus-visible {
+  outline: 2px solid #ed4f9a;
+  outline-offset: 3px;
+}
+
+@media (max-width: 600px) {
+  .admin-login-page {
+    padding: 14px;
+  }
+
+  .admin-login-card {
+    padding: 28px 22px;
+  }
+
+  .admin-login-card__title {
+    font-size: 1.7rem;
+  }
+}

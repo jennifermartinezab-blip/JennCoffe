@@ -1,6 +1,9 @@
 import { useState } from 'react';
 
 import LoginPage from './pages/LoginPage';
+import AdminLoginPage from './pages/AdminLoginPage';
+import AdminDashboardPage from './pages/AdminDashboardPage';
+import AdminPedidosPage from './pages/AdminPedidosPage';
 import MenuPage from './pages/MenuPage';
 import CarritoPage from './pages/CarritoPage';
 import ConfirmarPedidoPage from './pages/ConfirmarPedidoPage';
@@ -13,6 +16,11 @@ import {
   obtenerToken
 } from './services/authService';
 
+import {
+  eliminarTokenAdministrador,
+  obtenerTokenAdministrador
+} from './services/adminAuthService';
+
 import type { Producto } from './types/Producto';
 import type { CarritoItem } from './types/CarritoItem';
 
@@ -23,26 +31,55 @@ type VistaActual =
   | 'misPedidos'
   | 'detallePedido';
 
+type VistaAdministrador =
+  | 'dashboard'
+  | 'productos'
+  | 'categorias'
+  | 'clientes'
+  | 'pedidos'
+  | 'usuarios';
+
+type TipoAcceso =
+  | 'cliente'
+  | 'administrador';
+
 function App() {
   const [carrito, setCarrito] = useState<CarritoItem[]>([]);
+
   const [vistaActual, setVistaActual] =
     useState<VistaActual>('menu');
+
+  const [
+    vistaAdministrador,
+    setVistaAdministrador
+  ] = useState<VistaAdministrador>('dashboard');
 
   const [pedidoSeleccionadoId, setPedidoSeleccionadoId] =
     useState<string | null>(null);
 
-  const [autenticado, setAutenticado] = useState(
-    Boolean(obtenerToken())
-  );
+  const [tipoAcceso, setTipoAcceso] =
+    useState<TipoAcceso>('cliente');
+
+  const [clienteAutenticado, setClienteAutenticado] =
+    useState(Boolean(obtenerToken()));
+
+  const [
+    administradorAutenticado,
+    setAdministradorAutenticado
+  ] = useState(Boolean(obtenerTokenAdministrador()));
 
   const agregarAlCarrito = (producto: Producto) => {
-    if (!producto.disponibilidad || producto.estado !== 'Activo') {
+    if (
+      !producto.disponibilidad ||
+      producto.estado !== 'Activo'
+    ) {
       return;
     }
 
     setCarrito((carritoActual) => {
       const productoYaAgregado = carritoActual.some(
-        (item) => item.producto._id === producto._id
+        (item) =>
+          item.producto._id === producto._id
       );
 
       if (productoYaAgregado) {
@@ -59,15 +96,20 @@ function App() {
     });
   };
 
-  const eliminarProductoDelCarrito = (productoId: string) => {
+  const eliminarProductoDelCarrito = (
+    productoId: string
+  ) => {
     setCarrito((carritoActual) =>
       carritoActual.filter(
-        (item) => item.producto._id !== productoId
+        (item) =>
+          item.producto._id !== productoId
       )
     );
   };
 
-  const aumentarCantidad = (productoId: string) => {
+  const aumentarCantidad = (
+    productoId: string
+  ) => {
     setCarrito((carritoActual) =>
       carritoActual.map((item) =>
         item.producto._id === productoId
@@ -80,7 +122,9 @@ function App() {
     );
   };
 
-  const disminuirCantidad = (productoId: string) => {
+  const disminuirCantidad = (
+    productoId: string
+  ) => {
     setCarrito((carritoActual) =>
       carritoActual.map((item) =>
         item.producto._id === productoId &&
@@ -97,7 +141,9 @@ function App() {
   const calcularTotalCarrito = () => {
     return carrito.reduce(
       (total, item) =>
-        total + item.producto.precio * item.cantidad,
+        total +
+        item.producto.precio *
+          item.cantidad,
       0
     );
   };
@@ -118,7 +164,9 @@ function App() {
     setVistaActual('misPedidos');
   };
 
-  const abrirDetallePedido = (pedidoId: string) => {
+  const abrirDetallePedido = (
+    pedidoId: string
+  ) => {
     setPedidoSeleccionadoId(pedidoId);
     setVistaActual('detallePedido');
   };
@@ -136,9 +184,54 @@ function App() {
     setVistaActual('menu');
   };
 
-  const loginCorrecto = () => {
-    setAutenticado(true);
+  const abrirAccesoAdministrador = () => {
+    setTipoAcceso('administrador');
+  };
+
+  const volverAccesoCliente = () => {
+    setTipoAcceso('cliente');
+  };
+
+  const irDashboardAdmin = () => {
+    setVistaAdministrador('dashboard');
+  };
+
+  const irProductosAdmin = () => {
+    setVistaAdministrador('productos');
+  };
+
+  const irCategoriasAdmin = () => {
+    setVistaAdministrador('categorias');
+  };
+
+  const irClientesAdmin = () => {
+    setVistaAdministrador('clientes');
+  };
+
+  const irPedidosAdmin = () => {
+    setVistaAdministrador('pedidos');
+  };
+
+  const irUsuariosAdmin = () => {
+    setVistaAdministrador('usuarios');
+  };
+
+  const loginClienteCorrecto = () => {
+    eliminarTokenAdministrador();
+    setAdministradorAutenticado(false);
+
+    setClienteAutenticado(true);
+    setTipoAcceso('cliente');
     setVistaActual('menu');
+  };
+
+  const loginAdministradorCorrecto = () => {
+    eliminarToken();
+    setClienteAutenticado(false);
+
+    setAdministradorAutenticado(true);
+    setTipoAcceso('administrador');
+    setVistaAdministrador('dashboard');
   };
 
   const pedidoRegistrado = () => {
@@ -146,27 +239,93 @@ function App() {
     setVistaActual('misPedidos');
   };
 
-  const cerrarSesion = async () => {
+  const cerrarSesionCliente = async () => {
     try {
       await logout();
     } catch (error) {
       console.error(
-        'No fue posible completar el logout en el servidor:',
+        'No fue posible completar el logout del cliente en el servidor:',
         error
       );
     } finally {
       eliminarToken();
+
       setCarrito([]);
       setPedidoSeleccionadoId(null);
       setVistaActual('menu');
-      setAutenticado(false);
+      setClienteAutenticado(false);
+      setTipoAcceso('cliente');
     }
   };
 
-  if (!autenticado) {
+  const cerrarSesionAdministrador = async () => {
+    try {
+      await logout();
+    } catch (error) {
+      console.error(
+        'No fue posible completar el logout del administrador en el servidor:',
+        error
+      );
+    } finally {
+      eliminarTokenAdministrador();
+
+      setAdministradorAutenticado(false);
+      setTipoAcceso('cliente');
+      setVistaAdministrador('dashboard');
+
+      setCarrito([]);
+      setPedidoSeleccionadoId(null);
+      setVistaActual('menu');
+    }
+  };
+
+  if (
+    tipoAcceso === 'administrador' &&
+    !administradorAutenticado
+  ) {
+    return (
+      <AdminLoginPage
+        onLoginAdministradorCorrecto={
+          loginAdministradorCorrecto
+        }
+        onVolverCliente={volverAccesoCliente}
+      />
+    );
+  }
+
+  if (administradorAutenticado) {
+    const propsNavegacionAdmin = {
+      onCerrarSesion: cerrarSesionAdministrador,
+      onIrDashboard: irDashboardAdmin,
+      onIrProductos: irProductosAdmin,
+      onIrCategorias: irCategoriasAdmin,
+      onIrClientes: irClientesAdmin,
+      onIrPedidos: irPedidosAdmin,
+      onIrUsuarios: irUsuariosAdmin
+    };
+
+    if (vistaAdministrador === 'pedidos') {
+      return (
+        <AdminPedidosPage
+          {...propsNavegacionAdmin}
+        />
+      );
+    }
+
+    return (
+      <AdminDashboardPage
+        {...propsNavegacionAdmin}
+      />
+    );
+  }
+
+  if (!clienteAutenticado) {
     return (
       <LoginPage
-        onLoginCorrecto={loginCorrecto}
+        onLoginCorrecto={loginClienteCorrecto}
+        onIrAdministrador={
+          abrirAccesoAdministrador
+        }
       />
     );
   }
@@ -178,7 +337,9 @@ function App() {
     return (
       <DetallePedidoPage
         pedidoId={pedidoSeleccionadoId}
-        onVolverAMisPedidos={volverAMisPedidos}
+        onVolverAMisPedidos={
+          volverAMisPedidos
+        }
       />
     );
   }
@@ -192,13 +353,20 @@ function App() {
     );
   }
 
-  if (vistaActual === 'confirmarPedido') {
+  if (
+    vistaActual ===
+    'confirmarPedido'
+  ) {
     return (
       <ConfirmarPedidoPage
         carrito={carrito}
         total={calcularTotalCarrito()}
-        onVolverAlCarrito={volverAlCarrito}
-        onPedidoRegistrado={pedidoRegistrado}
+        onVolverAlCarrito={
+          volverAlCarrito
+        }
+        onPedidoRegistrado={
+          pedidoRegistrado
+        }
       />
     );
   }
@@ -207,11 +375,21 @@ function App() {
     return (
       <CarritoPage
         carrito={carrito}
-        onEliminarProducto={eliminarProductoDelCarrito}
-        onAumentarCantidad={aumentarCantidad}
-        onDisminuirCantidad={disminuirCantidad}
-        onVolverAlMenu={volverAlMenu}
-        onConfirmarPedido={abrirConfirmacionPedido}
+        onEliminarProducto={
+          eliminarProductoDelCarrito
+        }
+        onAumentarCantidad={
+          aumentarCantidad
+        }
+        onDisminuirCantidad={
+          disminuirCantidad
+        }
+        onVolverAlMenu={
+          volverAlMenu
+        }
+        onConfirmarPedido={
+          abrirConfirmacionPedido
+        }
       />
     );
   }
@@ -219,10 +397,18 @@ function App() {
   return (
     <MenuPage
       carrito={carrito}
-      onAgregarAlCarrito={agregarAlCarrito}
-      onAbrirCarrito={abrirCarrito}
-      onAbrirMisPedidos={abrirMisPedidos}
-      onCerrarSesion={cerrarSesion}
+      onAgregarAlCarrito={
+        agregarAlCarrito
+      }
+      onAbrirCarrito={
+        abrirCarrito
+      }
+      onAbrirMisPedidos={
+        abrirMisPedidos
+      }
+      onCerrarSesion={
+        cerrarSesionCliente
+      }
     />
   );
 }
