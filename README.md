@@ -469,3 +469,7 @@ Se agregó paginación al historial de pedidos del cliente y al listado administ
 Se implementaron filtros administrativos para consultar pedidos por estado: Pendiente, En preparación, En camino, Entregado y Cancelado.
 
 También se mantuvo la paginación de 5 pedidos por página.
+
+### RF30 - Gestión de usuarios administradores
+
+Se implementó la gestión de usuarios administradores, permitiendo crear, editar, activar/inactivar y eliminar usuarios de forma segura.
