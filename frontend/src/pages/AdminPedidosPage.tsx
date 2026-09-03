@@ -21,6 +21,10 @@ interface AdminPedidosPageProps {
   onIrUsuarios: () => void;
 }
 
+type FiltroEstado =
+  | 'Todos'
+  | EstadoPedido;
+
 const PEDIDOS_POR_PAGINA = 5;
 
 function AdminPedidosPage({
@@ -42,14 +46,24 @@ function AdminPedidosPage({
   const [paginaActual, setPaginaActual] =
     useState(1);
 
+  const [filtroEstado, setFiltroEstado] =
+    useState<FiltroEstado>('Todos');
+
   useEffect(() => {
     const cargarPedidos = async () => {
       try {
         setCargando(true);
         setError('');
 
+        const estadoConsulta =
+          filtroEstado === 'Todos'
+            ? undefined
+            : filtroEstado;
+
         const pedidosObtenidos =
-          await obtenerPedidosAdmin();
+          await obtenerPedidosAdmin(
+            estadoConsulta
+          );
 
         setPedidos(pedidosObtenidos);
         setPaginaActual(1);
@@ -68,7 +82,7 @@ function AdminPedidosPage({
     };
 
     cargarPedidos();
-  }, []);
+  }, [filtroEstado]);
 
   const pedidosOrdenados = useMemo(() => {
     return [...pedidos].sort((a, b) => {
@@ -129,6 +143,13 @@ function AdminPedidosPage({
       top: 0,
       behavior: 'smooth'
     });
+  };
+
+  const cambiarFiltro = (
+    nuevoFiltro: FiltroEstado
+  ) => {
+    setFiltroEstado(nuevoFiltro);
+    setPaginaActual(1);
   };
 
   const formatearFecha = (fecha: string) => {
@@ -218,6 +239,21 @@ function AdminPedidosPage({
           siguienteEstado
         );
 
+      if (
+        filtroEstado !== 'Todos' &&
+        pedidoActualizado.estado !==
+          filtroEstado
+      ) {
+        setPedidos((pedidosActuales) =>
+          pedidosActuales.filter(
+            (item) =>
+              item._id !== pedido._id
+          )
+        );
+
+        return;
+      }
+
       setPedidos((pedidosActuales) =>
         pedidosActuales.map((item) => {
           if (item._id !== pedido._id) {
@@ -248,6 +284,36 @@ function AdminPedidosPage({
     }
   };
 
+  const filtros: {
+    etiqueta: string;
+    valor: FiltroEstado;
+  }[] = [
+    {
+      etiqueta: 'Todos',
+      valor: 'Todos'
+    },
+    {
+      etiqueta: 'Pendientes',
+      valor: 'Pendiente'
+    },
+    {
+      etiqueta: 'En preparación',
+      valor: 'En preparación'
+    },
+    {
+      etiqueta: 'En camino',
+      valor: 'En camino'
+    },
+    {
+      etiqueta: 'Entregados',
+      valor: 'Entregado'
+    },
+    {
+      etiqueta: 'Cancelados',
+      valor: 'Cancelado'
+    }
+  ];
+
   return (
     <AdminLayout
       vistaActiva="pedidos"
@@ -272,6 +338,30 @@ function AdminPedidosPage({
           </div>
         </header>
 
+        <nav
+          className="admin-pedidos-filters"
+          aria-label="Filtros de pedidos por estado"
+        >
+          {filtros.map((filtro) => (
+            <button
+              key={filtro.valor}
+              type="button"
+              className={
+                filtroEstado === filtro.valor
+                  ? 'admin-pedidos-filters__button admin-pedidos-filters__button--active'
+                  : 'admin-pedidos-filters__button'
+              }
+              onClick={() =>
+                cambiarFiltro(
+                  filtro.valor
+                )
+              }
+            >
+              {filtro.etiqueta}
+            </button>
+          ))}
+        </nav>
+
         {cargando ? (
           <p className="admin-pedidos-page__loading">
             Cargando pedidos...
@@ -289,7 +379,7 @@ function AdminPedidosPage({
 
             {pedidosOrdenados.length === 0 ? (
               <p className="admin-pedidos-page__empty">
-                No hay pedidos registrados.
+                No hay pedidos para el filtro seleccionado.
               </p>
             ) : (
               <>

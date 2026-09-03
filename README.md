@@ -463,3 +463,9 @@ Se agregó paginación al historial de pedidos del cliente y al listado administ
 - Los controles se deshabilitan correctamente en la primera y última página.
 - La paginación se adapta a dispositivos móviles.
 - Las operaciones de cancelación y actualización de estado continúan funcionando sin perder la navegación actual.
+
+### RF27 - RF29 Gestión de pedidos por estado
+
+Se implementaron filtros administrativos para consultar pedidos por estado: Pendiente, En preparación, En camino, Entregado y Cancelado.
+
+También se mantuvo la paginación de 5 pedidos por página.
