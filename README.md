@@ -489,3 +489,7 @@ Se implementó la gestión de clientes con listado, búsqueda, edición, estado,
 ### Registro de clientes
 
 Se implementó el registro de clientes desde el frontend con validación e inicio de sesión posterior.
+
+### Perfil del cliente
+
+Se implementó la consulta y actualización del perfil del cliente autenticado.

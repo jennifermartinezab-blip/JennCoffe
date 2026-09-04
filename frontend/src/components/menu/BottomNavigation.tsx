@@ -4,12 +4,14 @@ interface BottomNavigationProps {
   cantidadCarrito: number;
   onAbrirCarrito: () => void;
   onAbrirMisPedidos: () => void;
+  onAbrirPerfil: () => void;
 }
 
 function BottomNavigation({
   cantidadCarrito,
   onAbrirCarrito,
-  onAbrirMisPedidos
+  onAbrirMisPedidos,
+  onAbrirPerfil
 }: BottomNavigationProps) {
   return (
     <nav
@@ -17,7 +19,10 @@ function BottomNavigation({
       aria-label="Navegación principal del cliente"
     >
       <div className="bottom-navigation__item bottom-navigation__item--active">
-        <span className="bottom-navigation__icon" aria-hidden="true">
+        <span
+          className="bottom-navigation__icon"
+          aria-hidden="true"
+        >
           ⌂
         </span>
 
@@ -27,7 +32,10 @@ function BottomNavigation({
       </div>
 
       <div className="bottom-navigation__item">
-        <span className="bottom-navigation__icon" aria-hidden="true">
+        <span
+          className="bottom-navigation__icon"
+          aria-hidden="true"
+        >
           ☰
         </span>
 
@@ -42,7 +50,10 @@ function BottomNavigation({
         onClick={onAbrirCarrito}
         aria-label={`Abrir carrito con ${cantidadCarrito} productos`}
       >
-        <span className="bottom-navigation__icon" aria-hidden="true">
+        <span
+          className="bottom-navigation__icon"
+          aria-hidden="true"
+        >
           🛒
         </span>
 
@@ -66,7 +77,10 @@ function BottomNavigation({
         onClick={onAbrirMisPedidos}
         aria-label="Abrir mis pedidos"
       >
-        <span className="bottom-navigation__icon" aria-hidden="true">
+        <span
+          className="bottom-navigation__icon"
+          aria-hidden="true"
+        >
           ◫
         </span>
 
@@ -75,15 +89,23 @@ function BottomNavigation({
         </span>
       </button>
 
-      <div className="bottom-navigation__item">
-        <span className="bottom-navigation__icon" aria-hidden="true">
+      <button
+        type="button"
+        className="bottom-navigation__item bottom-navigation__button"
+        onClick={onAbrirPerfil}
+        aria-label="Abrir mi perfil"
+      >
+        <span
+          className="bottom-navigation__icon"
+          aria-hidden="true"
+        >
           ♙
         </span>
 
         <span className="bottom-navigation__label">
           Perfil
         </span>
-      </div>
+      </button>
     </nav>
   );
 }

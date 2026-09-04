@@ -14,6 +14,7 @@ import CarritoPage from './pages/CarritoPage';
 import ConfirmarPedidoPage from './pages/ConfirmarPedidoPage';
 import MisPedidosPage from './pages/MisPedidosPage';
 import DetallePedidoPage from './pages/DetallePedidoPage';
+import PerfilPage from './pages/PerfilPage';
 
 import {
   eliminarToken,
@@ -34,7 +35,8 @@ type VistaActual =
   | 'carrito'
   | 'confirmarPedido'
   | 'misPedidos'
-  | 'detallePedido';
+  | 'detallePedido'
+  | 'perfil';
 
 type VistaAdministrador =
   | 'dashboard'
@@ -170,6 +172,10 @@ function App() {
     setVistaActual('misPedidos');
   };
 
+  const abrirPerfil = () => {
+    setVistaActual('perfil');
+  };
+
   const abrirDetallePedido = (
     pedidoId: string
   ) => {
@@ -298,7 +304,9 @@ function App() {
         onLoginAdministradorCorrecto={
           loginAdministradorCorrecto
         }
-        onVolverCliente={volverAccesoCliente}
+        onVolverCliente={
+          volverAccesoCliente
+        }
       />
     );
   }
@@ -309,20 +317,29 @@ function App() {
   ) {
     return (
       <RegistroPage
-        onVolverLogin={volverAccesoCliente}
+        onVolverLogin={
+          volverAccesoCliente
+        }
       />
     );
   }
 
   if (administradorAutenticado) {
     const propsNavegacionAdmin = {
-      onCerrarSesion: cerrarSesionAdministrador,
-      onIrDashboard: irDashboardAdmin,
-      onIrProductos: irProductosAdmin,
-      onIrCategorias: irCategoriasAdmin,
-      onIrClientes: irClientesAdmin,
-      onIrPedidos: irPedidosAdmin,
-      onIrUsuarios: irUsuariosAdmin
+      onCerrarSesion:
+        cerrarSesionAdministrador,
+      onIrDashboard:
+        irDashboardAdmin,
+      onIrProductos:
+        irProductosAdmin,
+      onIrCategorias:
+        irCategoriasAdmin,
+      onIrClientes:
+        irClientesAdmin,
+      onIrPedidos:
+        irPedidosAdmin,
+      onIrUsuarios:
+        irUsuariosAdmin
     };
 
     if (vistaAdministrador === 'productos') {
@@ -375,12 +392,27 @@ function App() {
   if (!clienteAutenticado) {
     return (
       <LoginPage
-        onLoginCorrecto={loginClienteCorrecto}
+        onLoginCorrecto={
+          loginClienteCorrecto
+        }
         onIrAdministrador={
           abrirAccesoAdministrador
         }
         onIrRegistro={
           abrirRegistroCliente
+        }
+      />
+    );
+  }
+
+  if (vistaActual === 'perfil') {
+    return (
+      <PerfilPage
+        onVolverAlMenu={
+          volverAlMenu
+        }
+        onCerrarSesion={
+          cerrarSesionCliente
         }
       />
     );
@@ -392,7 +424,9 @@ function App() {
   ) {
     return (
       <DetallePedidoPage
-        pedidoId={pedidoSeleccionadoId}
+        pedidoId={
+          pedidoSeleccionadoId
+        }
         onVolverAMisPedidos={
           volverAMisPedidos
         }
@@ -403,8 +437,12 @@ function App() {
   if (vistaActual === 'misPedidos') {
     return (
       <MisPedidosPage
-        onVolverAlMenu={volverAlMenu}
-        onVerDetalle={abrirDetallePedido}
+        onVolverAlMenu={
+          volverAlMenu
+        }
+        onVerDetalle={
+          abrirDetallePedido
+        }
       />
     );
   }
@@ -415,8 +453,12 @@ function App() {
   ) {
     return (
       <ConfirmarPedidoPage
-        carrito={carrito}
-        total={calcularTotalCarrito()}
+        carrito={
+          carrito
+        }
+        total={
+          calcularTotalCarrito()
+        }
         onVolverAlCarrito={
           volverAlCarrito
         }
@@ -430,7 +472,9 @@ function App() {
   if (vistaActual === 'carrito') {
     return (
       <CarritoPage
-        carrito={carrito}
+        carrito={
+          carrito
+        }
         onEliminarProducto={
           eliminarProductoDelCarrito
         }
@@ -452,7 +496,9 @@ function App() {
 
   return (
     <MenuPage
-      carrito={carrito}
+      carrito={
+        carrito
+      }
       onAgregarAlCarrito={
         agregarAlCarrito
       }
@@ -461,6 +507,9 @@ function App() {
       }
       onAbrirMisPedidos={
         abrirMisPedidos
+      }
+      onAbrirPerfil={
+        abrirPerfil
       }
       onCerrarSesion={
         cerrarSesionCliente

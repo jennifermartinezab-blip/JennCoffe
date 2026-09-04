@@ -22,6 +22,7 @@ interface MenuPageProps {
   onAgregarAlCarrito: (producto: Producto) => void;
   onAbrirCarrito: () => void;
   onAbrirMisPedidos: () => void;
+  onAbrirPerfil: () => void;
   onCerrarSesion: () => void;
 }
 
@@ -30,6 +31,7 @@ function MenuPage({
   onAgregarAlCarrito,
   onAbrirCarrito,
   onAbrirMisPedidos,
+  onAbrirPerfil,
   onCerrarSesion
 }: MenuPageProps) {
   const [categorias, setCategorias] = useState<Categoria[]>([]);
@@ -47,16 +49,23 @@ function MenuPage({
         setCargando(true);
         setError('');
 
-        const [categoriasObtenidas, productosObtenidos] = await Promise.all([
-          obtenerCategorias(),
-          obtenerProductos()
-        ]);
+        const [categoriasObtenidas, productosObtenidos] =
+          await Promise.all([
+            obtenerCategorias(),
+            obtenerProductos()
+          ]);
 
         setCategorias(categoriasObtenidas);
         setProductos(productosObtenidos);
       } catch (error) {
-        console.error('Error al cargar el menú:', error);
-        setError('No fue posible cargar el menú. Intenta nuevamente.');
+        console.error(
+          'Error al cargar el menú:',
+          error
+        );
+
+        setError(
+          'No fue posible cargar el menú. Intenta nuevamente.'
+        );
       } finally {
         setCargando(false);
       }
@@ -65,17 +74,30 @@ function MenuPage({
     cargarMenu();
   }, []);
 
-  const seleccionarCategoria = async (categoriaId: string) => {
+  const seleccionarCategoria = async (
+    categoriaId: string
+  ) => {
     try {
       setError('');
 
       const productosObtenidos =
-        await obtenerProductosPorCategoria(categoriaId);
+        await obtenerProductosPorCategoria(
+          categoriaId
+        );
 
-      setCategoriaSeleccionada(categoriaId);
-      setProductos(productosObtenidos);
+      setCategoriaSeleccionada(
+        categoriaId
+      );
+
+      setProductos(
+        productosObtenidos
+      );
     } catch (error) {
-      console.error('Error al filtrar productos por categoría:', error);
+      console.error(
+        'Error al filtrar productos por categoría:',
+        error
+      );
+
       setError(
         'No fue posible consultar los productos de esta categoría.'
       );
@@ -86,21 +108,36 @@ function MenuPage({
     try {
       setError('');
 
-      const productosObtenidos = await obtenerProductos();
+      const productosObtenidos =
+        await obtenerProductos();
 
       setCategoriaSeleccionada(null);
-      setProductos(productosObtenidos);
+
+      setProductos(
+        productosObtenidos
+      );
     } catch (error) {
-      console.error('Error al consultar todos los productos:', error);
-      setError('No fue posible consultar todos los productos.');
+      console.error(
+        'Error al consultar todos los productos:',
+        error
+      );
+
+      setError(
+        'No fue posible consultar todos los productos.'
+      );
     }
   };
 
   if (cargando) {
     return (
       <main>
-        <h1>JennCoffee</h1>
-        <p>Cargando menú...</p>
+        <h1>
+          JennCoffee
+        </h1>
+
+        <p>
+          Cargando menú...
+        </p>
       </main>
     );
   }
@@ -108,8 +145,13 @@ function MenuPage({
   if (error) {
     return (
       <main>
-        <h1>JennCoffee</h1>
-        <p>{error}</p>
+        <h1>
+          JennCoffee
+        </h1>
+
+        <p>
+          {error}
+        </p>
       </main>
     );
   }
@@ -117,27 +159,50 @@ function MenuPage({
   return (
     <main className="menu-page">
       <MenuHeader
-        onCerrarSesion={onCerrarSesion}
+        onCerrarSesion={
+          onCerrarSesion
+        }
       />
 
       <HeroBanner />
 
       <CategoryList
-        categorias={categorias}
-        categoriaSeleccionada={categoriaSeleccionada}
-        onSeleccionarCategoria={seleccionarCategoria}
-        onVerTodas={verTodas}
+        categorias={
+          categorias
+        }
+        categoriaSeleccionada={
+          categoriaSeleccionada
+        }
+        onSeleccionarCategoria={
+          seleccionarCategoria
+        }
+        onVerTodas={
+          verTodas
+        }
       />
 
       <ProductGrid
-        productos={productos}
-        onAgregar={onAgregarAlCarrito}
+        productos={
+          productos
+        }
+        onAgregar={
+          onAgregarAlCarrito
+        }
       />
 
       <BottomNavigation
-        cantidadCarrito={carrito.length}
-        onAbrirCarrito={onAbrirCarrito}
-        onAbrirMisPedidos={onAbrirMisPedidos}
+        cantidadCarrito={
+          carrito.length
+        }
+        onAbrirCarrito={
+          onAbrirCarrito
+        }
+        onAbrirMisPedidos={
+          onAbrirMisPedidos
+        }
+        onAbrirPerfil={
+          onAbrirPerfil
+        }
       />
     </main>
   );

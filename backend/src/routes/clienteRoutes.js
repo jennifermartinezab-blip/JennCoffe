@@ -3,13 +3,16 @@ const express = require('express');
 const {
   registrarCliente,
   listarClientes,
+  obtenerMiPerfil,
+  actualizarMiPerfil,
   actualizarCliente,
   eliminarCliente
 } = require('../controllers/clienteController');
 
 const {
   verificarToken,
-  soloAdministrador
+  soloAdministrador,
+  soloCliente
 } = require('../middlewares/authMiddleware');
 
 const router = express.Router();
@@ -19,6 +22,22 @@ const router = express.Router();
 router.post(
   '/',
   registrarCliente
+);
+
+// Perfil del cliente autenticado
+// Debe ir antes de /:id para evitar que "me" sea interpretado como un id
+router.get(
+  '/me',
+  verificarToken,
+  soloCliente,
+  obtenerMiPerfil
+);
+
+router.put(
+  '/me',
+  verificarToken,
+  soloCliente,
+  actualizarMiPerfil
 );
 
 // RF11 - Consultar clientes
