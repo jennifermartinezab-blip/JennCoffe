@@ -477,3 +477,7 @@ Se implementó la gestión de usuarios administradores, permitiendo crear, edita
 ### Gestión administrativa de productos
 
 Se implementó la gestión de productos con listado, búsqueda, filtro por categoría, creación, edición, eliminación, estado, disponibilidad y paginación.
+
+### Gestión administrativa de categorías
+
+Se implementó la gestión de categorías con listado, búsqueda, creación, edición, estado, eliminación y paginación.

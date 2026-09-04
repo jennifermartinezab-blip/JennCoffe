@@ -9,9 +9,32 @@ export interface CategoriaAdmin {
   updatedAt?: string;
 }
 
+export interface CrearCategoriaAdminData {
+  nombre: string;
+  descripcion?: string;
+  estado?: string;
+}
+
+export interface ActualizarCategoriaAdminData {
+  nombre?: string;
+  descripcion?: string;
+  estado?: string;
+}
+
 interface CategoriasResponse {
   success: boolean;
   data: CategoriaAdmin[];
+}
+
+interface CategoriaResponse {
+  success: boolean;
+  message?: string;
+  data: CategoriaAdmin;
+}
+
+interface EliminarCategoriaResponse {
+  success: boolean;
+  message: string;
 }
 
 export const obtenerCategoriasAdmin = async (): Promise<
@@ -23,4 +46,37 @@ export const obtenerCategoriasAdmin = async (): Promise<
     );
 
   return respuesta.data.data;
+};
+
+export const crearCategoriaAdmin = async (
+  datos: CrearCategoriaAdminData
+): Promise<CategoriaAdmin> => {
+  const respuesta =
+    await api.post<CategoriaResponse>(
+      '/categorias',
+      datos
+    );
+
+  return respuesta.data.data;
+};
+
+export const actualizarCategoriaAdmin = async (
+  categoriaId: string,
+  datos: ActualizarCategoriaAdminData
+): Promise<CategoriaAdmin> => {
+  const respuesta =
+    await api.put<CategoriaResponse>(
+      `/categorias/${categoriaId}`,
+      datos
+    );
+
+  return respuesta.data.data;
+};
+
+export const eliminarCategoriaAdmin = async (
+  categoriaId: string
+): Promise<void> => {
+  await api.delete<EliminarCategoriaResponse>(
+    `/categorias/${categoriaId}`
+  );
 };
