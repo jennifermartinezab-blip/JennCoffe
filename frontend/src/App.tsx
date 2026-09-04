@@ -1,6 +1,7 @@
 import { useState } from 'react';
 
 import LoginPage from './pages/LoginPage';
+import RegistroPage from './pages/RegistroPage';
 import AdminLoginPage from './pages/AdminLoginPage';
 import AdminDashboardPage from './pages/AdminDashboardPage';
 import AdminPedidosPage from './pages/AdminPedidosPage';
@@ -45,6 +46,7 @@ type VistaAdministrador =
 
 type TipoAcceso =
   | 'cliente'
+  | 'registro'
   | 'administrador';
 
 function App() {
@@ -192,6 +194,10 @@ function App() {
     setTipoAcceso('administrador');
   };
 
+  const abrirRegistroCliente = () => {
+    setTipoAcceso('registro');
+  };
+
   const volverAccesoCliente = () => {
     setTipoAcceso('cliente');
   };
@@ -297,6 +303,17 @@ function App() {
     );
   }
 
+  if (
+    tipoAcceso === 'registro' &&
+    !clienteAutenticado
+  ) {
+    return (
+      <RegistroPage
+        onVolverLogin={volverAccesoCliente}
+      />
+    );
+  }
+
   if (administradorAutenticado) {
     const propsNavegacionAdmin = {
       onCerrarSesion: cerrarSesionAdministrador,
@@ -361,6 +378,9 @@ function App() {
         onLoginCorrecto={loginClienteCorrecto}
         onIrAdministrador={
           abrirAccesoAdministrador
+        }
+        onIrRegistro={
+          abrirRegistroCliente
         }
       />
     );

@@ -485,3 +485,7 @@ Se implementó la gestión de categorías con listado, búsqueda, creación, edi
 ### Gestión administrativa de clientes
 
 Se implementó la gestión de clientes con listado, búsqueda, edición, estado, eliminación controlada y paginación.
+
+### Registro de clientes
+
+Se implementó el registro de clientes desde el frontend con validación e inicio de sesión posterior.

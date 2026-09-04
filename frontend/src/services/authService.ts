@@ -6,6 +6,17 @@ interface LoginClienteData {
   contrasena: string;
 }
 
+export interface RegistroClienteData {
+  documento: string;
+  tipoDocumento: string;
+  nombre: string;
+  apellidos: string;
+  correo: string;
+  telefono: string;
+  direccion: string;
+  contrasena: string;
+}
+
 interface ClienteAutenticado {
   id: string;
   tipo: 'Cliente';
@@ -14,11 +25,31 @@ interface ClienteAutenticado {
   correo: string;
 }
 
+interface ClienteRegistrado {
+  _id: string;
+  documento: string;
+  tipoDocumento: string;
+  nombre: string;
+  apellidos: string;
+  correo: string;
+  telefono: string;
+  direccion: string;
+  estado?: string;
+  createdAt?: string;
+  updatedAt?: string;
+}
+
 interface LoginResponse {
   success: boolean;
   message: string;
   token: string;
   data: ClienteAutenticado;
+}
+
+interface RegistroClienteResponse {
+  success: boolean;
+  message: string;
+  data: ClienteRegistrado;
 }
 
 interface LogoutResponse {
@@ -40,6 +71,18 @@ export const loginCliente = async (
     '/auth/login',
     datos
   );
+
+  return respuesta.data;
+};
+
+export const registrarCliente = async (
+  datos: RegistroClienteData
+): Promise<RegistroClienteResponse> => {
+  const respuesta =
+    await api.post<RegistroClienteResponse>(
+      '/clientes',
+      datos
+    );
 
   return respuesta.data;
 };

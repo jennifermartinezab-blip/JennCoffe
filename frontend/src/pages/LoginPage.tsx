@@ -10,11 +10,13 @@ import {
 interface LoginPageProps {
   onLoginCorrecto: () => void;
   onIrAdministrador: () => void;
+  onIrRegistro: () => void;
 }
 
 function LoginPage({
   onLoginCorrecto,
-  onIrAdministrador
+  onIrAdministrador,
+  onIrRegistro
 }: LoginPageProps) {
   const [correo, setCorreo] = useState('');
   const [contrasena, setContrasena] = useState('');
@@ -156,6 +158,20 @@ function LoginPage({
                 : 'Iniciar sesión'}
             </button>
           </form>
+
+          <div className="login-card__register">
+            <span>
+              ¿No tienes cuenta?
+            </span>
+
+            <button
+              type="button"
+              className="login-card__register-button"
+              onClick={onIrRegistro}
+            >
+              Crear cuenta
+            </button>
+          </div>
 
           <p className="login-card__note">
             Acceso exclusivo para clientes registrados en JennCoffee.
