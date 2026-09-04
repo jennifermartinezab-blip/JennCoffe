@@ -7,6 +7,7 @@ import AdminPedidosPage from './pages/AdminPedidosPage';
 import AdminUsuariosPage from './pages/AdminUsuariosPage';
 import AdminProductosPage from './pages/AdminProductosPage';
 import AdminCategoriasPage from './pages/AdminCategoriasPage';
+import AdminClientesPage from './pages/AdminClientesPage';
 import MenuPage from './pages/MenuPage';
 import CarritoPage from './pages/CarritoPage';
 import ConfirmarPedidoPage from './pages/ConfirmarPedidoPage';
@@ -318,6 +319,14 @@ function App() {
     if (vistaAdministrador === 'categorias') {
       return (
         <AdminCategoriasPage
+          {...propsNavegacionAdmin}
+        />
+      );
+    }
+
+    if (vistaAdministrador === 'clientes') {
+      return (
+        <AdminClientesPage
           {...propsNavegacionAdmin}
         />
       );

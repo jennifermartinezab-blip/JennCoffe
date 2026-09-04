@@ -481,3 +481,7 @@ Se implementó la gestión de productos con listado, búsqueda, filtro por categ
 ### Gestión administrativa de categorías
 
 Se implementó la gestión de categorías con listado, búsqueda, creación, edición, estado, eliminación y paginación.
+
+### Gestión administrativa de clientes
+
+Se implementó la gestión de clientes con listado, búsqueda, edición, estado, eliminación controlada y paginación.
