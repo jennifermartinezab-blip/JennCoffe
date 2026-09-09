@@ -55,6 +55,24 @@ function AdminLoginPage({
   return (
     <main className="admin-login-page">
       <section className="admin-login-card">
+        <div className="admin-login-card__brand">
+          <img
+            src="/images/branding/jenncoffee-cat-logo.png"
+            alt="JennCoffee"
+            className="admin-login-card__brand-image"
+          />
+
+          <div>
+            <strong className="admin-login-card__brand-name">
+              JennCoffee
+            </strong>
+
+            <span className="admin-login-card__brand-subtitle">
+              Panel administrativo
+            </span>
+          </div>
+        </div>
+
         <button
           type="button"
           className="admin-login-card__back-button"

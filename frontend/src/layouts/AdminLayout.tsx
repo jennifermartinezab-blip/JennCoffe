@@ -48,11 +48,12 @@ function AdminLayout({
     <div className="admin-layout">
       <aside className="admin-layout__sidebar">
         <div className="admin-layout__brand">
-          <div
-            className="admin-layout__brand-icon"
-            aria-hidden="true"
-          >
-            🐱
+          <div className="admin-layout__brand-icon">
+            <img
+              src="/images/branding/jenncoffee-cat-logo.png"
+              alt="JennCoffee"
+              className="admin-layout__brand-image"
+            />
           </div>
 
           <div>

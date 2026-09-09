@@ -27,16 +27,21 @@ function ConfirmarPedidoPage({
     useState<MetodoPago>('Tarjeta simulada');
 
   const [procesando, setProcesando] = useState(false);
+  const [pedidoExitoso, setPedidoExitoso] = useState(false);
   const [error, setError] = useState('');
 
   const manejarConfirmacion = async () => {
     if (direccionEntrega.trim() === '') {
-      setError('La dirección de entrega es obligatoria.');
+      setError(
+        'La dirección de entrega es obligatoria.'
+      );
       return;
     }
 
     if (carrito.length === 0) {
-      setError('El carrito está vacío.');
+      setError(
+        'El carrito está vacío.'
+      );
       return;
     }
 
@@ -51,7 +56,7 @@ function ConfirmarPedidoPage({
         'Aprobado'
       );
 
-      onPedidoRegistrado();
+      setPedidoExitoso(true);
     } catch (error) {
       console.error(
         'Error al registrar el pedido:',
@@ -65,6 +70,59 @@ function ConfirmarPedidoPage({
       setProcesando(false);
     }
   };
+
+  if (pedidoExitoso) {
+    return (
+      <main className="confirmar-pedido-page confirmar-pedido-page--success">
+        <section className="confirmar-pedido-success">
+          <div className="confirmar-pedido-success__image-wrapper">
+            <img
+              src="/images/branding/jenncoffee-payment-success.jpg"
+              alt="Pedido confirmado en JennCoffee"
+              className="confirmar-pedido-success__image"
+            />
+          </div>
+
+          <div className="confirmar-pedido-success__content">
+            <p className="confirmar-pedido-success__brand">
+              JennCoffee
+            </p>
+
+            <h1 className="confirmar-pedido-success__title">
+              ¡Pago exitoso!
+            </h1>
+
+            <p className="confirmar-pedido-success__text">
+              Tu pedido fue registrado correctamente.
+            </p>
+
+            <div className="confirmar-pedido-success__summary">
+              <span>
+                Total pagado
+              </span>
+
+              <strong>
+                ${total.toLocaleString('es-CO')}
+              </strong>
+            </div>
+
+            <p className="confirmar-pedido-success__note">
+              Gracias por comprar en JennCoffee. Puedes consultar
+              el estado de tu pedido en Mis pedidos.
+            </p>
+
+            <button
+              type="button"
+              className="confirmar-pedido-success__button"
+              onClick={onPedidoRegistrado}
+            >
+              Ver mis pedidos
+            </button>
+          </div>
+        </section>
+      </main>
+    );
+  }
 
   return (
     <main className="confirmar-pedido-page">
@@ -121,9 +179,13 @@ function ConfirmarPedidoPage({
               type="radio"
               name="metodoPago"
               value="Tarjeta simulada"
-              checked={metodoPago === 'Tarjeta simulada'}
+              checked={
+                metodoPago === 'Tarjeta simulada'
+              }
               onChange={() =>
-                setMetodoPago('Tarjeta simulada')
+                setMetodoPago(
+                  'Tarjeta simulada'
+                )
               }
             />
 
@@ -138,9 +200,13 @@ function ConfirmarPedidoPage({
               type="radio"
               name="metodoPago"
               value="Efectivo"
-              checked={metodoPago === 'Efectivo'}
+              checked={
+                metodoPago === 'Efectivo'
+              }
               onChange={() =>
-                setMetodoPago('Efectivo')
+                setMetodoPago(
+                  'Efectivo'
+                )
               }
             />
 
@@ -169,7 +235,8 @@ function ConfirmarPedidoPage({
               <strong className="confirmar-pedido-page__summary-price">
                 $
                 {(
-                  item.producto.precio * item.cantidad
+                  item.producto.precio *
+                  item.cantidad
                 ).toLocaleString('es-CO')}
               </strong>
             </article>

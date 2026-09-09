@@ -1,11 +1,28 @@
 .confirmar-pedido-page {
   width: min(100%, 760px);
+
   min-height: 100vh;
+
   margin: 0 auto;
+
   padding: 24px 24px 80px;
 
   color: #4c3747;
+
   background: #ffffff;
+}
+
+.confirmar-pedido-page--success {
+  width: 100%;
+  max-width: none;
+
+  padding: 24px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background: #fcf4f6;
 }
 
 .confirmar-pedido-page__header {
@@ -19,6 +36,7 @@
 .confirmar-pedido-page__back-button {
   width: 42px;
   height: 42px;
+
   padding: 0;
 
   display: flex;
@@ -32,6 +50,7 @@
   color: #765f70;
 
   font-size: 1.3rem;
+
   cursor: pointer;
 }
 
@@ -56,13 +75,16 @@
 
 .confirmar-pedido-page__section {
   margin-bottom: 18px;
+
   padding: 20px;
 
   border: 1px solid #f1dbe6;
   border-radius: 18px;
 
   background: #fff8fb;
-  box-shadow: 0 6px 18px rgba(76, 55, 71, 0.05);
+
+  box-shadow:
+    0 6px 18px rgba(76, 55, 71, 0.05);
 }
 
 .confirmar-pedido-page__section-title {
@@ -89,6 +111,7 @@
 
 .confirmar-pedido-page__input {
   width: 100%;
+
   padding: 12px 14px;
 
   border: 1px solid #e8ccd9;
@@ -102,17 +125,23 @@
 
 .confirmar-pedido-page__input:focus {
   border-color: #ed4f9a;
-  box-shadow: 0 0 0 3px rgba(237, 79, 154, 0.12);
+
+  box-shadow:
+    0 0 0 3px rgba(237, 79, 154, 0.12);
 }
 
 .confirmar-pedido-page__payment-options {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+
+  grid-template-columns:
+    repeat(2, minmax(0, 1fr));
+
   gap: 12px;
 }
 
 .confirmar-pedido-page__payment-option {
   min-height: 76px;
+
   padding: 14px;
 
   display: flex;
@@ -123,8 +152,8 @@
   border-radius: 14px;
 
   background: #ffffff;
-
   color: #4c3747;
+
   font-size: 0.9rem;
   font-weight: 600;
 
@@ -133,6 +162,7 @@
 
 .confirmar-pedido-page__payment-option:has(input:checked) {
   border-color: #ed4f9a;
+
   background: #fff0f6;
 }
 
@@ -204,6 +234,7 @@
 
 .confirmar-pedido-page__error {
   margin: 0 0 16px;
+
   padding: 12px 14px;
 
   border: 1px solid #f3c1d4;
@@ -217,15 +248,23 @@
 
 .confirmar-pedido-page__confirm-button {
   width: 100%;
+
   padding: 13px 16px;
 
   border: 0;
   border-radius: 12px;
 
-  background: #ed4f9a;
+  background:
+    linear-gradient(
+      90deg,
+      #9a62e8 0%,
+      #ed4f9a 100%
+    );
+
   color: #ffffff;
 
   font-weight: 800;
+
   cursor: pointer;
 }
 
@@ -235,6 +274,7 @@
 
 .confirmar-pedido-page__confirm-button:disabled {
   background: #d9c8d1;
+
   cursor: not-allowed;
 }
 
@@ -250,12 +290,150 @@
 
   font-size: 0.8rem;
   line-height: 1.5;
+
   text-align: center;
+}
+
+/* Pago exitoso */
+
+.confirmar-pedido-success {
+  width: min(100%, 460px);
+
+  overflow: hidden;
+
+  border: 1px solid #f1dbe6;
+  border-radius: 24px;
+
+  background: #ffffff;
+
+  box-shadow:
+    0 18px 45px rgba(76, 55, 71, 0.12);
+}
+
+.confirmar-pedido-success__image-wrapper {
+  width: 100%;
+  height: 260px;
+
+  overflow: hidden;
+
+  background: #fcf4f6;
+}
+
+.confirmar-pedido-success__image {
+  width: 100%;
+  height: 100%;
+
+  display: block;
+
+  object-fit: cover;
+  object-position: center;
+}
+
+.confirmar-pedido-success__content {
+  padding: 28px 28px 30px;
+
+  text-align: center;
+}
+
+.confirmar-pedido-success__brand {
+  margin: 0 0 8px;
+
+  color: #ed4f9a;
+
+  font-size: 0.88rem;
+  font-weight: 800;
+}
+
+.confirmar-pedido-success__title {
+  margin: 0;
+
+  color: #4c3747;
+
+  font-size: 1.8rem;
+  font-weight: 800;
+}
+
+.confirmar-pedido-success__text {
+  margin: 8px 0 20px;
+
+  color: #765f70;
+
+  font-size: 0.92rem;
+  line-height: 1.5;
+}
+
+.confirmar-pedido-success__summary {
+  padding: 14px 16px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  border: 1px solid #f1dbe6;
+  border-radius: 14px;
+
+  background: #fff8fb;
+
+  color: #765f70;
+
+  font-size: 0.86rem;
+}
+
+.confirmar-pedido-success__summary strong {
+  color: #ed4f9a;
+
+  font-size: 1.05rem;
+  font-weight: 800;
+}
+
+.confirmar-pedido-success__note {
+  margin: 18px 0;
+
+  color: #8a7483;
+
+  font-size: 0.8rem;
+  line-height: 1.5;
+}
+
+.confirmar-pedido-success__button {
+  width: 100%;
+
+  padding: 12px 16px;
+
+  border: 0;
+  border-radius: 12px;
+
+  background:
+    linear-gradient(
+      90deg,
+      #9a62e8 0%,
+      #ed4f9a 100%
+    );
+
+  color: #ffffff;
+
+  font-size: 0.9rem;
+  font-weight: 800;
+
+  cursor: pointer;
+}
+
+.confirmar-pedido-success__button:hover {
+  opacity: 0.92;
+}
+
+.confirmar-pedido-success__button:focus-visible {
+  outline: 2px solid #ed4f9a;
+  outline-offset: 3px;
 }
 
 @media (max-width: 600px) {
   .confirmar-pedido-page {
     padding: 16px 12px 60px;
+  }
+
+  .confirmar-pedido-page--success {
+    padding: 14px;
   }
 
   .confirmar-pedido-page__title {
@@ -276,5 +454,17 @@
 
   .confirmar-pedido-page__total-value {
     font-size: 1.2rem;
+  }
+
+  .confirmar-pedido-success__image-wrapper {
+    height: 220px;
+  }
+
+  .confirmar-pedido-success__content {
+    padding: 24px 20px 26px;
+  }
+
+  .confirmar-pedido-success__title {
+    font-size: 1.55rem;
   }
 }

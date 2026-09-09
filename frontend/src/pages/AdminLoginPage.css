@@ -6,29 +6,70 @@
   align-items: center;
   justify-content: center;
 
-  background:
-    linear-gradient(
-      135deg,
-      #fff7fb 0%,
-      #f8ecff 55%,
-      #fff4f8 100%
-    );
+  background: #fcf4f6;
 }
 
 .admin-login-card {
   width: min(100%, 520px);
+
   padding: 36px;
 
   border: 1px solid #f1dbe6;
   border-radius: 22px;
 
-  background: #ffffff;
+  background: #fff9fa;
 
-  box-shadow: 0 18px 45px rgba(76, 55, 71, 0.12);
+  box-shadow:
+    0 18px 45px rgba(76, 55, 71, 0.12);
+}
+
+.admin-login-card__brand {
+  margin-bottom: 22px;
+
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.admin-login-card__brand-image {
+  width: 46px;
+  height: 46px;
+
+  display: block;
+
+  flex-shrink: 0;
+
+  object-fit: cover;
+  object-position: center;
+
+  border-radius: 12px;
+
+  box-shadow:
+    0 4px 12px rgba(76, 55, 71, 0.08);
+}
+
+.admin-login-card__brand-name {
+  display: block;
+
+  color: #ed4f9a;
+
+  font-size: 1rem;
+  font-weight: 800;
+}
+
+.admin-login-card__brand-subtitle {
+  display: block;
+
+  margin-top: 2px;
+
+  color: #8a7483;
+
+  font-size: 0.72rem;
 }
 
 .admin-login-card__back-button {
   margin-bottom: 22px;
+
   padding: 9px 12px;
 
   border: 1px solid #e8ccd9;
@@ -87,6 +128,7 @@
 
 .admin-login-form__input {
   width: 100%;
+
   padding: 12px 14px;
 
   border: 1px solid #e8ccd9;
@@ -107,6 +149,7 @@
 
 .admin-login-form__error {
   margin: 0;
+
   padding: 10px 12px;
 
   border: 1px solid #f3c1d4;
@@ -120,15 +163,24 @@
 
 .admin-login-form__button {
   width: 100%;
+
   margin-top: 4px;
+
   padding: 12px 16px;
 
   border: 0;
   border-radius: 12px;
 
-  background: #ed4f9a;
+  background:
+    linear-gradient(
+      90deg,
+      #9a62e8 0%,
+      #ed4f9a 100%
+    );
+
   color: #ffffff;
 
+  font-size: 0.95rem;
   font-weight: 800;
 
   cursor: pointer;
@@ -140,6 +192,7 @@
 
 .admin-login-form__button:disabled {
   background: #d9c8d1;
+
   cursor: not-allowed;
 }
 

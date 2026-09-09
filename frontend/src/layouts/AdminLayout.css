@@ -1,17 +1,22 @@
 .admin-layout {
   min-height: 100vh;
+
   display: grid;
+
   grid-template-columns: 230px minmax(0, 1fr);
 
   background: #fffafb;
+
   color: #4c3747;
 }
 
 .admin-layout__sidebar {
   min-height: 100vh;
+
   padding: 22px 16px;
 
   display: flex;
+
   flex-direction: column;
 
   background:
@@ -26,31 +31,51 @@
 
 .admin-layout__brand {
   display: flex;
+
   align-items: center;
+
   gap: 10px;
 
   padding: 4px 4px 18px;
 }
 
 .admin-layout__brand-icon {
-  width: 40px;
-  height: 40px;
+  width: 44px;
+
+  height: 44px;
 
   display: flex;
+
   align-items: center;
+
   justify-content: center;
+
+  flex-shrink: 0;
+
+  overflow: hidden;
 
   border-radius: 12px;
 
   background: rgba(255, 255, 255, 0.16);
+}
 
-  font-size: 1.5rem;
+.admin-layout__brand-image {
+  width: 100%;
+
+  height: 100%;
+
+  display: block;
+
+  object-fit: cover;
+
+  object-position: center;
 }
 
 .admin-layout__brand-name {
   display: block;
 
   font-size: 1.05rem;
+
   font-weight: 800;
 }
 
@@ -60,15 +85,19 @@
   margin-top: 2px;
 
   font-size: 0.7rem;
+
   opacity: 0.8;
 }
 
 .admin-layout__profile {
   margin-bottom: 18px;
+
   padding: 12px;
 
   display: flex;
+
   align-items: center;
+
   gap: 10px;
 
   border-radius: 14px;
@@ -78,10 +107,13 @@
 
 .admin-layout__profile-avatar {
   width: 38px;
+
   height: 38px;
 
   display: flex;
+
   align-items: center;
+
   justify-content: center;
 
   flex-shrink: 0;
@@ -89,9 +121,11 @@
   border-radius: 50%;
 
   background: #fff3f8;
+
   color: #6f58a6;
 
   font-size: 0.9rem;
+
   font-weight: 800;
 }
 
@@ -99,6 +133,7 @@
   display: block;
 
   font-size: 0.85rem;
+
   font-weight: 800;
 }
 
@@ -108,33 +143,43 @@
   margin-top: 2px;
 
   font-size: 0.7rem;
+
   opacity: 0.78;
 }
 
 .admin-layout__nav {
   display: flex;
+
   flex-direction: column;
+
   gap: 6px;
 }
 
 .admin-layout__nav-button {
   width: 100%;
+
   padding: 10px 12px;
 
   display: flex;
+
   align-items: center;
+
   gap: 10px;
 
   border: 0;
+
   border-radius: 10px;
 
   background: transparent;
+
   color: #ffffff;
 
   font-size: 0.85rem;
+
   font-weight: 700;
 
   text-align: left;
+
   cursor: pointer;
 }
 
@@ -150,7 +195,9 @@
   width: 20px;
 
   display: inline-flex;
+
   align-items: center;
+
   justify-content: center;
 
   font-size: 0.95rem;
@@ -158,20 +205,27 @@
 
 .admin-layout__logout {
   width: 100%;
+
   margin-top: auto;
+
   padding: 11px 12px;
 
   display: flex;
+
   align-items: center;
+
   gap: 10px;
 
   border: 1px solid rgba(255, 255, 255, 0.32);
+
   border-radius: 10px;
 
   background: rgba(255, 255, 255, 0.08);
+
   color: #ffffff;
 
   font-size: 0.85rem;
+
   font-weight: 700;
 
   cursor: pointer;
@@ -185,12 +239,15 @@
   width: 20px;
 
   display: inline-flex;
+
   align-items: center;
+
   justify-content: center;
 }
 
 .admin-layout__content {
   min-width: 0;
+
   min-height: 100vh;
 
   background: #fffafb;
@@ -199,6 +256,7 @@
 .admin-layout__nav-button:focus-visible,
 .admin-layout__logout:focus-visible {
   outline: 2px solid #ffffff;
+
   outline-offset: 2px;
 }
 
@@ -215,6 +273,7 @@
 
   .admin-layout__sidebar {
     min-height: auto;
+
     padding: 14px;
   }
 
@@ -224,6 +283,7 @@
 
   .admin-layout__nav {
     display: grid;
+
     grid-template-columns:
       repeat(2, minmax(0, 1fr));
   }

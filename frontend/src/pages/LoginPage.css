@@ -6,20 +6,11 @@
   align-items: center;
   justify-content: center;
 
-  background:
-    linear-gradient(
-      135deg,
-      #fff7fb 0%,
-      #f8ecff 55%,
-      #fff4f8 100%
-    );
+  background: #fcf4f6;
 }
 
 .login-card {
-  width: min(100%, 920px);
-
-  display: grid;
-  grid-template-columns: 1fr 1fr;
+  width: min(100%, 460px);
 
   overflow: hidden;
 
@@ -32,83 +23,52 @@
     0 18px 45px rgba(76, 55, 71, 0.12);
 }
 
-.login-card__visual {
-  min-height: 560px;
-  padding: 44px;
+.login-card__header {
+  padding: 26px 26px 14px;
 
   display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-
-  background:
-    linear-gradient(
-      160deg,
-      #f8ddff 0%,
-      #ffe4ef 100%
-    );
-
-  color: #4c3747;
-}
-
-.login-card__brand {
-  margin: 0;
-
-  color: #ed4f9a;
-
-  font-size: 1.2rem;
-  font-weight: 800;
-}
-
-.login-card__visual-content {
-  max-width: 340px;
-}
-
-.login-card__visual-title {
-  margin: 0 0 14px;
-
-  font-size: 2.2rem;
-  line-height: 1.1;
-  font-weight: 800;
-}
-
-.login-card__visual-text {
-  margin: 0;
-
-  color: #765f70;
-
-  font-size: 1rem;
-  line-height: 1.6;
-}
-
-.login-card__decoration {
-  font-size: 5rem;
-  line-height: 1;
-}
-
-.login-card__content {
-  padding: 48px 44px;
-
-  display: flex;
-  flex-direction: column;
   justify-content: center;
+
+  background: #fcf4f6;
+}
+
+.login-card__brand-image {
+  width: min(100%, 280px);
+  height: auto;
+
+  display: block;
+
+  object-fit: contain;
+}
+
+.login-card__form-box {
+  margin: 0 20px;
+  padding: 24px 18px 22px;
+
+  border: 1px solid #f1dbe6;
+  border-radius: 20px;
+
+  background: #ffffff;
 }
 
 .login-card__title {
-  margin: 0 0 8px;
+  margin: 0 0 6px;
 
   color: #4c3747;
 
-  font-size: 1.9rem;
+  font-size: 1.7rem;
   font-weight: 800;
+  text-align: center;
 }
 
 .login-card__subtitle {
-  margin: 0 0 28px;
+  margin: 0 0 22px;
 
   color: #765f70;
 
-  font-size: 0.95rem;
+  font-size: 0.92rem;
   line-height: 1.5;
+  text-align: center;
 }
 
 .login-form {
@@ -171,9 +131,16 @@
   border: 0;
   border-radius: 12px;
 
-  background: #ed4f9a;
+  background:
+    linear-gradient(
+      90deg,
+      #9a62e8 0%,
+      #ed4f9a 100%
+    );
+
   color: #ffffff;
 
+  font-size: 0.95rem;
   font-weight: 800;
 
   cursor: pointer;
@@ -205,6 +172,7 @@
   color: #765f70;
 
   font-size: 0.86rem;
+  text-align: center;
 }
 
 .login-card__register-button {
@@ -228,6 +196,7 @@
 .login-card__register-button:focus-visible {
   outline: 2px solid #ed4f9a;
   outline-offset: 3px;
+
   border-radius: 4px;
 }
 
@@ -238,6 +207,7 @@
 
   font-size: 0.8rem;
   line-height: 1.5;
+  text-align: center;
 }
 
 .login-card__admin-button {
@@ -266,35 +236,62 @@
   outline-offset: 3px;
 }
 
-@media (max-width: 760px) {
+.login-card__footer-visual {
+  margin-top: 18px;
+  height: 145px;
+
+  overflow: hidden;
+
+  border-top: 1px solid #f6e6ee;
+
+  background: #fcf4f6;
+}
+
+.login-card__footer-image {
+  width: 100%;
+  height: 100%;
+
+  display: block;
+
+  object-fit: cover;
+  object-position: center bottom;
+}
+
+@media (max-width: 520px) {
   .login-page {
-    padding: 14px;
+    padding: 12px;
   }
 
   .login-card {
-    grid-template-columns: 1fr;
+    width: 100%;
+
+    border-radius: 20px;
   }
 
-  .login-card__visual {
-    min-height: auto;
-    padding: 28px;
-
-    gap: 28px;
+  .login-card__header {
+    padding: 22px 18px 12px;
   }
 
-  .login-card__visual-title {
-    font-size: 1.8rem;
+  .login-card__brand-image {
+    width: min(100%, 240px);
   }
 
-  .login-card__decoration {
-    font-size: 3.8rem;
+  .login-card__form-box {
+    margin: 0 14px;
+    padding: 20px 14px 18px;
+
+    border-radius: 18px;
   }
 
-  .login-card__content {
-    padding: 32px 24px;
+  .login-card__title {
+    font-size: 1.45rem;
   }
 
   .login-card__register {
     flex-wrap: wrap;
+  }
+
+  .login-card__footer-visual {
+    height: 120px;
   }
 }

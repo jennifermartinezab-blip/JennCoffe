@@ -1,4 +1,9 @@
-import { useEffect, useState } from 'react';
+import {
+  useEffect,
+  useMemo,
+  useState
+} from 'react';
+
 import './MenuPage.css';
 
 import MenuHeader from '../components/menu/MenuHeader';
@@ -19,7 +24,9 @@ import type { CarritoItem } from '../types/CarritoItem';
 
 interface MenuPageProps {
   carrito: CarritoItem[];
-  onAgregarAlCarrito: (producto: Producto) => void;
+  onAgregarAlCarrito: (
+    producto: Producto
+  ) => void;
   onAbrirCarrito: () => void;
   onAbrirMisPedidos: () => void;
   onAbrirPerfil: () => void;
@@ -34,14 +41,25 @@ function MenuPage({
   onAbrirPerfil,
   onCerrarSesion
 }: MenuPageProps) {
-  const [categorias, setCategorias] = useState<Categoria[]>([]);
-  const [productos, setProductos] = useState<Producto[]>([]);
-  const [categoriaSeleccionada, setCategoriaSeleccionada] = useState<
-    string | null
-  >(null);
+  const [categorias, setCategorias] =
+    useState<Categoria[]>([]);
 
-  const [cargando, setCargando] = useState(true);
-  const [error, setError] = useState('');
+  const [productos, setProductos] =
+    useState<Producto[]>([]);
+
+  const [
+    categoriaSeleccionada,
+    setCategoriaSeleccionada
+  ] = useState<string | null>(null);
+
+  const [busqueda, setBusqueda] =
+    useState('');
+
+  const [cargando, setCargando] =
+    useState(true);
+
+  const [error, setError] =
+    useState('');
 
   useEffect(() => {
     const cargarMenu = async () => {
@@ -49,14 +67,21 @@ function MenuPage({
         setCargando(true);
         setError('');
 
-        const [categoriasObtenidas, productosObtenidos] =
-          await Promise.all([
-            obtenerCategorias(),
-            obtenerProductos()
-          ]);
+        const [
+          categoriasObtenidas,
+          productosObtenidos
+        ] = await Promise.all([
+          obtenerCategorias(),
+          obtenerProductos()
+        ]);
 
-        setCategorias(categoriasObtenidas);
-        setProductos(productosObtenidos);
+        setCategorias(
+          categoriasObtenidas
+        );
+
+        setProductos(
+          productosObtenidos
+        );
       } catch (error) {
         console.error(
           'Error al cargar el menú:',
@@ -79,6 +104,7 @@ function MenuPage({
   ) => {
     try {
       setError('');
+      setBusqueda('');
 
       const productosObtenidos =
         await obtenerProductosPorCategoria(
@@ -107,6 +133,7 @@ function MenuPage({
   const verTodas = async () => {
     try {
       setError('');
+      setBusqueda('');
 
       const productosObtenidos =
         await obtenerProductos();
@@ -127,6 +154,60 @@ function MenuPage({
       );
     }
   };
+
+  const verPromociones = async () => {
+    const categoriaPromociones =
+      categorias.find(
+        (categoria) =>
+          categoria.nombre
+            .trim()
+            .toLowerCase() ===
+          'promociones'
+      );
+
+    if (!categoriaPromociones) {
+      setError(
+        'La categoría Promociones no está disponible.'
+      );
+      return;
+    }
+
+    await seleccionarCategoria(
+      categoriaPromociones._id
+    );
+  };
+
+  const productosFiltrados =
+    useMemo(() => {
+      const texto =
+        busqueda
+          .trim()
+          .toLowerCase();
+
+      if (texto === '') {
+        return productos;
+      }
+
+      return productos.filter(
+        (producto) => {
+          const nombre =
+            producto.nombre
+              ?.toLowerCase() ?? '';
+
+          const descripcion =
+            producto.descripcion
+              ?.toLowerCase() ?? '';
+
+          return (
+            nombre.includes(texto) ||
+            descripcion.includes(texto)
+          );
+        }
+      );
+    }, [
+      busqueda,
+      productos
+    ]);
 
   if (cargando) {
     return (
@@ -159,12 +240,34 @@ function MenuPage({
   return (
     <main className="menu-page">
       <MenuHeader
+        busqueda={
+          busqueda
+        }
+        cantidadCarrito={
+          carrito.length
+        }
+        onCambiarBusqueda={
+          setBusqueda
+        }
+        onAbrirCarrito={
+          onAbrirCarrito
+        }
+        onAbrirMisPedidos={
+          onAbrirMisPedidos
+        }
+        onAbrirPerfil={
+          onAbrirPerfil
+        }
         onCerrarSesion={
           onCerrarSesion
         }
       />
 
-      <HeroBanner />
+      <HeroBanner
+        onVerPromociones={
+          verPromociones
+        }
+      />
 
       <CategoryList
         categorias={
@@ -183,7 +286,7 @@ function MenuPage({
 
       <ProductGrid
         productos={
-          productos
+          productosFiltrados
         }
         onAgregar={
           onAgregarAlCarrito

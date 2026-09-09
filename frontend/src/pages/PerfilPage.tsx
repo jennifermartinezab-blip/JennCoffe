@@ -166,18 +166,28 @@ function PerfilPage({
     <main className="perfil-page">
       <section className="perfil-card">
         <header className="perfil-header">
-          <div>
-            <p className="perfil-brand">
-              JennCoffee
-            </p>
+          <div className="perfil-header__brand-area">
+            <div className="perfil-logo">
+              <img
+                src="/images/branding/jenncoffee-cat-logo.png"
+                alt="JennCoffee"
+                className="perfil-logo__image"
+              />
+            </div>
 
-            <h1 className="perfil-title">
-              Mi perfil
-            </h1>
+            <div>
+              <p className="perfil-brand">
+                JennCoffee
+              </p>
 
-            <p className="perfil-subtitle">
-              Consulta y actualiza tus datos personales.
-            </p>
+              <h1 className="perfil-title">
+                Mi perfil
+              </h1>
+
+              <p className="perfil-subtitle">
+                Consulta y actualiza tus datos personales.
+              </p>
+            </div>
           </div>
 
           <div className="perfil-header__actions">
@@ -206,7 +216,7 @@ function PerfilPage({
               .toUpperCase()}
           </div>
 
-          <div>
+          <div className="perfil-summary__content">
             <h2>
               {perfil.nombre}{' '}
               {perfil.apellidos}

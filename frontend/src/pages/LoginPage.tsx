@@ -58,37 +58,21 @@ function LoginPage({
   return (
     <main className="login-page">
       <section className="login-card">
-        <div className="login-card__visual">
-          <p className="login-card__brand">
-            JennCoffee
-          </p>
+        <header className="login-card__header">
+          <img
+            src="/images/branding/jenncoffee-inicio.jpg"
+            alt="Identidad visual de JennCoffee"
+            className="login-card__brand-image"
+          />
+        </header>
 
-          <div className="login-card__visual-content">
-            <h1 className="login-card__visual-title">
-              Tu rincón coreano favorito
-            </h1>
-
-            <p className="login-card__visual-text">
-              Disfruta bebidas, platos y postres inspirados
-              en los cafés coreanos.
-            </p>
-          </div>
-
-          <div
-            className="login-card__decoration"
-            aria-hidden="true"
-          >
-            ☕
-          </div>
-        </div>
-
-        <div className="login-card__content">
+        <div className="login-card__form-box">
           <h2 className="login-card__title">
-            Iniciar sesión
+            ¡Bienvenida de nuevo!
           </h2>
 
           <p className="login-card__subtitle">
-            Ingresa con tu cuenta de cliente para continuar.
+            Inicia sesión para continuar.
           </p>
 
           <form
@@ -100,7 +84,7 @@ function LoginPage({
                 className="login-form__label"
                 htmlFor="correo"
               >
-                Correo
+                Correo electrónico
               </label>
 
               <input
@@ -169,7 +153,7 @@ function LoginPage({
               className="login-card__register-button"
               onClick={onIrRegistro}
             >
-              Crear cuenta
+              Regístrate aquí
             </button>
           </div>
 
@@ -184,6 +168,17 @@ function LoginPage({
           >
             Ingresar como administrador
           </button>
+        </div>
+
+        <div
+          className="login-card__footer-visual"
+          aria-hidden="true"
+        >
+          <img
+            src="/images/branding/jenncoffee-login.jpg"
+            alt=""
+            className="login-card__footer-image"
+          />
         </div>
       </section>
     </main>
