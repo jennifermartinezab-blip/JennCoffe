@@ -12,20 +12,37 @@ const app = express();
 
 const ORIGENES_PERMITIDOS = new Set([
   'http://localhost:5173',
-  'http://127.0.0.1:5173'
+  'http://127.0.0.1:5173',
+  'http://localhost:8080',
+  'http://127.0.0.1:8080'
 ]);
 
 const corsOptions = {
   origin: (origen, callback) => {
-    // Permite Postman y otras herramientas sin encabezado Origin
+    // Permite Postman y otras herramientas sin encabezado Origin.
     if (!origen || ORIGENES_PERMITIDOS.has(origen)) {
       return callback(null, true);
     }
 
-    return callback(new Error('Origen no permitido por CORS'));
+    return callback(
+      new Error('Origen no permitido por CORS')
+    );
   },
-  methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
-  allowedHeaders: ['Content-Type', 'Authorization'],
+
+  methods: [
+    'GET',
+    'POST',
+    'PUT',
+    'PATCH',
+    'DELETE',
+    'OPTIONS'
+  ],
+
+  allowedHeaders: [
+    'Content-Type',
+    'Authorization'
+  ],
+
   credentials: false
 };
 
@@ -46,7 +63,7 @@ app.use('/api/pedidos', pedidoRoutes);
 app.use('/api/usuarios', usuarioRoutes);
 app.use('/api/auth', authRoutes);
 
-// Manejo de rutas inexistentes
+// Manejo de rutas inexistentes.
 app.use((req, res) => {
   res.status(404).json({
     success: false,
@@ -54,9 +71,12 @@ app.use((req, res) => {
   });
 });
 
-// Manejo global de errores
+// Manejo global de errores.
 app.use((error, req, res, _next) => {
-  console.error('Error no controlado:', error.message);
+  console.error(
+    'Error no controlado:',
+    error.message
+  );
 
   res.status(500).json({
     success: false,

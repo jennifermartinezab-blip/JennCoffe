@@ -4,7 +4,7 @@ const app = require('./src/app');
 const conectarDB = require('./src/config/database');
 
 const PORT = Number(process.env.PORT) || 3000;
-const HOST = '127.0.0.1';
+const HOST = process.env.HOST || '0.0.0.0';
 
 const iniciarServidor = async () => {
   try {
@@ -19,7 +19,11 @@ const iniciarServidor = async () => {
       console.error('Error HTTP:', error.message);
     });
   } catch (error) {
-    console.error('Error al iniciar el servidor:', error.message);
+    console.error(
+      'Error al iniciar el servidor:',
+      error.message
+    );
+
     process.exit(1);
   }
 };

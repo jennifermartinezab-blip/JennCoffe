@@ -1,0 +1,37 @@
+services:
+  mongo:
+    image: mongo:8
+    container_name: jenncoffee-mongo
+    restart: unless-stopped
+    ports:
+      - "27017:27017"
+    volumes:
+      - jenncoffee_mongo_data:/data/db
+
+  backend:
+    build:
+      context: ./backend
+    container_name: jenncoffee-backend
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    environment:
+      PORT: 3000
+      HOST: 0.0.0.0
+      MONGODB_URI: mongodb://mongo:27017/jenncoffee
+      JWT_SECRET: ${JWT_SECRET}
+    depends_on:
+      - mongo
+
+  frontend:
+    build:
+      context: ./frontend
+    container_name: jenncoffee-frontend
+    restart: unless-stopped
+    ports:
+      - "8080:80"
+    depends_on:
+      - backend
+
+volumes:
+  jenncoffee_mongo_data:
