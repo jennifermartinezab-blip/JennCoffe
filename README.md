@@ -493,3 +493,7 @@ Se implementó el registro de clientes desde el frontend con validación e inici
 ### Perfil del cliente
 
 Se implementó la consulta y actualización del perfil del cliente autenticado.
+
+### Dashboard administrativo
+
+Se implementó el dashboard con indicadores reales y pedidos recientes.
