@@ -109,193 +109,219 @@ function RegistroPage({
   return (
     <main className="registro-page">
       <section className="registro-card">
-        <div className="registro-card__header">
-          <p className="registro-card__brand">
-            JennCoffee
-          </p>
+        <header className="registro-card__header">
+          <div className="registro-card__logo-wrapper">
+            <img
+              src="/images/branding/jenncoffee-cat-logo.png"
+              alt="JennCoffee"
+              className="registro-card__logo"
+            />
+          </div>
 
-          <h1 className="registro-card__title">
-            Crear cuenta
-          </h1>
+          <div className="registro-card__header-copy">
+            <p className="registro-card__brand">
+              JennCoffee
+            </p>
 
-          <p className="registro-card__subtitle">
-            Regístrate para realizar pedidos en JennCoffee.
-          </p>
-        </div>
+            <h1 className="registro-card__title">
+              Crear cuenta
+            </h1>
+
+            <p className="registro-card__subtitle">
+              Regístrate para realizar pedidos y disfrutar la experiencia JennCoffee.
+            </p>
+          </div>
+        </header>
+
+        <div className="registro-card__divider" />
 
         <form
           className="registro-form"
           onSubmit={manejarSubmit}
         >
-          <div className="registro-form__grid">
-            <label className="registro-form__field">
-              <span>
-                Tipo de documento
-              </span>
+          <div className="registro-form__section">
+            <h2 className="registro-form__section-title">
+              Información personal
+            </h2>
 
-              <select
-                value={tipoDocumento}
-                onChange={(event) =>
-                  setTipoDocumento(
-                    event.target.value
-                  )
-                }
-              >
-                <option value="CC">
-                  Cédula de ciudadanía
-                </option>
+            <div className="registro-form__grid">
+              <label className="registro-form__field">
+                <span>
+                  Tipo de documento
+                </span>
 
-                <option value="CE">
-                  Cédula de extranjería
-                </option>
+                <select
+                  value={tipoDocumento}
+                  onChange={(event) =>
+                    setTipoDocumento(
+                      event.target.value
+                    )
+                  }
+                >
+                  <option value="CC">
+                    Cédula de ciudadanía
+                  </option>
 
-                <option value="TI">
-                  Tarjeta de identidad
-                </option>
+                  <option value="CE">
+                    Cédula de extranjería
+                  </option>
 
-                <option value="Pasaporte">
-                  Pasaporte
-                </option>
-              </select>
-            </label>
+                  <option value="TI">
+                    Tarjeta de identidad
+                  </option>
 
-            <label className="registro-form__field">
-              <span>
-                Documento
-              </span>
+                  <option value="Pasaporte">
+                    Pasaporte
+                  </option>
+                </select>
+              </label>
 
-              <input
-                type="text"
-                value={documento}
-                onChange={(event) =>
-                  setDocumento(
-                    event.target.value
-                  )
-                }
-                placeholder="Número de documento"
-              />
-            </label>
+              <label className="registro-form__field">
+                <span>
+                  Documento
+                </span>
 
-            <label className="registro-form__field">
-              <span>
-                Nombre
-              </span>
+                <input
+                  type="text"
+                  value={documento}
+                  onChange={(event) =>
+                    setDocumento(
+                      event.target.value
+                    )
+                  }
+                  placeholder="Número de documento"
+                />
+              </label>
 
-              <input
-                type="text"
-                value={nombre}
-                onChange={(event) =>
-                  setNombre(
-                    event.target.value
-                  )
-                }
-                placeholder="Nombre"
-              />
-            </label>
+              <label className="registro-form__field">
+                <span>
+                  Nombre
+                </span>
 
-            <label className="registro-form__field">
-              <span>
-                Apellidos
-              </span>
+                <input
+                  type="text"
+                  value={nombre}
+                  onChange={(event) =>
+                    setNombre(
+                      event.target.value
+                    )
+                  }
+                  placeholder="Nombre"
+                />
+              </label>
 
-              <input
-                type="text"
-                value={apellidos}
-                onChange={(event) =>
-                  setApellidos(
-                    event.target.value
-                  )
-                }
-                placeholder="Apellidos"
-              />
-            </label>
+              <label className="registro-form__field">
+                <span>
+                  Apellidos
+                </span>
 
-            <label className="registro-form__field">
-              <span>
-                Correo
-              </span>
+                <input
+                  type="text"
+                  value={apellidos}
+                  onChange={(event) =>
+                    setApellidos(
+                      event.target.value
+                    )
+                  }
+                  placeholder="Apellidos"
+                />
+              </label>
 
-              <input
-                type="email"
-                value={correo}
-                onChange={(event) =>
-                  setCorreo(
-                    event.target.value
-                  )
-                }
-                placeholder="correo@ejemplo.com"
-              />
-            </label>
+              <label className="registro-form__field">
+                <span>
+                  Correo
+                </span>
 
-            <label className="registro-form__field">
-              <span>
-                Teléfono
-              </span>
+                <input
+                  type="email"
+                  value={correo}
+                  onChange={(event) =>
+                    setCorreo(
+                      event.target.value
+                    )
+                  }
+                  placeholder="correo@ejemplo.com"
+                />
+              </label>
 
-              <input
-                type="text"
-                value={telefono}
-                onChange={(event) =>
-                  setTelefono(
-                    event.target.value
-                  )
-                }
-                placeholder="Teléfono"
-              />
-            </label>
+              <label className="registro-form__field">
+                <span>
+                  Teléfono
+                </span>
 
-            <label className="registro-form__field registro-form__field--full">
-              <span>
-                Dirección
-              </span>
+                <input
+                  type="text"
+                  value={telefono}
+                  onChange={(event) =>
+                    setTelefono(
+                      event.target.value
+                    )
+                  }
+                  placeholder="Teléfono"
+                />
+              </label>
 
-              <input
-                type="text"
-                value={direccion}
-                onChange={(event) =>
-                  setDireccion(
-                    event.target.value
-                  )
-                }
-                placeholder="Dirección de entrega"
-              />
-            </label>
+              <label className="registro-form__field registro-form__field--full">
+                <span>
+                  Dirección
+                </span>
 
-            <label className="registro-form__field">
-              <span>
-                Contraseña
-              </span>
+                <input
+                  type="text"
+                  value={direccion}
+                  onChange={(event) =>
+                    setDireccion(
+                      event.target.value
+                    )
+                  }
+                  placeholder="Dirección de entrega"
+                />
+              </label>
+            </div>
+          </div>
 
-              <input
-                type="password"
-                value={contrasena}
-                onChange={(event) =>
-                  setContrasena(
-                    event.target.value
-                  )
-                }
-                placeholder="Contraseña"
-                autoComplete="new-password"
-              />
-            </label>
+          <div className="registro-form__section">
+            <h2 className="registro-form__section-title">
+              Seguridad de la cuenta
+            </h2>
 
-            <label className="registro-form__field">
-              <span>
-                Confirmar contraseña
-              </span>
+            <div className="registro-form__grid">
+              <label className="registro-form__field">
+                <span>
+                  Contraseña
+                </span>
 
-              <input
-                type="password"
-                value={confirmarContrasena}
-                onChange={(event) =>
-                  setConfirmarContrasena(
-                    event.target.value
-                  )
-                }
-                placeholder="Repite la contraseña"
-                autoComplete="new-password"
-              />
-            </label>
+                <input
+                  type="password"
+                  value={contrasena}
+                  onChange={(event) =>
+                    setContrasena(
+                      event.target.value
+                    )
+                  }
+                  placeholder="Contraseña"
+                  autoComplete="new-password"
+                />
+              </label>
+
+              <label className="registro-form__field">
+                <span>
+                  Confirmar contraseña
+                </span>
+
+                <input
+                  type="password"
+                  value={confirmarContrasena}
+                  onChange={(event) =>
+                    setConfirmarContrasena(
+                      event.target.value
+                    )
+                  }
+                  placeholder="Repite la contraseña"
+                  autoComplete="new-password"
+                />
+              </label>
+            </div>
           </div>
 
           {error && (
