@@ -1,9 +1,11 @@
 require('dotenv').config();
 
 const mongoose = require('mongoose');
+const bcrypt = require('bcrypt');
 
 const Categoria = require('../src/models/Categoria');
 const Producto = require('../src/models/Producto');
+const Usuario = require('../src/models/Usuario');
 
 const categorias = [
   {
@@ -255,6 +257,45 @@ const productos = [
   }
 ];
 
+const crearAdministradorInicial = async () => {
+  const adminUser = process.env.ADMIN_USER;
+  const adminPassword = process.env.ADMIN_PASSWORD;
+
+  if (!adminUser || !adminPassword) {
+    throw new Error(
+      'Faltan ADMIN_USER o ADMIN_PASSWORD en las variables de entorno'
+    );
+  }
+
+  const administradorExistente = await Usuario.findOne({
+    usuario: adminUser
+  });
+
+  if (administradorExistente) {
+    console.log(
+      `Administrador inicial ya existe: ${adminUser}`
+    );
+
+    return;
+  }
+
+  const contrasenaProtegida = await bcrypt.hash(
+    adminPassword,
+    10
+  );
+
+  await Usuario.create({
+    usuario: adminUser,
+    contrasena: contrasenaProtegida,
+    rol: 'Administrador',
+    estado: 'Activo'
+  });
+
+  console.log(
+    `Administrador inicial creado: ${adminUser}`
+  );
+};
+
 const ejecutarSeed = async () => {
   try {
     await mongoose.connect(process.env.MONGODB_URI);
@@ -313,11 +354,16 @@ const ejecutarSeed = async () => {
       );
     }
 
+    await crearAdministradorInicial();
+
     const totalCategorias =
       await Categoria.countDocuments();
 
     const totalProductos =
       await Producto.countDocuments();
+
+    const totalUsuarios =
+      await Usuario.countDocuments();
 
     console.log(
       `Categorías disponibles: ${totalCategorias}`
@@ -325,6 +371,10 @@ const ejecutarSeed = async () => {
 
     console.log(
       `Productos disponibles: ${totalProductos}`
+    );
+
+    console.log(
+      `Usuarios administradores disponibles: ${totalUsuarios}`
     );
 
     console.log(
